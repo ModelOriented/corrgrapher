@@ -3,19 +3,19 @@ library(dplyr)
 library(tidyr)
 # df <- Titanic
 # View(Titanic)
-df1 <- as.data.frame(datasets::Seatbelts)
-# View(head(as.data.frame(df1)))
-corelations <- cor(df1)
-coldict <- setNames(1:ncol(df1), colnames(df1))
+df <- as.data.frame(datasets::Seatbelts)
+# View(head(as.data.frame(df)))
+corelations <- cor(df)
+coldict <- setNames(1:ncol(df), colnames(df))
 no_corelation_approx <- 0.05
 
 nodes <- data.frame(id = coldict,
               label = names(coldict))
-edges <- cor(df1) %>% as.data.frame() %>%
-  pivot_longer(cols = 1:ncol(df1),
+edges <- cor(df) %>% as.data.frame() %>%
+  pivot_longer(cols = 1:ncol(df),
                names_to = "to",
                values_to = "strength") %>%
-  mutate(from = rep(colnames(df1), each = ncol(df1))) %>%
+  mutate(from = rep(colnames(df), each = ncol(df))) %>%
   filter(from != to) %>%
   mutate(length = (1.05 - strength) ^ 2 * 1000,
          physics = strength > no_corelation_approx,
