@@ -3,11 +3,13 @@ library(dplyr)
 library(tidyr)
 # df <- Titanic
 # View(Titanic)
-df <- as.data.frame(datasets::Seatbelts)
+df <- as.data.frame(datasets::Seatbelts) %>%
+  select(-law)
 # View(head(as.data.frame(df)))
 corelations <- cor(df)
 coldict <- setNames(1:ncol(df), colnames(df))
-no_corelation_approx <- 0.05
+no_corelation_approx <- 0.15
+negative_corelation_handler <- function(x) x ^ 3
 
 nodes <- data.frame(id = coldict,
               label = names(coldict))
@@ -17,10 +19,10 @@ edges <- cor(df) %>% as.data.frame() %>%
                values_to = "strength") %>%
   mutate(from = rep(colnames(df), each = ncol(df))) %>%
   filter(from != to) %>%
-  mutate(length = (1.05 - strength) ^ 2 * 1000,
-         physics = strength > no_corelation_approx,
+  mutate(length = negative_corelation_handler(1.1 - strength) * 700,
          color = if_else(physics, 'blue', 'red'),
          hidden = abs(strength) < no_corelation_approx,
+         physics = !hidden,
          label = as.character(round(strength, 2)),
          from = coldict[from],
          to = coldict[to]) %>%
@@ -32,8 +34,8 @@ edges <- cor(df) %>% as.data.frame() %>%
 #                                      select(strength) %>% abs() %>% sum() + 1)
 #)
 net <- visNetwork(nodes, select(edges, -strength), height = 600, width = 1000) %>%
-  # visEdges(length = )  %>% 
-  visLayout(randomSeed = 123) 
+  visEdges(smooth = FALSE) %>%
+  visPhysics(barnesHut = list(repulsion = -500))
 
 net
 
