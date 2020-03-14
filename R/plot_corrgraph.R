@@ -27,16 +27,8 @@ plot_corrgraph <- function(df){
            width = abs(strength) * 2 + 2,
            to = coldict[to]) %>%
     filter(from >= to)
-  # nodes <- data.frame(id = coldict,
-  #                     label = names(coldict)
-  #                      mass = sapply(coldict, function(id) filter(edges, (from == id) | (to == id),  
-  #                                                                 strength < 0) %>%
-  #                                      select(strength) %>% abs() %>% sum() + 1)
-  #)
   net <- visNetwork(nodes, select(edges, -strength), height = 600, width = 1000) %>%
     visNodes(size = 20) %>% 
     visEdges(smooth = FALSE) # %>%
-  # visPhysics(barnesHut = list(repulsion = -500))
-  
   net
 }
