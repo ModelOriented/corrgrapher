@@ -1,3 +1,4 @@
+#' @importFrom dplyr "%>%"
 #' @export
 plot_corrgraph <- function(df){
   warning('Package in experimental state. Use this function ONLY with dfs which ALL columns are numeric 
@@ -15,7 +16,7 @@ plot_corrgraph <- function(df){
                  values_to = "strength") %>%
     dplyr::mutate(from = rep(colnames(df), each = ncol(df))) %>%
     dplyr::filter(from != to) %>%
-    dplyr::mutate(length = negative_corelation_handler(1.1 - strength) * 500,
+    dplyr::mutate(length = negative_corelation_handler(1.1 - abs(strength)) * 500,
            hidden = abs(strength) < no_corelation_approx,
            physics = !hidden,
            color = dplyr::if_else(strength >= 0, 'blue', 'red'),
