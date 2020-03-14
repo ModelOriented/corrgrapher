@@ -1,9 +1,12 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
+library(CorrGrapheR)
+library(dplyr)
+library(tidyr)
+library(visNetwork)
 
 ## ----cars---------------------------------------------------------------------
-summary(cars)
-
-## ----pressure, echo=FALSE-----------------------------------------------------
-plot(pressure)
+df <- as.data.frame(datasets::Seatbelts) %>%
+  select(-law)
+plot_corrgraph(df)
 

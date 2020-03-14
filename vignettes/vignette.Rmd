@@ -12,6 +12,9 @@ vignette: >
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(CorrGrapheR)
+library(dplyr)
+library(tidyr)
+library(visNetwork)
 ```
 
 ## CorrGrapheR
@@ -21,7 +24,9 @@ This package aims to plot correlations between variables in form of a graph. Var
 ## Example 1 - Seatbelts
 
 ```{r cars}
-summary(cars)
+df <- as.data.frame(datasets::Seatbelts) %>%
+  select(-law)
+plot_corrgraph(df)
 ```
 
 ## Example 2 - FIFA
