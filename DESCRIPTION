@@ -9,13 +9,12 @@ Description: This package aims to plot correlations between variables in form of
   Variables strongly correlated with each other (negatively or positively) shall be close,
   correlated weakly - far from each other.
 License: GPL (>= 2)
-Imports: visNetwork, 
-  dplyr, 
-  tidyr
+Imports: visNetwork
 Suggests: 
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    dplyr
 VignetteBuilder: knitr
 RoxygenNote: 7.0.2
 URL: https://MrDomani.github.io/CorrGrapheR/, https://github.com/MrDomani/CorrGrapheR
