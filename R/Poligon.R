@@ -20,9 +20,9 @@ edges <- cor(df) %>% as.data.frame() %>%
   mutate(from = rep(colnames(df), each = ncol(df))) %>%
   filter(from != to) %>%
   mutate(length = negative_corelation_handler(1.1 - strength) * 700,
-         color = if_else(physics, 'blue', 'red'),
          hidden = abs(strength) < no_corelation_approx,
          physics = !hidden,
+         color = if_else(physics, 'blue', 'red'),
          label = as.character(round(strength, 2)),
          from = coldict[from],
          to = coldict[to]) %>%

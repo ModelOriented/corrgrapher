@@ -1,11 +1,9 @@
 Package: CorrGrapheR
 Type: Package
-Title: What the Package Does Using Title Case
+Title: Plot Correlations Between Variables In A Data Frame
 Version: 1.0
 Date: 2020-03-10
-Author: Your Name
-Maintainer: Your Name <your@email.com>
-Description: More details about what the package does. See
-           <http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file> for
-           details on how to write this part.
+Author: Pawel Morgen
+Maintainer: Pawel Morgen <seriousmorgen@protonmail.com>
+Description: This package aims to plot correlations between variables in form of a graph. Variables correlated with each other shall be close, and correlated negatively - far from each other.
 License: GPL (>= 2)
