@@ -7,3 +7,6 @@ Author: Pawel Morgen
 Maintainer: Pawel Morgen <seriousmorgen@protonmail.com>
 Description: This package aims to plot correlations between variables in form of a graph. Variables correlated with each other shall be close, and correlated negatively - far from each other.
 License: GPL (>= 2)
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.0.2

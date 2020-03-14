@@ -1,0 +1,29 @@
+---
+title: "Vignette"
+author: "Paweł Morgen"
+date: "14/03/2020"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(CorrGrapheR)
+```
+
+## CorrGrapheR
+
+This package aims to plot correlations between variables in form of a graph. Variables correlated with each other shall be close, and correlated negatively - far from each other.
+
+## Example 1 - Seatbelts
+
+```{r cars}
+summary(cars)
+```
+
+## Example 2 - FIFA
+
+
