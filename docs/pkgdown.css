@@ -17,12 +17,6 @@ html, body {
   height: 100%;
 }
 
-body > .container {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-}
-
 body > .container .row {
   flex: 1 0 auto;
 }
@@ -97,7 +91,7 @@ a.anchor {
 
 .contents h1, .contents h2, .contents h3, .contents h4 {
   padding-top: 60px;
-  margin-top: -40px;
+  margin-top: -60px;
 }
 
 /* Sidebar --------------------------*/
@@ -119,6 +113,18 @@ a.anchor {
 
 #sidebar .list-unstyled li {
   margin-bottom: 0.5em;
+}
+
+#sidebar .nav nav-pills .nav-stacked > li > a:focus, .nav-pills > li > a:focus {
+  background-color: #4a3c89 !important;
+	color: #fff;
+}
+#sidebar .nav nav-pills .nav-stacked > li.active > a, .nav-pills > li.active > a{
+    background-color: #370f54 !important;
+}
+#sidebar .nav nav-pills .nav-stacked > li > a, .nav-pills > li > a{
+  background-color: #4a3c89 !important;
+	color: #fff;
 }
 
 .orcid {
@@ -239,18 +245,4 @@ mark {
 /* vertical spacing after htmlwidgets */
 .html-widget {
   margin-bottom: 10px;
-}
-
-/* fontawesome ------------------------ */
-
-.fab {
-    font-family: "Font Awesome 5 Brands" !important;
-}
-
-/* don't display links in code chunks when printing */
-/* source: https://stackoverflow.com/a/10781533 */
-@media print {
-  code a:link:after, code a:visited:after {
-    content: "";
-  }
 }
