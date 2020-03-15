@@ -4,13 +4,20 @@
 \alias{plot_corrgraph}
 \title{Visualize correlations in a data frame}
 \usage{
-plot_corrgraph(df, cutoff = 0.15)
+plot_corrgraph(df, cutoff = 0.2, method = c("pearson", "kendall", "spearman"))
 }
 \arguments{
-\item{df}{a \code{data frame}, in which \strong{all} columns are \code{numeric} (calling \code{\link{cor}} makes sense).}
+\item{df}{a \code{data.frame}, in which \strong{all} columns are \code{numeric} (calling \code{\link{cor}} makes sense).}
 
-\item{cutoff}{a number. Corelations below this are treated as \strong{no} corelation.}
+\item{cutoff}{a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.}
+
+\item{method}{passed directly to \code{\link{cor}} function.}
+}
+\value{
+a \code{\link{visNework}} object; graph. On this graph, the edges are treated as springs. 
+  The variables correlated \strong{strongly} (positively or negatively) are \strong{close} to each other, 
+  and those not (or weakly) correlated - \strong{far} from each other.
 }
 \description{
-Visualize correlations in a data frame
+In a \code{data.frame}, visualize correlations between variables stored in columns.
 }
