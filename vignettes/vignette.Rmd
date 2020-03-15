@@ -1,7 +1,6 @@
 ---
 title: "Vignette"
 author: "Paweł Morgen"
-date: "14/03/2020"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette}
@@ -13,11 +12,12 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 library(CorrGrapheR)
 library(dplyr)
+#.
 ```
 
 ## CorrGrapheR
 
-This package aims to plot correlations between variables in form of a graph. Variables correlated with each other shall be close, and correlated negatively - far from each other.
+This package aims to plot correlations between variables in form of a graph. Variables correlated with each other shall be close (posivitely and negatively alike), and weakly correlated  - far from each other.
 
 ## Example 1 - Seatbelts
 
@@ -29,4 +29,10 @@ plot_corrgraph(df)
 
 ## Example 2 - FIFA
 
+```{r fifa}
+load(normalizePath('../data/fifa20.rda'))
+fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,25:26,45:78)]
+nums <- unlist(lapply(fifa20_selected, is.numeric))
+plot_corrgraph(fifa20_selected[,nums], cutoff = 0.3)
+```
 
