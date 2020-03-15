@@ -1,3 +1,4 @@
 template:
   package: DrWhyTemplate
   default_assets: false
+  
