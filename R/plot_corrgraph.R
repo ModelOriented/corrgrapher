@@ -2,7 +2,7 @@
 #' 
 #' In a \code{data.frame}, visualize correlations between variables stored in columns.
 #' 
-#' @param df a \code{data.frame}, in which \strong{all} columns are \code{numeric} (calling \code{\link{cor}} makes sense).
+#' @param df a \code{data.frame}, in which for all \code{numeric} columns calling \code{\link{cor}} makes sense.
 #' @param cutoff a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.
 #' @param method passed directly to \code{\link{cor}} function. 
 #' @return a \code{\link{visNework}} object; graph. On this graph, the edges are treated as springs. 
@@ -10,8 +10,10 @@
 #'   and those not (or weakly) correlated - \strong{far} from each other.
 #' @export
 plot_corrgraph <- function(df, cutoff = 0.2, method = c('pearson', 'kendall', 'spearman')){
-  warning('Package in experimental state. Use this function ONLY with dfs which ALL columns are numeric 
-          (i.e. calculating corelation with cor() makes sense).')
+  # warning('Package in experimental state. Use this function ONLY with dfs which ALL columns are numeric 
+  #         (i.e. calculating corelation with cor() makes sense).')
+  nums <- unlist(lapply(df, is.numeric))
+  df <- df[,nums]
   corelations <- cor(df, method = method)
   coldict <- setNames(1:ncol(df), colnames(df))
   

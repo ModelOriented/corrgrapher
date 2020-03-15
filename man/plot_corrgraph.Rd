@@ -7,7 +7,7 @@
 plot_corrgraph(df, cutoff = 0.2, method = c("pearson", "kendall", "spearman"))
 }
 \arguments{
-\item{df}{a \code{data.frame}, in which \strong{all} columns are \code{numeric} (calling \code{\link{cor}} makes sense).}
+\item{df}{a \code{data.frame}, in which for all \code{numeric} columns calling \code{\link{cor}} makes sense.}
 
 \item{cutoff}{a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.}
 
