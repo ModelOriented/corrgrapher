@@ -18,6 +18,8 @@ library(dplyr)
 
 This package aims to plot correlations between variables in form of a graph. Variables correlated with each other shall be close (posivitely and negatively alike), and weakly correlated  - far from each other.
 
+It is achieved through a physical simulation, where the nodes are treated as points with mass (and are pushing each other away) and edges are treated as mass-less springs. The length of a spring depends on absolute value of correlation between connected nodes. The bigger the correlation, the shorter the spring.
+
 ## Example 1 - Seatbelts
 
 ```{r cars}
