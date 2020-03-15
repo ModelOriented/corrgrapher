@@ -2,7 +2,6 @@
 knitr::opts_chunk$set(echo = TRUE)
 library(CorrGrapheR)
 library(dplyr)
-#.
 
 ## ----cars---------------------------------------------------------------------
 df <- as.data.frame(datasets::Seatbelts) %>%
