@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot Correlations Between Variables In A Data Frame — CorrGrapheR-package • CorrGrapheR</title>
+<title>Visualize correlations in a data frame — plot.corrgrapher • CorrGrapheR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -35,10 +35,8 @@
 
 
 
-<meta property="og:title" content="Plot Correlations Between Variables In A Data Frame — CorrGrapheR-package" />
-<meta property="og:description" content="This package aims to plot correlations between variables in form of a graph. 
-  Variables strongly correlated with each other (negatively or positively) shall be close,
-  correlated weakly - far from each other." />
+<meta property="og:title" content="Visualize correlations in a data frame — plot.corrgrapher" />
+<meta property="og:description" content="Visualize correlations between variables stored in columns, using previously created corrgrapher object." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,36 +126,62 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot Correlations Between Variables In A Data Frame</h1>
-    
-    <div class="hidden name"><code>CorrGrapheR-package.Rd</code></div>
+    <h1>Visualize correlations in a data frame</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MrDomani/CorrGrapheR/blob/master/R/plot_corrgraph.R'><code>R/plot_corrgraph.R</code></a></small>
+    <div class="hidden name"><code>plot.corrgrapher.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This package aims to plot correlations between variables in form of a graph. 
-  Variables strongly correlated with each other (negatively or positively) shall be close,
-  correlated weakly - far from each other.</p>
+    <p>Visualize correlations between variables stored in columns, using previously created <code>corrgrapher</code> object.</p>
     </div>
 
+    <pre class="usage"><span class='co'># S3 method for corrgrapher</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>600</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='no'>...</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>a <code>corrgrapher</code> object. See <code><a href='create_corrgrapher.html'>create_corrgrapher</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>height</th>
+      <td><p>Height</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>Width</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>other parameters, passed directly to <code>visNetwork</code> function (such as <code>main</code>, <code>submain</code>, etc)</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="package-content"><a class="anchor" href="#package-content"></a>Package Content</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Index:  This package was not yet installed at build time.<br /></p>
-    <h2 class="hasAnchor" id="maintainer"><a class="anchor" href="#maintainer"></a>Maintainer</h2>
+    <p>A <code>visNetwork</code> object; graph. On this graph, the edges are treated as springs. 
+  The variables correlated <strong>strongly</strong> (positively or negatively) are <strong>close</strong> to each other, 
+  and those not (or weakly) correlated - <strong>far</strong> from each other.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Pawel Morgen &lt;seriousmorgen@protonmail.com&gt;</p>
+    <div class='dont-index'><p><code><a href='create_corrgrapher.html'>create_corrgrapher</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/datasets/UKDriverDeaths.html'>Seatbelts</a></span>)[,<span class='fl'>1</span>:<span class='fl'>7</span>] <span class='co'># drop the binary target variable</span>
+<span class='no'>cgr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_corrgrapher.html'>create_corrgrapher</a></span>(<span class='no'>df</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cgr</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#package-content">Package Content</a></li>
-      <li><a href="#maintainer">Maintainer</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p>Pawel Morgen</p>
   </div>
 </div>
 
