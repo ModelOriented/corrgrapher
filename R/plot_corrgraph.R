@@ -20,7 +20,7 @@
 
 plot.corrgrapher <- function(x, height = 600, width = 1000, ...){
   net <- visNetwork::visNetwork(nodes = x$nodes, 
-                                edges = x$edges[-which(names(x$edges)=='corelations')],
+                                edges = x$edges,
                                 height = height,
                                 width = width,
                                 ...)

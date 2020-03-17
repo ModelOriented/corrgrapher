@@ -1,7 +1,7 @@
 #' Create a CorrGrapheR object
 #' 
 #' Create a CorrGrapheR object before passing it to \code{plot()}. 
-#' 
+#' @importFrom stats cor
 #' @param df a \code{data.frame}, in which for all \code{numeric} columns calling \code{\link{cor}} makes sense.
 #' @param cutoff a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.
 #' @param method passed directly to \code{\link{cor}} function. 
@@ -47,10 +47,11 @@ create_corrgrapher.default <- function(df,
                       #                  1),
                       color = ifelse(corelations >= 0, 'blue', 'red'),
                       label = as.character(round(corelations, 2)),
-                      width = abs(corelations) * 2)
-  edges <- as.list(edges[edges$from < edges$to,])
-  edges$smooth <- FALSE
-  edges$scaling <- list(label = TRUE)
+                      width = abs(corelations) * 2,
+                      smooth = FALSE,
+                      scaling = list(label = TRUE))
+  edges <- edges[edges$from < edges$to,]
+  edges$corelations <- NULL
   structure(list(nodes = nodes, 
                  edges = edges),
             class = "corrgrapher")
