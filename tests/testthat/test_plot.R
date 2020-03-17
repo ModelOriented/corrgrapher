@@ -1,5 +1,5 @@
-context('Basic test')
+context('plot working properly')
 df <- as.data.frame(datasets::Seatbelts)
 df <- df[,1:(ncol(df)-1)]
 
-expect_is(plot_corrgraph(df), 'visNetwork')
+expect_is(plot(create_corrgrapher(df)), 'visNetwork')
