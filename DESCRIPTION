@@ -11,7 +11,9 @@ Description: This package aims to plot correlations between variables in form of
   correlated weakly - far from each other.
 License: GPL (>= 2)
 Depends: R (>= 3.1.0)
-Imports: visNetwork
+Imports: visNetwork,
+    DALEX,
+    ingredients
 Suggests: 
     knitr,
     rmarkdown,

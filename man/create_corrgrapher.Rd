@@ -19,7 +19,7 @@ create_corrgrapher(x, ...)
   x,
   cutoff = 0.2,
   method = c("pearson", "kendall", "spearman"),
-  sizes = NULL,
+  values = NULL,
   ...
 )
 }
