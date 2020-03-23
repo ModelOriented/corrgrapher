@@ -80,7 +80,7 @@ fifa_gbm_exp <- explain(fifa_gbm,
 
 fifa_feat <- ingredients::feature_importance(fifa_gbm_exp)
 
-create_corrgrapher(fifa20_selected, cutoff = 0.3) %>%
+create_corrgrapher(fifa20_selected, cutoff = 0.3, feature_importance = fifa_feat) %>%
   plot()
 ```
 
