@@ -24,7 +24,7 @@ plot.corrgrapher <- function(x, height = 600, width = 1000, ...){
                                 height = height,
                                 width = width,
                                 ...)
-  visOptions(net, highlightNearest = TRUE)
+  visNetwork::visOptions(net, highlightNearest = TRUE)
 }
 
 #'

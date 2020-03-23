@@ -18,7 +18,9 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    dplyr
+    dplyr,
+    gbm,
+    randomForest
 VignetteBuilder: knitr
 RoxygenNote: 7.0.2
 URL: https://MrDomani.github.io/CorrGrapheR/, https://github.com/MrDomani/CorrGrapheR

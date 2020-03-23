@@ -2,6 +2,9 @@
 knitr::opts_chunk$set(echo = TRUE)
 library(CorrGrapheR)
 library(dplyr)
+library("ingredients")
+library("DALEX")
+library("gbm")
 #.
 
 ## ----cars---------------------------------------------------------------------
@@ -10,7 +13,21 @@ df <- as.data.frame(datasets::Seatbelts) %>%
 create_corrgrapher(df) %>%
   plot()
 
-## ----fifa---------------------------------------------------------------------
+## ----titanic, cache=TRUE, eval=FALSE, include=FALSE---------------------------
+#  library("randomForest")
+#  titanic <- na.omit(titanic)
+#  model_titanic_rf <- randomForest(survived == "yes" ~ .,
+#                                   data = titanic)
+#  explain_titanic_rf <- explain(model_titanic_rf,
+#                                data = titanic[,-9],
+#                                y = titanic$survived == "yes",
+#                                label = "Random Forest")
+#  feature_importance_titanic_rf <- feature_importance(explain_titanic_rf)
+#  
+#  create_corrgrapher(explain_titanic_rf, feature_importance = feature_importance_titanic_rf) %>%
+#    plot()
+
+## ----fifa, cache=TRUE, echo=FALSE---------------------------------------------
 load(normalizePath('../data/fifa20.rda'))
 fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,25:26,45:78)]
 # Value is skewed. Will be much easier to model sqrt(Value).
@@ -26,18 +43,18 @@ fifa20_selected <- fifa20_selected[,-1]
 # create a gbm model
 
 set.seed(1313)
-library("gbm")
+
 # 4:5 are overall and potential, too strong predictors
 fifa_gbm <- gbm(value_eur ~ . , data = fifa20_selected[,-(4:5)], n.trees = 250, interaction.depth = 3)
 
-library("DALEX")
+
 fifa_gbm_exp <- explain(fifa_gbm, 
                         data = fifa20_selected[, -6], 
                         y = 10^fifa20_selected$value_eur, 
                         predict_function = function(m,x) 
                           10^predict(m, x, n.trees = 250))
 
-library("ingredients")
+
 fifa_feat <- ingredients::feature_importance(fifa_gbm_exp)
 
 create_corrgrapher(fifa20_selected, cutoff = 0.3) %>%

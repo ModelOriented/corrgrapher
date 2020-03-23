@@ -30,7 +30,7 @@ create_corrgrapher(x, ...)
 
 \item{cutoff}{a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.}
 
-\item{feature_importance}{(Optional) an object of \code{feature importance} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.}
+\item{feature_importance}{(Optional) an object of \code{feature importance_explainer} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.}
 
 \item{method}{passed directly to \code{\link{cor}} function.}
 
