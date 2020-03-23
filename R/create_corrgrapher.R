@@ -70,7 +70,7 @@ create_corrgrapher.default <- function(x,
   else {
     if(!is.data.frame(values)) stop('if suported, values must be a data.frame')
     if(length(setdiff(c('label', 'value'), colnames(values))) > 0) stop('if suported, values must contain "label" and "value" columns')
-    if(length(setdiff(values[['label']], colnames(x))) > 0) stop('if supported, values$label must contain all colnames(x)')
+    if(length(setdiff(colnames(x), values[['label']])) > 0) stop('if supported, values$label must contain all colnames(x)')
     if(!is.numeric(values$value)) stop('Values$value must be numeric')
     values <- values[,c('label', 'value')]
   }
