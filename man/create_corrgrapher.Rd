@@ -2,20 +2,29 @@
 % Please edit documentation in R/create_corrgrapher.R
 \name{create_corrgrapher}
 \alias{create_corrgrapher}
+\alias{create_corrgrapher.explainer}
 \alias{create_corrgrapher.default}
 \title{Create a CorrGrapheR object}
 \usage{
-create_corrgrapher(df, ...)
+create_corrgrapher(x, ...)
+
+\method{create_corrgrapher}{explainer}(
+  x,
+  cutoff = 0.2,
+  feature_importance = NULL,
+  method = c("pearson", "kendall", "spearman")
+)
 
 \method{create_corrgrapher}{default}(
-  df,
+  x,
   cutoff = 0.2,
   method = c("pearson", "kendall", "spearman"),
+  sizes = NULL,
   ...
 )
 }
 \arguments{
-\item{df}{a \code{data.frame}, in which for all \code{numeric} columns calling \code{\link{cor}} makes sense.}
+\item{x}{a \code{data.frame}, in which for all \code{numeric} columns calling \code{\link{cor}} makes sense.}
 
 \item{...}{other parameters.}
 
