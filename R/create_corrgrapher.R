@@ -5,7 +5,7 @@
 #' @param x a \code{data.frame}, in which for all \code{numeric} columns calling \code{\link{cor}} makes sense.
 #' @param cutoff a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.
 #' @param method passed directly to \code{\link{cor}} function. 
-#' @param feature_importance (Optional) an object of \code{feature importance} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.
+#' @param feature_importance (Optional) an object of \code{feature importance_explainer} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.
 #' @param values (Optional) a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.
 #' @param ... other parameters.
 #' 
@@ -28,7 +28,7 @@ create_corrgrapher.explainer <- function(x,
                                          cutoff = 0.2,
                                          feature_importance = NULL,
                                          method = c('pearson', 'kendall', 'spearman')){
-  
+  if(! 'feature_importance_explainer' %in% class(feature_importance)) stop('feature_importance must be of feature_importance_explainer class')
   if(is.null(feature_importance)){
     x_feat <- ingredients::feature_importance(x)
   } else x_feat <- feature_importance
@@ -60,10 +60,20 @@ create_corrgrapher.default <- function(x,
   #   v <- v / max(v) * out_max
   #   v + out_min
   # }
+  if(!is.data.frame(x)) stop('x must be a data.frame')
+  if(length(cutoff) > 1 || !is.numeric(cutoff)) stop('cutoff must be a number.')
+  if(cutoff >= 1) warning('cutoff > 1. Interpreting as no cutoff')
+  if(cutoff <= 0) warning('cutoff <= 0. Cutting off all edges')
   
   if(is.null(values)) values <- data.frame(value = rep(5 * sqrt(ncol(x)), ncol(x)),
                                        label = colnames(x))
-  else values <- values[,c('label', 'value')]
+  else {
+    if(!is.data.frame(values)) stop('if suported, values must be a data.frame')
+    if(length(setdiff(c('label', 'value'), colnames(values))) > 0) stop('if suported, values must contain "label" and "value" columns')
+    if(length(setdiff(values[['label']], colnames(x))) > 0) stop('if supported, values$label must contain all colnames(x)')
+    if(!is.numeric(values$value)) stop('Values$value must be numeric')
+    values <- values[,c('label', 'value')]
+  }
   # else values$value <- normalize(values$value, 
   #                         out_mean = 5 * sqrt(ncol(x)),
   #                         out_sd = sqrt(ncol(x)))
