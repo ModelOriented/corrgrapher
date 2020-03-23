@@ -5,6 +5,8 @@
 #' @param x a \code{data.frame}, in which for all \code{numeric} columns calling \code{\link{cor}} makes sense.
 #' @param cutoff a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.
 #' @param method passed directly to \code{\link{cor}} function. 
+#' @param feature_importance (Optional) an object of \code{feature importance} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.
+#' @param values (Optional) a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.
 #' @param ... other parameters.
 #' 
 #' @return A \code{corrgrapher} object.

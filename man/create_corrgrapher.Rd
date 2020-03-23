@@ -30,7 +30,11 @@ create_corrgrapher(x, ...)
 
 \item{cutoff}{a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.}
 
+\item{feature_importance}{(Optional) an object of \code{feature importance} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.}
+
 \item{method}{passed directly to \code{\link{cor}} function.}
+
+\item{values}{(Optional) a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.}
 }
 \value{
 A \code{corrgrapher} object.
