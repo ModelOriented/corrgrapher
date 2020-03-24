@@ -48,20 +48,9 @@ create_corrgrapher.default <- function(x,
                                        method = c('pearson', 'kendall', 'spearman'),
                                        values = NULL,
                                        ...){
-  # values - df z kolumną label i value
-  # normalize robi wektor o średniej i sd danym na wejściu
-  # normalize <- function(v, out_mean = 0, out_sd = 1) (v - mean(v, na.rm = TRUE)) / sd(v, na.rm = TRUE) * out_sd + out_mean
-  # 
-  # # opcja druga: skalujemy wektor do zbioru[10,50]
-  # normalize2 <- function(v, 
-  #                        out_min = 10, 
-  #                        out_max = 50) {
-  #   v <- v - min(v)
-  #   v <- v / max(v) * out_max
-  #   v + out_min
-  # }
+  # if(is.null(colorer)) colorer <- colorRampPalette(c('#9fe5bd80', '#77d1be80','#46bac280','#4590c480', '#371ea380'))
   if(!is.data.frame(x)) stop('x must be a data.frame')
-  if(length(cutoff) > 1 || !is.numeric(cutoff)) stop('cutoff must be a number.')
+  if(length(cutoff) > 1 || !is.numeric(cutoff)) stop('cutoff must be a single number')
   if(cutoff >= 1) warning('cutoff > 1. Interpreting as no cutoff')
   if(cutoff <= 0) warning('cutoff <= 0. Cutting off all edges')
   
@@ -71,7 +60,7 @@ create_corrgrapher.default <- function(x,
     if(!is.data.frame(values)) stop('if suported, values must be a data.frame')
     if(length(setdiff(c('label', 'value'), colnames(values))) > 0) stop('if suported, values must contain "label" and "value" columns')
     if(length(setdiff(colnames(x), values[['label']])) > 0) stop('if supported, values$label must contain all colnames(x)')
-    if(!is.numeric(values$value)) stop('Values$value must be numeric')
+    if(!is.numeric(values$value)) stop('if supported, values$value must be numeric')
     values <- values[,c('label', 'value')]
   }
   # else values$value <- normalize(values$value, 
@@ -84,35 +73,29 @@ create_corrgrapher.default <- function(x,
   nodes <- data.frame(id = 1:ncol(x),
                       label = colnames(x),
                       title = colnames(x),
-                      scaling = list(label = list(min = 3, max = 15)))
+                      color = '#ae2c87',
+                      scaling = list(label = list(min = 10, max = 15)))
   nodes <- merge(nodes, values, 
                  by.x = 'label',
                  by.y = 'label')
-  corelations <- stats::cor(x, method = method)
+  corelations <- as.vector(stats::cor(x, method = method))
   
-  negative_corelation_handler <- function(x) x
-  
-  
-  corelations <- as.vector(cor(x))
   edges <- data.frame(corelations = corelations, 
                       from = rep(1:ncol(x), each = ncol(x)),
                       to = rep(1:ncol(x), times = ncol(x)),
-                      length = negative_corelation_handler(1.1 - abs(corelations)) * 100 * sqrt(ncol(x)),
-                      hidden = abs(corelations) < cutoff,
-                      # dashes = abs(corelations) < no_corelation_approx,
-                      # opacity = ifelse(abs(corelations) < no_corelation_approx,
-                      #                  0.3,
-                      #                  1),
-                      color = ifelse(corelations >= 0, 'blue', 'red'),
-                      label = as.character(round(corelations, 2)),
                       value = abs(corelations) * 2,
+                      label = as.character(round(corelations, 2)),
+                      length = (1.1 - abs(corelations)) * 100 * sqrt(ncol(x)),
+                      hidden = abs(corelations) < cutoff,
+                      color = ifelse(corelations >= 0, '#4378bf80', '#f05a7180'),
+                      font = list(color = '#34343480',
+                                  strokeWidth = 0),
                       smooth = FALSE,
-                      scaling = list(min = 0.1,
-                                     max = 3,
-                                     label = list(min = 5, max = 10, maxVisible = 10)))
+                      scaling = list(min = 0.05,
+                                     max = 5,
+                                     label = list(min = 5, max = 8, maxVisible = 8)))
   edges <- edges[edges$from < edges$to,]
   edges$corelations <- NULL
-  # browser()
   structure(list(nodes = nodes, 
                  edges = edges),
             class = "corrgrapher")

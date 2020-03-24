@@ -4,16 +4,12 @@
 \alias{plot.corrgrapher}
 \title{Visualize correlations in a data frame}
 \usage{
-\method{plot}{corrgrapher}(x, height = 600, width = 1000, ...)
+\method{plot}{corrgrapher}(x, ...)
 }
 \arguments{
 \item{x}{a \code{corrgrapher} object. See \code{\link{create_corrgrapher}}.}
 
-\item{height}{Height}
-
-\item{width}{Width}
-
-\item{...}{other parameters, passed directly to \code{\link{visNetwork}} function (such as \code{main}, \code{submain}, etc)}
+\item{...}{other parameters, passed directly to \code{\link{visNetwork}} function (such as \code{main}, \code{submain}, \code{width}, \code{height} etc.)}
 }
 \value{
 A \code{\link{visNetwork}} object; graph. On this graph, the edges are treated as springs. 

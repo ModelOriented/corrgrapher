@@ -5,9 +5,7 @@
 #' Visualize correlations between variables stored in columns, using previously created \code{corrgrapher} object.
 #' 
 #' @param x a \code{corrgrapher} object. See \code{\link{create_corrgrapher}}.
-#' @param width Width
-#' @param height Height
-#' @param ... other parameters, passed directly to \code{\link{visNetwork}} function (such as \code{main}, \code{submain}, etc)
+#' @param ... other parameters, passed directly to \code{\link{visNetwork}} function (such as \code{main}, \code{submain}, \code{width}, \code{height} etc.)
 #' @return A \code{\link{visNetwork}} object; graph. On this graph, the edges are treated as springs. 
 #'   The variables correlated \strong{strongly} (positively or negatively) are \strong{close} to each other, 
 #'   and those not (or weakly) correlated - \strong{far} from each other.
@@ -18,13 +16,14 @@
 #' @seealso \code{\link{create_corrgrapher}}
 #' @export
 
-plot.corrgrapher <- function(x, height = 600, width = 1000, ...){
+plot.corrgrapher <- function(x, ...){
   net <- visNetwork::visNetwork(nodes = x$nodes, 
                                 edges = x$edges,
-                                height = height,
-                                width = width,
+                                # height = height,
+                                # width = width,
                                 ...)
-  visNetwork::visOptions(net, highlightNearest = TRUE)
+  net <- visNetwork::visOptions(net, highlightNearest = TRUE)
+  net
 }
 
 #'
