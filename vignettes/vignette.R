@@ -1,7 +1,7 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
-load('../data/fifa_gbm_exp.rda')
-load('../data/fifa_feat.rda')
+data('fifa_gbm_exp', package = 'CorrGrapheR')
+data('fifa_feat', package = 'CorrGrapheR')
 #.
 
 ## ----cars, message=FALSE------------------------------------------------------
@@ -30,7 +30,7 @@ create_corrgrapher(df) %>%
 ## ----fifa_show, eval=FALSE----------------------------------------------------
 #  library("gbm")
 #  
-#  load(normalizePath('../data/fifa20.rda'))
+#  data('fifa20', package = 'CorrGrapheR')
 #  fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,25:26,45:78)]
 #  
 #  # Value is skewed. Will be much easier to model sqrt(Value).
