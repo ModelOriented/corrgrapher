@@ -3,7 +3,7 @@ context('create_corrgrapher working properly')
 df <- as.data.frame(datasets::Seatbelts)[,1:7]
 cgr <- create_corrgrapher(df)
 
-load(normalizePath('../../data/fifa20.rda'))
+data('fifa_20', package = 'CorrGrapheR')
 fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,25:26,45:78)]
 # Value is skewed. Will be much easier to model sqrt(Value).
 
