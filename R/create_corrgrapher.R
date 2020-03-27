@@ -28,16 +28,21 @@ create_corrgrapher.explainer <- function(x,
                                          cutoff = 0.2,
                                          feature_importance = NULL,
                                          method = c('pearson', 'kendall', 'spearman')){
-  if(! 'feature_importance_explainer' %in% class(feature_importance)) stop('feature_importance must be of feature_importance_explainer class')
   if(is.null(feature_importance)){
     x_feat <- ingredients::feature_importance(x)
-  } else x_feat <- feature_importance
+  } else {
+    if(! 'feature_importance_explainer' %in% class(feature_importance)) stop('feature_importance must be of feature_importance_explainer class')
+    x_feat <- feature_importance
+  }
   x_feat <- x_feat[x_feat$permutation == 0, ]
   names(x_feat)[names(x_feat) %in% c('variable', 'dropout_loss', 'label')] <- c('label', 'value', 'model_label')
-  create_corrgrapher(x$data, 
+  cgr <- create_corrgrapher(x$data, 
                      cutoff = cutoff,
                      method = method,
                      values = x_feat)
+  cgr$pds <- lapply(colnames(x$data),
+                    function(label) ingredients::partial_dependence(x, label))
+  cgr
 }
 
 #' @rdname create_corrgrapher
