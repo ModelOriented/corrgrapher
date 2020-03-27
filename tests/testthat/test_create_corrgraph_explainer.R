@@ -5,10 +5,19 @@ library(randomForest)
 library(ingredients)
 
 data(dragons, package = 'DALEX')
-model <- randomForest(colour ~ ., data = dragons, num.trees = 50)
-model_exp <- explain(model, data = dragons[,-5], y = dragons$colour)
+model <- randomForest::randomForest(colour ~ ., data = dragons, num.trees = 50)
+model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour)
 model_fi <- feature_importance(model_exp, type = 'raw', loss_function = loss_cross_entropy)
-cgr <- create_corrgrapher(model_exp, feature_importance = model_fi)
+cgr_exp <- create_corrgrapher(model_exp, feature_importance = model_fi)
+
+test_that("Output type",{
+  expect_is(cgr_exp, 'corrgrapher')
+  expect_true(all(c("nodes", "edges", "pds") %in% names(cgr_exp)))
+})
+
+test_that('Incorrect argument feature_importance caught', {
+  expect_error(create_corrgrapher(model_exp, feature_importance = 'ABC'))
+})
 
 # data('fifa20', package = 'CorrGrapheR')
 # fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,25:26,45:78)]
@@ -38,13 +47,3 @@ cgr <- create_corrgrapher(model_exp, feature_importance = model_fi)
 # 
 # 
 # fifa_feat <- ingredients::feature_importance(fifa_gbm_exp)
-
-test_that("Output type",{
-  expect_is(cgr_exp, 'corrgrapher')
-  expect_true(all(c("nodes", "edges") %in% names(cgr_exp)))
-})
-
-test_that('Incorrect argument feature_importance caught', {
-  expect_error(create_corrgrapher(model_exp, feature_importance = 'ABC'))
-})
-
