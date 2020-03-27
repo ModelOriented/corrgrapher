@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+.body{
+  display: none;
+}
+
+/* Style the tab */
+.cgr_tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the tab content */
+.cgr_tabcontent {
+  display: none;
+}
