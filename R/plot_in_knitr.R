@@ -22,41 +22,43 @@ plot_in_knitr <- function(cgr, ...){
 
 create_tabset <- function(cgr){
   cgr_graph <- plot(cgr)
-  # cgr_graph <- visEvents(cgr_graph, selectNode = "function(properties) {
-  #     alert('selected nodes ' + this.body.data.nodes.get(properties.nodes[0]).id);}")
-  # 
+  script <- readLines(system.file('d3js','change_plot.js', package = 'CorrGrapheR'))
+  # cgr_graph <- visOptions(cgr_graph, nodesIdSelection = list(selected = 1))
+  cgr_graph <- visEvents(cgr_graph, selectNode = do.call(paste0, as.list(script)))
   css_tabcontent <- css(display='none')
-  css_tab <- css(background.color = '#f1f1f1')
   base_id <- paste('cgr_content', as.character(round(runif(1, min = 1e5, max = 1e6-1))), sep = '_')
   plots <- tagList(
     lapply(names(cgr$pds), function(name){
       tags$div(
         id = paste(base_id, name, sep = '_'),
         class = 'cgr_tabcontent',
+        style = css_tabcontent,
         plotly::ggplotly(plot(cgr$pds[[name]]))
       )
     })
   )
   
-  create_option_tags <- function(name){
-    tagList(
-      lapply(name, function(name) HTML(paste0('<option value=',name,'>',name,'</option>')))
-    )
-  }
-  
   tags$div(
     style = css(display = 'flex', width='100%'),
     id = base_id,
-    includeScript(system.file('d3js', 'my_script.js', package = 'CorrGrapheR')),
     tags$div(
-      style = css(flex = '60%'),
+      style = css(flex = '50%'),
       id = paste(base_id, 'graph', sep = '_'),
       cgr_graph),
     tags$div(
       class = 'cgr_tabpanel',
-      style = css(flex = '40%'),
+      style = css(flex = '50%'),
       plots
-    )
+    ),
+    #includeScript(system.file('d3js', 'hide_all_plots.js', package = 'CorrGrapheR')),
+    tags$script(paste0(
+      'document.getElementById(\'',
+      paste(base_id, cgr$nodes[1,'label'], sep = '_'),
+       '\').style.display = "block";'
+      # 'addEventToSelect(\'',
+      # base_id,
+      # '\');'
+    ))
   )
 }
 
