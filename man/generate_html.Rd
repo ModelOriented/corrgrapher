@@ -4,14 +4,14 @@
 \alias{generate_html}
 \title{Generate HTML report}
 \usage{
-generate_html(cgr, file = "report.html", rewrite = FALSE, ...)
+generate_html(cgr, file = "report.html", overwrite = FALSE, ...)
 }
 \arguments{
 \item{cgr}{An object of \code{corrgrapher} class. See \code{\link{craete_corrgrapher}} function.}
 
 \item{file}{File to write content to; passed directly to \code{\link{htmltools::save_html}}.}
 
-\item{rewrite}{If \code{file} exists, should it be overwritten?}
+\item{overwrite}{If \code{file} exists, should it be overwritten?}
 }
 \value{
 A file of \code{file} name will be generated with either 1 or 2 elements: 

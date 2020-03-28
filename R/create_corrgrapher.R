@@ -40,8 +40,12 @@ create_corrgrapher.explainer <- function(x,
                      cutoff = cutoff,
                      method = method,
                      values = x_feat)
-  cgr$pds <- ingredients::partial_dependence(x)
-  cgr$pds <- split(cgr$pds, cgr$pds$`_vname_`)
+  numerical_pds <- ingredients::partial_dependence(x, variable_type = 'numerical')
+  numerical_pds_list <- split(numerical_pds, numerical_pds[['_vname_']], drop = TRUE)
+  # categorical_pds <- ingredients::partial_dependence(x, variable_type = 'categorical')
+  # categorical_pds_list <- split(categorical_pds, categorical_pds[['_vname_']], drop = TRUE)
+  # cgr$pds <- append(numerical_pds_list, categorical_pds_list)
+  cgr$pds <- numerical_pds_list
   cgr
 }
 
