@@ -1,28 +1,26 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
-data('fifa_gbm_exp', package = 'CorrGrapheR')
-data('fifa_feat', package = 'CorrGrapheR')
-#.
+data('fifa_cgr', package = 'CorrGrapheR')
+data('dragons_cgr', package = 'CorrGrapheR')
 
 ## ----cars, message=FALSE------------------------------------------------------
 library('CorrGrapheR')
-library('dplyr')
-df <- as.data.frame(datasets::Seatbelts) %>%
-  select(-law)
+library('magrittr')
+df <- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
 create_corrgrapher(df) %>%
   plot()
 
-## ----titanic, cache=TRUE, eval=FALSE, include=FALSE---------------------------
+## ----titanic, eval=FALSE, include=FALSE---------------------------------------
 #  library("randomForest")
 #  
 #  titanic <- na.omit(titanic)
 #  model_titanic_rf <- randomForest(survived == "yes" ~ .,
 #                                   data = titanic)
-#  explain_titanic_rf <- explain(model_titanic_rf,
+#  explain_titanic_rf <- DALEX::explain(model_titanic_rf,
 #                                data = titanic[,-9],
 #                                y = titanic$survived == "yes",
 #                                label = "Random Forest")
-#  feature_importance_titanic_rf <- feature_importance(explain_titanic_rf)
+#  feature_importance_titanic_rf <- ingredients::feature_importance(explain_titanic_rf)
 #  
 #  create_corrgrapher(explain_titanic_rf, feature_importance = feature_importance_titanic_rf) %>%
 #    plot()
@@ -52,8 +50,7 @@ create_corrgrapher(df) %>%
 #  
 #  # Create DALEX explainer
 #  
-#  library("DALEX")
-#  fifa_gbm_exp <- explain(fifa_gbm,
+#  fifa_gbm_exp <- DALEX::explain(fifa_gbm,
 #                          data = fifa20_selected[, -6],
 #                          y = 10^fifa20_selected$value_eur,
 #                          predict_function = function(m,x)
@@ -61,11 +58,26 @@ create_corrgrapher(df) %>%
 #  
 #  # Create table with feature importance info - not necessary
 #  
-#  library("ingredients")
-#  fifa_feat <- feature_importance(fifa_gbm_exp)
+#  fifa_feat <- ingredients::feature_importance(fifa_gbm_exp)
 #  
+#  # Finally, create a corrgrapher object
+#  fifa_cgr <- create_corrgrapher(fifa_gbm_exp, cutoff = 0.4, feature_importance = fifa_feat)
 
 ## ----fifa_plot----------------------------------------------------------------
-create_corrgrapher(fifa_gbm_exp, cutoff = 0.4, feature_importance = fifa_feat) %>%
-  plot(width = 800, height = 600)
+fifa_cgr
+
+## ----dragons_setup, eval=FALSE------------------------------------------------
+#  library(randomForest)
+#  data(dragons, package = 'DALEX')
+#  dragons_rf <- randomForest::randomForest(colour ~ ., data = dragons, num.trees = 50)
+#  dragons_rf_exp <- DALEX::explain(dragons_rf, data = dragons[,-5], y = dragons$colour)
+#  dragons_feat <- ingredients::feature_importance(dragons_rf_exp, type = 'raw', loss_function = loss_cross_entropy)
+#  dragons_cgr <- create_corrgrapher(dragons_rf_exp, feature_importance = dragons_feat)
+
+## ----dragons_plot-------------------------------------------------------------
+dragons_cgr
+
+## ----html, eval=FALSE---------------------------------------------------------
+#  ## NOT RUN
+#  generate_html(fifa_cgr)
 
