@@ -52,9 +52,14 @@ corrgrapher.explainer <- function(x,
     x_feat <- feature_importance
   }
   if(is.null(partial_dependency)){
-    partial_dependency <- ingredients::partial_dependence(x)
-  } else{
-    if(! 'aggregated_profiles_explainer' %in% class(partial_dependency)) stop('partial_dependence must be of aggregated_profiles_explainer class')
+    if(!is.null(partial_dependency_opts)){
+      x_feat <- do.call(ingredients::partial_dependency, append(partial_dependency_opts, x = x))
+    } else
+      x_feat <- ingredients::partial_dependency(x)
+  } else {
+    if(!'partial_dependency_explainer' %in% class(partial_dependency)) stop('partial_dependency must be of feature_importance_explainer class')
+    if(!is.null(feature_importance_opts)) warning('feature_importance and feature_importance_opts supported; ignoring feature_importance_opts')
+    x_feat <- feature_importance
   }
   
   
