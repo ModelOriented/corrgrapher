@@ -9,7 +9,7 @@
 #' In other case, just a graph will be displayed.
 #' 
 #' @export
-knit_print.corrgrapher <- function(x, ...){
+knit_print.corrgrapher <- function(x){
   content <- wrap_with_html_tag(x)
   htmltools::knit_print.shiny.tag(content)
 }

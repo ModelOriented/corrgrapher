@@ -16,12 +16,9 @@
 #' @seealso \code{\link{create_corrgrapher}}
 #' @export
 
-plot.corrgrapher <- function(x, width = '100%', ...){
+plot.corrgrapher <- function(x, ...){
   net <- visNetwork::visNetwork(nodes = x$nodes, 
                                 edges = x$edges,
-                                # height = height,
-                                # width = width,
-                                width = width,
                                 ...)
   net <- visNetwork::visOptions(net, highlightNearest = TRUE)
   net

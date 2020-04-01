@@ -20,9 +20,10 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    dplyr,
+    magrittr,
     gbm,
     randomForest,
+    ranger,
     shiny
 VignetteBuilder: knitr
 RoxygenNote: 7.0.2
