@@ -1,23 +1,13 @@
 context('generate_html working properly')
 
-library(DALEX)
-library(randomForest)
-library(ingredients)
+if(!exists('cgr_exp')) skip('Corrgrapher did not create the object')
 
-data(dragons, package = 'DALEX')
-model <- randomForest::randomForest(colour ~ ., data = dragons, num.trees = 50)
-model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour)
-model_fi <- feature_importance(model_exp, type = 'raw', loss_function = loss_cross_entropy)
-
-tryCatch(cgr_exp <- create_corrgrapher(model_exp, feature_importance = model_fi),
-         error = function(e) {
-           unlink('temp_output', recursive = TRUE)
-           skip('Error in create_corrgrapher')})
-
-dir.create('temp_output')
-file.create('temp_output/do_not_overwrite_me.html')
+if(dir.exists('temp_output')) unlink('temp_output', recursive = TRUE)
+absolutePath <- file.path(getwd(), 'temp_output')
+dir.create(absolutePath)
+file.create(file.path(absolutePath, 'do_not_overwrite_me.'))
 test_that('HTML generating with no errors',
-         expect_output_file(generate_html(cgr_exp, file = 'temp_output/report.html'),
+         expect_output_file(generate_html(cgr_exp, file = file.path()),
                             file = 'temp_output/report.html'))
 
 test_that('Existing file error handling',

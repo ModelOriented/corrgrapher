@@ -1,22 +1,32 @@
-context('create_corrgrapher working properly for explainers')
+context('corrgrapher working properly for explainers')
 
-library(DALEX)
-library(randomForest)
-library(ingredients)
-
-data(dragons, package = 'DALEX')
-model <- randomForest::randomForest(colour ~ ., data = dragons, num.trees = 50)
-model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour)
-model_fi <- feature_importance(model_exp, type = 'raw', loss_function = loss_cross_entropy)
-cgr_exp <- create_corrgrapher(model_exp, feature_importance = model_fi)
-
+test_that('Function is not returning errors', {
+  expect_is(corrgrapher(model_exp,
+                            feature_importance = model_fi,
+                            partial_dependency = model_pd), 'corrgrapher')
+  # expect_is(corrgrapher(model_exp), 'corrgrapher')
+  # expect_is(corrgrapher(model_exp,
+  #                           feature_importance = model_fi), 'corrgrapher')
+  # expect_silent(corrgrapher(model_exp,
+  #                           partial_dependency = model_pd))
+})
+  
 test_that("Output type",{
   expect_is(cgr_exp, 'corrgrapher')
   expect_true(all(c("nodes", "edges", "pds") %in% names(cgr_exp)))
 })
 
 test_that('Incorrect argument feature_importance caught', {
-  expect_error(create_corrgrapher(model_exp, feature_importance = 'ABC'))
+  expect_error(corrgrapher(model_exp, 
+                           feature_importance = 'ABC'),
+              regexp = 'feature_importance must be of feature_importance_explainer class')
+})
+
+test_that('Incorrect argument partial_dependency caught', {
+  expect_error(corrgrapher(model_exp, 
+                           feature_importance = model_fi,
+                           partial_dependency = 'ABC'),
+               regexp = 'partial_dependence must be of aggregated_profiles_explainer class')
 })
 
 # data('fifa20', package = 'CorrGrapheR')
