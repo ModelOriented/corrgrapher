@@ -12,47 +12,55 @@
 #' @return A \code{corrgrapher} object.
 #' @examples
 #' df <- as.data.frame(datasets::Seatbelts)[,1:7] # drop the binary target variable
-#' cgr <- create_corrgrapher(df)
+#' cgr <- corrgrapher(df)
 #' @seealso \code{\link{plot.corrgrapher}}
-#' @rdname create_corrgrapher
+#' @rdname corrgrapher
 #' @export
 
-create_corrgrapher <- function(x, ...){
-  UseMethod("create_corrgrapher")
+corrgrapher <- function(x, ...){
+  UseMethod("corrgrapher")
 }
 
-#' @rdname create_corrgrapher
+#' @rdname corrgrapher
 #' @export
 
-create_corrgrapher.explainer <- function(x,
-                                         cutoff = 0.2,
-                                         feature_importance = NULL,
-                                         method = c('pearson', 'kendall', 'spearman')){
+corrgrapher.explainer <- function(x,
+                                  cutoff = 0.2,
+                                  feature_importance = NULL,
+                                  partial_dependency = NULL,
+                                  method = c('pearson', 'kendall', 'spearman')) {
   if(is.null(feature_importance)){
     x_feat <- ingredients::feature_importance(x)
   } else {
     if(! 'feature_importance_explainer' %in% class(feature_importance)) stop('feature_importance must be of feature_importance_explainer class')
     x_feat <- feature_importance
   }
+  if(is.null(partial_dependency)){
+    partial_dependency <- ingredients::partial_dependence(x)
+  } else{
+    if(! 'aggregated_profiles_explainer' %in% class(partial_dependency)) stop('partial_dependence must be of aggregated_profiles_explainer class')
+  }
+  
+  
   x_feat <- x_feat[x_feat$permutation == 0, ]
   names(x_feat)[names(x_feat) %in% c('variable', 'dropout_loss', 'label')] <- c('label', 'value', 'model_label')
-  cgr <- create_corrgrapher(x$data, 
+  cgr <- corrgrapher(x$data, 
                      cutoff = cutoff,
                      method = method,
                      values = x_feat)
-  numerical_pds <- ingredients::partial_dependence(x, variable_type = 'numerical')
-  numerical_pds_list <- split(numerical_pds, numerical_pds[['_vname_']], drop = TRUE)
+  
+  pds_list <- split(partial_dependency, partial_dependency[['_vname_']], drop = TRUE)
   # categorical_pds <- ingredients::partial_dependence(x, variable_type = 'categorical')
   # categorical_pds_list <- split(categorical_pds, categorical_pds[['_vname_']], drop = TRUE)
   # cgr$pds <- append(numerical_pds_list, categorical_pds_list)
-  cgr$pds <- numerical_pds_list
+  cgr$pds <- pds_list
   cgr
 }
 
-#' @rdname create_corrgrapher
+#' @rdname corrgrapher
 #' @export
 
-create_corrgrapher.default <- function(x, 
+corrgrapher.default <- function(x, 
                                        cutoff = 0.2, 
                                        method = c('pearson', 'kendall', 'spearman'),
                                        values = NULL,
