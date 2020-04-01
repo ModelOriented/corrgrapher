@@ -2,7 +2,13 @@
 #' 
 #' Create a CorrGrapheR object before passing it to \code{plot()}. 
 #' @importFrom stats cor
-#' @param x a \code{data.frame}, in which for all \code{numeric} columns calling \code{\link{cor}} makes sense.
+#' @param x an object to be used to select the method, which must satisfy conditions:
+#' \itemize{
+#' \item{if \code{data.frame} (default), columns with type \code{numeric} will be selected and called with \code{\link{cor}}.}
+#' \item{if \code{explainer}, methods \code{\link{ingredients::feature_importance}} and \code{\link{ingredients::partial_dependency}} must not return an error. 
+#' Supply them as arguments(\code{feature_importance} or \code{partial_dependency}) 
+#' or supply options to call the functions inside (\code{feature_importance_opts} and \code{partial_dependency})}
+#' }
 #' @param cutoff a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.
 #' @param method passed directly to \code{\link{cor}} function. 
 #' @param feature_importance (Optional) an object of \code{feature importance_explainer} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.
@@ -27,13 +33,22 @@ corrgrapher <- function(x, ...){
 
 corrgrapher.explainer <- function(x,
                                   cutoff = 0.2,
+                                  method = c('pearson', 'kendall', 'spearman'),
+                                  values = NULL,
                                   feature_importance = NULL,
                                   partial_dependency = NULL,
-                                  method = c('pearson', 'kendall', 'spearman')) {
+                                  feature_importance_opts = NULL,
+                                  partial_dependency_opts = NULL) {
+  # Check the parameters:
+  
   if(is.null(feature_importance)){
-    x_feat <- ingredients::feature_importance(x)
+    if(!is.null(feature_importance_opts)){
+      x_feat <- do.call(ingredients::feature_importance, append(feature_importance_opts, x = x))
+    } else
+      x_feat <- ingredients::feature_importance(x)
   } else {
-    if(! 'feature_importance_explainer' %in% class(feature_importance)) stop('feature_importance must be of feature_importance_explainer class')
+    if(!'feature_importance_explainer' %in% class(feature_importance)) stop('feature_importance must be of feature_importance_explainer class')
+    if(!is.null(feature_importance_opts)) warning('feature_importance and feature_importance_opts supported; ignoring feature_importance_opts')
     x_feat <- feature_importance
   }
   if(is.null(partial_dependency)){
@@ -45,11 +60,10 @@ corrgrapher.explainer <- function(x,
   
   x_feat <- x_feat[x_feat$permutation == 0, ]
   names(x_feat)[names(x_feat) %in% c('variable', 'dropout_loss', 'label')] <- c('label', 'value', 'model_label')
-  cgr <- corrgrapher(x$data, 
-                     cutoff = cutoff,
-                     method = method,
-                     values = x_feat)
-  
+  x <- x$data
+  cgr <- NextMethod(cutoff = cutoff,
+                    method = method,
+                    values = x_feat)
   pds_list <- split(partial_dependency, partial_dependency[['_vname_']], drop = TRUE)
   # categorical_pds <- ingredients::partial_dependence(x, variable_type = 'categorical')
   # categorical_pds_list <- split(categorical_pds, categorical_pds[['_vname_']], drop = TRUE)
@@ -61,12 +75,13 @@ corrgrapher.explainer <- function(x,
 #' @rdname corrgrapher
 #' @export
 
-corrgrapher.default <- function(x, 
-                                       cutoff = 0.2, 
-                                       method = c('pearson', 'kendall', 'spearman'),
-                                       values = NULL,
-                                       ...){
+corrgrapher.default <- function(x,
+                                cutoff = 0.2,
+                                method = c('pearson', 'kendall', 'spearman'),
+                                values = NULL,
+                                ...) {
   # if(is.null(colorer)) colorer <- colorRampPalette(c('#9fe5bd80', '#77d1be80','#46bac280','#4590c480', '#371ea380'))
+  browser()
   if(!is.data.frame(x)) stop('x must be a data.frame')
   if(length(cutoff) > 1 || !is.numeric(cutoff)) stop('cutoff must be a single number')
   if(cutoff >= 1) warning('cutoff > 1. Interpreting as no cutoff')

@@ -4,7 +4,7 @@
 \alias{plot.corrgrapher}
 \title{Visualize correlations in a data frame}
 \usage{
-\method{plot}{corrgrapher}(x, width = "100\%", ...)
+\method{plot}{corrgrapher}(x, ...)
 }
 \arguments{
 \item{x}{a \code{corrgrapher} object. See \code{\link{create_corrgrapher}}.}

@@ -8,6 +8,8 @@ knit_print.corrgrapher(x, ...)
 }
 \arguments{
 \item{x}{An object of \code{corrgrapher} class. See \code{\link{craete_corrgrapher}} function.}
+
+\item{...}{Other parameters, passed directly to \code{\link{htmltools::knit_print.shiny.tag}}}
 }
 \value{
 If \code{x} was created from \code{explainer}, 2 objects will be displayed: graph of correlations

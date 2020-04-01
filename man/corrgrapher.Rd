@@ -11,9 +11,12 @@ corrgrapher(x, ...)
 \method{corrgrapher}{explainer}(
   x,
   cutoff = 0.2,
+  method = c("pearson", "kendall", "spearman"),
+  values = NULL,
   feature_importance = NULL,
   partial_dependency = NULL,
-  method = c("pearson", "kendall", "spearman")
+  feature_importance_opts = NULL,
+  partial_dependency_opts = NULL
 )
 
 \method{corrgrapher}{default}(
@@ -25,17 +28,25 @@ corrgrapher(x, ...)
 )
 }
 \arguments{
-\item{x}{a \code{data.frame}, in which for all \code{numeric} columns calling \code{\link{cor}} makes sense.}
+\item{x}{an object to be used to select the method, which must satisfy conditions:
+\itemize{
+\item{if \code{data.frame} (default), columns with type \code{numeric} will be selected and called with \code{\link{cor}}.}
+\item{if \code{explainer}, methods \code{\link{ingredients::feature_importance}} and \code{\link{ingredients::partial_dependency}} must not return an error. 
+Supply them as arguments(\code{feature_importance} or \code{partial_dependency}) 
+or supply options to call the functions inside (\code{feature_importance_opts} and \code{partial_dependency})}
+}}
 
 \item{...}{other parameters.}
 
 \item{cutoff}{a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.}
 
-\item{feature_importance}{(Optional) an object of \code{feature importance_explainer} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.}
-
 \item{method}{passed directly to \code{\link{cor}} function.}
 
 \item{values}{(Optional) a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.}
+
+\item{feature_importance}{(Optional) an object of \code{feature importance_explainer} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.}
+
+\item{partial_dependency}{(Optional) an object of \code{aggregated_profile_explainer} class, created by \code{\link{ingredients::partial_dependency}}}
 }
 \value{
 A \code{corrgrapher} object.

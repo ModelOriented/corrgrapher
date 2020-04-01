@@ -10,7 +10,7 @@ Description: This package aims to plot correlations between variables in form of
   Variables strongly correlated with each other (negatively or positively) shall be close,
   correlated weakly - far from each other.
 License: GPL (>= 2)
-Depends: R (>= 3.1.0)
+Depends: R (>= 3.5.0)
 Imports: visNetwork,
     DALEX,
     ingredients,

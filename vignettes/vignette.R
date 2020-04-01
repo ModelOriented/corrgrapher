@@ -7,7 +7,7 @@ data('dragons_cgr', package = 'CorrGrapheR')
 library('CorrGrapheR')
 library('magrittr')
 df <- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
-create_corrgrapher(df) %>%
+corrgrapher(df) %>%
   plot()
 
 ## ----titanic, eval=FALSE, include=FALSE---------------------------------------
@@ -22,7 +22,7 @@ create_corrgrapher(df) %>%
 #                                label = "Random Forest")
 #  feature_importance_titanic_rf <- ingredients::feature_importance(explain_titanic_rf)
 #  
-#  create_corrgrapher(explain_titanic_rf, feature_importance = feature_importance_titanic_rf) %>%
+#  corrgrapher(explain_titanic_rf, feature_importance = feature_importance_titanic_rf) %>%
 #    plot()
 
 ## ----fifa_show, eval=FALSE----------------------------------------------------
@@ -61,7 +61,7 @@ create_corrgrapher(df) %>%
 #  fifa_feat <- ingredients::feature_importance(fifa_gbm_exp)
 #  
 #  # Finally, create a corrgrapher object
-#  fifa_cgr <- create_corrgrapher(fifa_gbm_exp, cutoff = 0.4, feature_importance = fifa_feat)
+#  fifa_cgr <- corrgrapher(fifa_gbm_exp, cutoff = 0.4, feature_importance = fifa_feat)
 
 ## ----fifa_plot----------------------------------------------------------------
 fifa_cgr
@@ -72,7 +72,7 @@ fifa_cgr
 #  dragons_rf <- randomForest::randomForest(colour ~ ., data = dragons, num.trees = 50)
 #  dragons_rf_exp <- DALEX::explain(dragons_rf, data = dragons[,-5], y = dragons$colour)
 #  dragons_feat <- ingredients::feature_importance(dragons_rf_exp, type = 'raw', loss_function = loss_cross_entropy)
-#  dragons_cgr <- create_corrgrapher(dragons_rf_exp, feature_importance = dragons_feat)
+#  dragons_cgr <- corrgrapher(dragons_rf_exp, feature_importance = dragons_feat)
 
 ## ----dragons_plot-------------------------------------------------------------
 dragons_cgr

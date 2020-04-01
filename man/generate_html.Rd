@@ -7,11 +7,13 @@
 generate_html(cgr, file = "report.html", overwrite = FALSE, ...)
 }
 \arguments{
-\item{cgr}{An object of \code{corrgrapher} class. See \code{\link{craete_corrgrapher}} function.}
+\item{cgr}{An object of \code{corrgrapher} class. See \code{\link{corrgrapher}} function.}
 
 \item{file}{File to write content to; passed directly to \code{\link{htmltools::save_html}}.}
 
 \item{overwrite}{If \code{file} exists, should it be overwritten?}
+
+\item{...}{Other parameters}
 }
 \value{
 A file of \code{file} name will be generated with either 1 or 2 elements: 
