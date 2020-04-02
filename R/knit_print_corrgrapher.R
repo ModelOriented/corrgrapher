@@ -11,5 +11,9 @@
 #' @export
 knit_print.corrgrapher <- function(x, ...){
   x <- wrap_with_html_tag(x)
+  x <- attachDependencies(x, value = htmlDependency(src = system.file('d3js', package = 'CorrGrapheR'),
+                                               version = '0.2',
+                                               name = 'CorrGrapheRCSS',
+                                               stylesheet = 'report.css'))
   htmltools::knit_print.shiny.tag(x)
 }

@@ -21,9 +21,9 @@ Visualize correlations between variables stored in columns, using previously cre
 }
 \examples{
 df <- as.data.frame(datasets::Seatbelts)[,1:7] # drop the binary target variable
-cgr <- create_corrgrapher(df)
+cgr <- corrgrapher(df)
 plot(cgr)
 }
 \seealso{
-\code{\link{create_corrgrapher}}
+\code{\link{corrgrapher}}
 }

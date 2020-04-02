@@ -1,0 +1,17 @@
+.cgr_content{
+  position: relative;
+}
+.cgr_tabpanel{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25%;
+  border: 2px solid #160e3b;
+}
+
+.cgr_graph{
+  width: 100%;
+}
+.cgr_tabcontent{
+  display: none;
+}

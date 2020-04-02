@@ -2,6 +2,7 @@
 knitr::opts_chunk$set(echo = TRUE)
 data('fifa_cgr', package = 'CorrGrapheR')
 data('dragons_cgr', package = 'CorrGrapheR')
+#.
 
 ## ----cars, message=FALSE------------------------------------------------------
 library('CorrGrapheR')
@@ -79,5 +80,5 @@ dragons_cgr
 
 ## ----html, eval=FALSE---------------------------------------------------------
 #  ## NOT RUN
-#  generate_html(fifa_cgr)
+#  save_cgr_to_html(fifa_cgr)
 

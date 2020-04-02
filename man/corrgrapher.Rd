@@ -13,6 +13,7 @@ corrgrapher(x, ...)
   cutoff = 0.2,
   method = c("pearson", "kendall", "spearman"),
   values = NULL,
+  ...,
   feature_importance = NULL,
   partial_dependency = NULL,
   feature_importance_opts = NULL,

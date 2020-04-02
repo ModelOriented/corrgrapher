@@ -12,6 +12,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 data('fifa_cgr', package = 'CorrGrapheR')
 data('dragons_cgr', package = 'CorrGrapheR')
+#.
 ```
 
 ## CorrGrapheR
@@ -114,5 +115,5 @@ If you wish to save info about single `corrgrapher` object, use `generate_html()
 
 ```{r html, eval=FALSE}
 ## NOT RUN
-generate_html(fifa_cgr)
+save_cgr_to_html(fifa_cgr)
 ```
