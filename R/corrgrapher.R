@@ -40,35 +40,56 @@ corrgrapher.explainer <- function(x,
                                   feature_importance_opts = NULL,
                                   partial_dependency_opts = NULL) {
   # Check the parameters:
-  
-  if(is.null(feature_importance)){
-    if(!is.null(feature_importance_opts)){
-      x_feat <- do.call(ingredients::feature_importance, append(feature_importance_opts, x = x))
-    } else
-      x_feat <- ingredients::feature_importance(x)
-  } else {
-    if(!'feature_importance_explainer' %in% class(feature_importance)) stop('feature_importance must be of feature_importance_explainer class')
-    if(!is.null(feature_importance_opts)) warning('feature_importance and feature_importance_opts supported; ignoring feature_importance_opts')
-    x_feat <- feature_importance
+  # values and feature_importance:
+  if (is.null(values)) {
+    if (is.null(feature_importance)) {
+      if (!is.null(feature_importance_opts)) {
+        values <-
+          do.call(ingredients::feature_importance,
+                  append(feature_importance_opts, list(x = x), after = 0))
+      } else
+        values <- ingredients::feature_importance(x)
+    } else {
+      if (!'feature_importance_explainer' %in% class(feature_importance))
+        stop('feature_importance must be of feature_importance_explainer class')
+      if (!is.null(feature_importance_opts))
+        warning(
+          'feature_importance and feature_importance_opts supported; ignoring feature_importance_opts'
+        )
+      values <- feature_importance
+    }
+    values <- values[values$permutation == 0,]
+    names(values)[names(values) %in% c('variable', 'dropout_loss', 'label')] <-
+      c('label', 'value', 'model_label')
+  } else{
+    if (!is.null(feature_importance))
+      warning('Supplied values and feature_importance. Ignoring feature_importance')
+    if(!is.null(feature_importance_opts))
+      warning('Supplied values and feature_importance_opts. Ignoring feature_importance')
   }
-  if(is.null(partial_dependency)){
-    if(!is.null(partial_dependency_opts)){
-      x_feat <- do.call(ingredients::partial_dependency, append(partial_dependency_opts, x = x))
+  
+  # partial_dependency:
+  
+  if (is.null(partial_dependency)) {
+    if (!is.null(partial_dependency_opts)) {
+      partial_dependency <-
+        do.call(ingredients::partial_dependency,
+                append(partial_dependency_opts, list(x = x), after = 0))
     } else
-      x_feat <- ingredients::partial_dependency(x)
+      partial_dependency <- ingredients::partial_dependency(x)
   } else {
-    if(!'partial_dependency_explainer' %in% class(partial_dependency)) stop('partial_dependency must be of feature_importance_explainer class')
-    if(!is.null(feature_importance_opts)) warning('feature_importance and feature_importance_opts supported; ignoring feature_importance_opts')
-    x_feat <- feature_importance
+    if (!'aggregated_profiles_explainer' %in% class(partial_dependency))
+      stop('partial_dependency must be of aggregated_profiles_explainer class')
+    if (!is.null(partial_dependency_opts))
+      warning(
+        'partial_dependence and partial_dependence_opts supported; ignoring partial_dependency_opts'
+      )
   }
   
-  
-  x_feat <- x_feat[x_feat$permutation == 0, ]
-  names(x_feat)[names(x_feat) %in% c('variable', 'dropout_loss', 'label')] <- c('label', 'value', 'model_label')
   x <- x$data
   cgr <- NextMethod(cutoff = cutoff,
                     method = method,
-                    values = x_feat)
+                    values = values)
   pds_list <- split(partial_dependency, partial_dependency[['_vname_']], drop = TRUE)
   # categorical_pds <- ingredients::partial_dependence(x, variable_type = 'categorical')
   # categorical_pds_list <- split(categorical_pds, categorical_pds[['_vname_']], drop = TRUE)
@@ -86,7 +107,6 @@ corrgrapher.default <- function(x,
                                 values = NULL,
                                 ...) {
   # if(is.null(colorer)) colorer <- colorRampPalette(c('#9fe5bd80', '#77d1be80','#46bac280','#4590c480', '#371ea380'))
-  browser()
   if(!is.data.frame(x)) stop('x must be a data.frame')
   if(length(cutoff) > 1 || !is.numeric(cutoff)) stop('cutoff must be a single number')
   if(cutoff >= 1) warning('cutoff > 1. Interpreting as no cutoff')
@@ -113,6 +133,7 @@ corrgrapher.default <- function(x,
                       title = colnames(x),
                       color = '#ae2c87',
                       scaling = list(label = list(min = 10, max = 15)))
+  
   nodes <- merge(nodes, values, 
                  by.x = 'label',
                  by.y = 'label')
