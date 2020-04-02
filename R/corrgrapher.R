@@ -5,20 +5,28 @@
 #' @param x an object to be used to select the method, which must satisfy conditions:
 #' \itemize{
 #' \item{if \code{data.frame} (default), columns with type \code{numeric} will be selected and called with \code{\link{cor}}.}
-#' \item{if \code{explainer}, methods \code{\link{ingredients::feature_importance}} and \code{\link{ingredients::partial_dependency}} must not return an error. 
+#' \item{if \code{explainer}, methods \code{\link[ingredients]{feature_importance}} and \code{\link[ingredients]{partial_dependency}} must not return an error. 
 #' Supply them as arguments(\code{feature_importance} or \code{partial_dependency}) 
 #' or supply options to call the functions inside (\code{feature_importance_opts} and \code{partial_dependency})}
 #' }
+#' @param ... other arguments.
 #' @param cutoff a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.
-#' @param method passed directly to \code{\link{cor}} function. 
-#' @param feature_importance (Optional) an object of \code{feature importance_explainer} class, created by \code{\link{ingredients::feature_importance}} function. If not supported, calculated inside function.
-#' @param partial_dependency (Optional) an object of \code{aggregated_profile_explainer} class, created by \code{\link{ingredients::partial_dependency}}
-#' @param values (Optional) a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.
-#' @param ... other parameters.
-#' 
-#' @return A \code{corrgrapher} object.
+#' @param method passed directly to \code{\link[stats]{cor}} function. 
+#' @param values a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.
+#' @param feature_importance an object of \code{feature importance_explainer} class, created by \code{\link[ingredients]{feature_importance}} function. If supported, the argument \code{feature_importance_opts} will be ignored.
+#' @param partial_dependency an object of \code{aggregated_profile_explainer} class, created by \code{\link[ingredients]{partial_dependency}} function. If supported, the argument \code{partial_dependency_opts} will be ignored.
+#' @param feature_importance_opts a \code{list} of parameters to pass to \code{\link[ingredients]{feature_importance}} function. This argument will be ignored if \code{feature_importance} is supported.
+#' @param partial_dependency_opts a \code{list} of parameters to pass to \code{\link[ingredients]{partial_dependency}} function. This argument will be ignored if \code{partial_dependency} is supported.
+
+#' @return A \code{corrgrapher} object, consisting of following fields:
+#' \itemize{
+#' \item{\code{nodes} - a \code{data.frame} to pass as argument \code{nodes} to \code{\link{visNetwork}} function}
+#' \item{\code{edges} - a \code{data.frame} to pass as argument \code{edges} to \code{\link{visNetwork}} function}
+#' \item{\code{pds} (if x was of \code{explainer} class) - a splitted \code{partial_dependency_explainer} object. Each item has information about single variable. Passed to \code{\link[ingredients]{plot.aggregated_profiles_explainer}}}
+#' }
 #' @examples
-#' df <- as.data.frame(datasets::Seatbelts)[,1:7] # drop the binary target variable
+#' # drop the binary target variable
+#' df <- as.data.frame(datasets::Seatbelts)[,1:7] 
 #' cgr <- corrgrapher(df)
 #' @seealso \code{\link{plot.corrgrapher}}
 #' @rdname corrgrapher
@@ -35,6 +43,7 @@ corrgrapher.explainer <- function(x,
                                   cutoff = 0.2,
                                   method = c('pearson', 'kendall', 'spearman'),
                                   values = NULL,
+                                  ...,
                                   feature_importance = NULL,
                                   partial_dependency = NULL,
                                   feature_importance_opts = NULL,
@@ -89,7 +98,8 @@ corrgrapher.explainer <- function(x,
   x <- x$data
   cgr <- NextMethod(cutoff = cutoff,
                     method = method,
-                    values = values)
+                    values = values,
+                    ...)
   pds_list <- split(partial_dependency, partial_dependency[['_vname_']], drop = TRUE)
   # categorical_pds <- ingredients::partial_dependence(x, variable_type = 'categorical')
   # categorical_pds_list <- split(categorical_pds, categorical_pds[['_vname_']], drop = TRUE)

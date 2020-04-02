@@ -11,9 +11,9 @@
 #'   and those not (or weakly) correlated - \strong{far} from each other.
 #' @examples
 #' df <- as.data.frame(datasets::Seatbelts)[,1:7] # drop the binary target variable
-#' cgr <- create_corrgrapher(df)
+#' cgr <- corrgrapher(df)
 #' plot(cgr)
-#' @seealso \code{\link{create_corrgrapher}}
+#' @seealso \code{\link{corrgrapher}}
 #' @export
 
 plot.corrgrapher <- function(x, ...){
