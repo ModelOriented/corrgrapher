@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualize correlations in a data frame — plot.corrgrapher • CorrGrapheR</title>
+<title>Create a CorrGrapheR object — corrgrapher • CorrGrapheR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Visualize correlations in a data frame — plot.corrgrapher" />
-<meta property="og:description" content="Visualize correlations between variables stored in columns, using previously created corrgrapher object." />
+<meta property="og:title" content="Create a CorrGrapheR object — corrgrapher" />
+<meta property="og:description" content="Create a CorrGrapheR object before passing it to plot()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -126,43 +126,86 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visualize correlations in a data frame</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MrDomani/CorrGrapheR/blob/master/R/plot_corrgraph.R'><code>R/plot_corrgraph.R</code></a></small>
-    <div class="hidden name"><code>plot.corrgrapher.Rd</code></div>
+    <h1>Create a CorrGrapheR object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MrDomani/CorrGrapheR/blob/master/R/corrgrapher.R'><code>R/corrgrapher.R</code></a></small>
+    <div class="hidden name"><code>corrgrapher.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Visualize correlations between variables stored in columns, using previously created <code>corrgrapher</code> object.</p>
+    <p>Create a CorrGrapheR object before passing it to <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for corrgrapher</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>corrgrapher</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for explainer</span>
+<span class='fu'>corrgrapher</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>),
+  <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>feature_importance</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>partial_dependency</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>feature_importance_opts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>partial_dependency_opts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>corrgrapher</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>),
+  <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>a <code>corrgrapher</code> object. See <code>create_corrgrapher</code>.</p></td>
+      <td><p>an object to be used to select the method, which must satisfy conditions:</p><ul>
+<li><p>if <code>data.frame</code> (default), columns with type <code>numeric</code> will be selected and called with <code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code>.</p></li>
+<li><p>if <code>explainer</code>, methods <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>ingredients::feature_importance</a></code> and <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>ingredients::partial_dependency</a></code> must not return an error. 
+Supply them as arguments(<code>feature_importance</code> or <code>partial_dependency</code>) 
+or supply options to call the functions inside (<code>feature_importance_opts</code> and <code>partial_dependency</code>)</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters, passed directly to <code>visNetwork</code> function (such as <code>main</code>, <code>submain</code>, <code>width</code>, <code>height</code> etc.)</p></td>
+      <td><p>other parameters.</p></td>
+    </tr>
+    <tr>
+      <th>cutoff</th>
+      <td><p>a number. Corelations below this are treated as <strong>no</strong> corelation. Edges corresponding to them will <strong>not</strong> be included in the graph.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>passed directly to <code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code> function.</p></td>
+    </tr>
+    <tr>
+      <th>values</th>
+      <td><p>(Optional) a <code>data.frame</code> with information abour size of the nodes, containing columns <code>value</code> and <code>label</code> (consistent with colnames of <code>x</code>). Deafult set to equal for all nodes, or (for <code>explainer</code>) importance of variables.</p></td>
+    </tr>
+    <tr>
+      <th>feature_importance</th>
+      <td><p>(Optional) an object of <code>feature importance_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>ingredients::feature_importance</a></code> function. If not supported, calculated inside function.</p></td>
+    </tr>
+    <tr>
+      <th>partial_dependency</th>
+      <td><p>(Optional) an object of <code>aggregated_profile_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>ingredients::partial_dependency</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>visNetwork</code> object; graph. On this graph, the edges are treated as springs. 
-  The variables correlated <strong>strongly</strong> (positively or negatively) are <strong>close</strong> to each other, 
-  and those not (or weakly) correlated - <strong>far</strong> from each other.</p>
+    <p>A <code>corrgrapher</code> object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>create_corrgrapher</code></p></div>
+    <div class='dont-index'><p><code><a href='plot.corrgrapher.html'>plot.corrgrapher</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/datasets/UKDriverDeaths.html'>Seatbelts</a></span>)[,<span class='fl'>1</span>:<span class='fl'>7</span>] <span class='co'># drop the binary target variable</span>
-<span class='no'>cgr</span> <span class='kw'>&lt;-</span> <span class='fu'>create_corrgrapher</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span class='error'>Error in create_corrgrapher(df): could not find function "create_corrgrapher"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cgr</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(cgr): object 'cgr' not found</span></div></pre>
+<span class='no'>cgr</span> <span class='kw'>&lt;-</span> <span class='fu'>corrgrapher</span>(<span class='no'>df</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
