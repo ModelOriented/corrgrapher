@@ -37,6 +37,7 @@ inst/htmlwidgets/*
 # cache data
 data/cgr_exp.rda
 data/cgr_dragons.rda
+data/*_cgr.rda
 
 report.html
 
