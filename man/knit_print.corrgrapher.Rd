@@ -9,7 +9,7 @@ knit_print.corrgrapher(x, ...)
 \arguments{
 \item{x}{An object of \code{corrgrapher} class. See \code{\link{craete_corrgrapher}} function.}
 
-\item{...}{Other parameters, passed directly to \code{\link{htmltools::knit_print.shiny.tag}}}
+\item{...}{Other parameters, passed directly to \code{\link[htmltools]{knit_print.shiny.tag}}}
 }
 \value{
 If \code{x} was created from \code{explainer}, 2 objects will be displayed: graph of correlations
@@ -17,5 +17,5 @@ on the left and partial dependency plot on the right.
 In other case, just a graph will be displayed.
 }
 \description{
-These methods allow \code{corrgrapher} objects to be displayed nicelu in knitr/rmarkdown documents.
+These methods allow \code{corrgrapher} objects to be displayed nicely in knitr/rmarkdown documents.
 }

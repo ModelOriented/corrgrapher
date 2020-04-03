@@ -1,3 +1,8 @@
+.cgr_container{
+  width: 700px;
+  margin: 0 auto;
+}
+
 .cgr_content{
   position: relative;
 }
@@ -5,13 +10,20 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 25%;
-  border: 2px solid #160e3b;
+  width: 40%;
 }
 
 .cgr_graph{
   width: 100%;
+  height: 600px;
 }
 .cgr_tabcontent{
   display: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.cgr_image{
+  width: 100%;
+  border: 3px solid #160e3b;
 }

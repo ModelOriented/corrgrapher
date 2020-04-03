@@ -1,26 +1,33 @@
 # Utils for creating HTML and knitr output
-wrap_with_html_tag <- function(cgr, ...){
-  if(!'corrgrapher' %in% class(cgr)) stop("cgr must be of corrgrapher class")
-  if('pds' %in% names(cgr))
-    content <- create_tabset(cgr)
+wrap_with_html_tag <- function(cgr, ...) {
+  if (!'corrgrapher' %in% class(cgr))
+    stop("cgr must be of corrgrapher class")
+  if ('pds' %in% names(cgr)) {
+    x <- create_tabset(cgr)
+    x <-
+      attachDependencies(
+        x,
+        value = htmlDependency(
+          src = system.file('d3js', package = 'CorrGrapheR'),
+          version = '0.2',
+          name = 'CorrGrapheRCSS',
+          stylesheet = 'report.css'
+        )
+      )
+  }
   else
-    content <- plot(cgr)
-  content
+    x <- plot(cgr)
+  x
 }
 
 create_tabset <- function(cgr){
-  cgr_graph <- plot(cgr)
+  cgr_graph <- plot(cgr, width = '100%',height = '100%')
   cgr_graph <- visNetwork::visOptions(cgr_graph, nodesIdSelection = list(selected = 1))
   cgr_graph <- visNetwork::visEvents(cgr_graph, type = 'once', afterDrawing = 'addEventToSelect')
   cgr_graph <- visNetwork::visEvents(cgr_graph, 
                                      selectNode = 'showPlotOnSelect')
-  # css_tabcontent <- css(display='none')
-  # css_tabpanel <- css(posistion = 'absolute',
-  #                     top = '0px',
-  #                     right = '0px',
-  #                     border = '2px solid #160e3b',
-  #                     z_index = 2)
   base_id <- paste('cgr_content', as.character(round(runif(1, min = 1e5, max = 1e6-1))), sep = '_')
+  
   plots <- tagList(
     lapply({
       fact <- cgr$nodes$label
@@ -30,29 +37,26 @@ create_tabset <- function(cgr){
       tags$div(
         id = paste(base_id, name, sep = '_'),
         class = 'cgr_tabcontent',
-        # style = css_tabcontent,
-        suppressWarnings(plotly::ggplotly(ingredients:::plot.aggregated_profiles_explainer(cgr$pds[[name]])))
+        encode_image(
+          suppressWarnings(ingredients:::plot.aggregated_profiles_explainer(cgr$pds,
+                          variables = name))
+          )
       )
     })
   )
   
   tags$div(
-    # style = css(width='100%', position = 'relative'),
     class = 'cgr_content',
     id = base_id,
     tags$div(
-      # style = css(width = '100%', z_index = 1, border = '2px solid yellow'),
       class = 'cgr_graph',
       id = paste(base_id, 'graph', sep = '_'),
       cgr_graph
-      #tags$p('I am the main game')
       ),
     tags$div(
       id = paste(base_id, 'tabpanel', sep = '_'),
       class = 'cgr_tabpanel',
-      #style = css_tabpanel,
       plots
-      #tags$p('I should be in corner')
     ),
     includeScript(system.file('d3js', 'graph-plot_communication.js', package = 'CorrGrapheR')),
     tags$script(paste0(
@@ -63,3 +67,23 @@ create_tabset <- function(cgr){
   )
 }
 
+encode_image <- function(plt, tf = NULL){
+  # plt - obiekt, który da się zapisać do .png za pomocą png()
+  if(is.null(tf)){
+    tf <- tempfile(fileext = '.png')
+    file.create(tf)
+  }
+  else{
+    if(file.exists(tf)) stop(paste0(tf, ' exists'))
+    file.create(tf)
+  }
+  suppressMessages(ggplot2::ggsave(tf, plt,
+                                   width = 125,
+                                   height = 125,
+                                   units = 'mm'))
+  txt <- RCurl::base64Encode(readBin(tf, "raw", file.info(tf)[1, "size"]), "txt")
+  file.remove(tf)
+  encoded_image_src <- sprintf('data:image/png;base64,%s', txt)
+  tags$img(src = encoded_image_src,
+           class = 'cgr_image')
+}

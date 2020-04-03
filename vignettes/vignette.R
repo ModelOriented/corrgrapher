@@ -1,8 +1,7 @@
 ## ----setup, include=FALSE-----------------------------------------------------
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE)
 data('fifa_cgr', package = 'CorrGrapheR')
-data('dragons_cgr', package = 'CorrGrapheR')
-#.
 
 ## ----cars, message=FALSE------------------------------------------------------
 library('CorrGrapheR')
@@ -60,20 +59,28 @@ corrgrapher(df) %>%
 #  # Create table with feature importance info - not necessary
 #  
 #  fifa_feat <- ingredients::feature_importance(fifa_gbm_exp)
-#  
+#  fifa_pd <- ingredients::partial_dependency(fifa_gbm_exp)
 #  # Finally, create a corrgrapher object
-#  fifa_cgr <- corrgrapher(fifa_gbm_exp, cutoff = 0.4, feature_importance = fifa_feat)
+#  fifa_cgr <- corrgrapher(fifa_gbm_exp, cutoff = 0.4,
+#                          feature_importance = fifa_feat,
+#                          partial_dependency = fifa_pd)
 
 ## ----fifa_plot----------------------------------------------------------------
 fifa_cgr
 
-## ----dragons_setup, eval=FALSE------------------------------------------------
-#  library(randomForest)
-#  data(dragons, package = 'DALEX')
-#  dragons_rf <- randomForest::randomForest(colour ~ ., data = dragons, num.trees = 50)
-#  dragons_rf_exp <- DALEX::explain(dragons_rf, data = dragons[,-5], y = dragons$colour)
-#  dragons_feat <- ingredients::feature_importance(dragons_rf_exp, type = 'raw', loss_function = loss_cross_entropy)
-#  dragons_cgr <- corrgrapher(dragons_rf_exp, feature_importance = dragons_feat)
+## ----dragons_setup------------------------------------------------------------
+library(ranger)
+data(dragons, package='DALEX')
+model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
+model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour)
+model_fi <- ingredients::feature_importance(model_exp, 
+                                            loss_function = DALEX::loss_accuracy, 
+                                            type = 'raw')
+model_pd <- ingredients::partial_dependence(model_exp, N=100, grid_points = 81)
+
+dragons_cgr <- corrgrapher(model_exp, 
+                       feature_importance = model_fi,
+                       partial_dependency = model_pd)
 
 ## ----dragons_plot-------------------------------------------------------------
 dragons_cgr

@@ -100,11 +100,10 @@ corrgrapher.explainer <- function(x,
                     method = method,
                     values = values,
                     ...)
-  pds_list <- split(partial_dependency, partial_dependency[['_vname_']], drop = TRUE)
   # categorical_pds <- ingredients::partial_dependence(x, variable_type = 'categorical')
   # categorical_pds_list <- split(categorical_pds, categorical_pds[['_vname_']], drop = TRUE)
   # cgr$pds <- append(numerical_pds_list, categorical_pds_list)
-  cgr$pds <- pds_list
+  cgr$pds <- partial_dependency
   cgr
 }
 

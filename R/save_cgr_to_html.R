@@ -22,11 +22,14 @@ save_cgr_to_html <- function(cgr, file = 'report.html', overwrite = FALSE,...){
   content <- wrap_with_html_tag(cgr)
   doc <- tags$html(
     tags$head(
-      includeCSS(system.file('d3js', 'report.css', package = 'CorrGrapheR')),
-      tags$title('CorrGrapheR report'),
+      #includeCSS(system.file('d3js', 'report.css', package = 'CorrGrapheR')),
+      tags$title('CorrGrapheR report')
     ),
     tags$body(
-      content
+      tags$div(
+        class = 'cgr_container',
+        content
+      )
     )
   )
   htmltools::save_html(doc, file)
