@@ -37,10 +37,12 @@ create_tabset <- function(cgr){
       tags$div(
         id = paste(base_id, name, sep = '_'),
         class = 'cgr_tabcontent',
-        encode_image(
-          suppressWarnings(ingredients:::plot.aggregated_profiles_explainer(cgr$pds,
-                          variables = name))
-          )
+        suppressWarnings(plotly::ggplotly(
+          ingredients:::plot.aggregated_profiles_explainer(cgr$pds,
+                                                           variables = name),
+          width = 500,
+          height = 500
+        ))
       )
     })
   )
