@@ -19,7 +19,7 @@ save_cgr_to_html <- function(cgr, file = 'report.html', overwrite = FALSE,...){
     if(!overwrite) stop(paste(file, 'exists!'))
     file.remove(file)
   }
-  content <- wrap_with_html_tag(cgr)
+  content <- wrap_with_html_tag(cgr, dir = dirname(file))
   doc <- tags$html(
     tags$head(
       #includeCSS(system.file('d3js', 'report.css', package = 'CorrGrapheR')),

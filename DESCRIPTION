@@ -26,6 +26,6 @@ Suggests:
     ranger,
     shiny
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 URL: https://MrDomani.github.io/CorrGrapheR/, https://github.com/MrDomani/CorrGrapheR
 BugReports: https://github.com/MrDomani/CorrGrapheR/issues

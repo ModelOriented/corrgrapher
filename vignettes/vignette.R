@@ -2,6 +2,7 @@
 knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE)
 data('fifa_cgr', package = 'CorrGrapheR')
+data('dragons_cgr', package = 'CorrGrapheR')
 
 ## ----cars, message=FALSE------------------------------------------------------
 library('CorrGrapheR')
@@ -68,19 +69,19 @@ corrgrapher(df) %>%
 ## ----fifa_plot----------------------------------------------------------------
 fifa_cgr
 
-## ----dragons_setup------------------------------------------------------------
-library(ranger)
-data(dragons, package='DALEX')
-model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
-model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour)
-model_fi <- ingredients::feature_importance(model_exp, 
-                                            loss_function = DALEX::loss_accuracy, 
-                                            type = 'raw')
-model_pd <- ingredients::partial_dependence(model_exp, N=100, grid_points = 81)
-
-dragons_cgr <- corrgrapher(model_exp, 
-                       feature_importance = model_fi,
-                       partial_dependency = model_pd)
+## ----dragons_setup, eval=FALSE------------------------------------------------
+#  library(ranger)
+#  data(dragons, package='DALEX')
+#  model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
+#  model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour)
+#  model_fi <- ingredients::feature_importance(model_exp,
+#                                              loss_function = DALEX::loss_accuracy,
+#                                              type = 'raw')
+#  model_pd <- ingredients::partial_dependence(model_exp, N=100, grid_points = 81)
+#  
+#  dragons_cgr <- corrgrapher(model_exp,
+#                         feature_importance = model_fi,
+#                         partial_dependency = model_pd)
 
 ## ----dragons_plot-------------------------------------------------------------
 dragons_cgr
