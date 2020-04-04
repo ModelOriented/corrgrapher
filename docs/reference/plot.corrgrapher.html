@@ -62,7 +62,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -108,7 +108,7 @@
   </ul>
 </li>
         <li>
-  <a href="https://github.com/MrDomani/CorrGrapheR">
+  <a href="https://github.com/MrDomani/CorrGrapheR/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -158,21 +158,17 @@
   and those not (or weakly) correlated - <strong>far</strong> from each other.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>create_corrgrapher</code></p></div>
+    <div class='dont-index'><p><code><a href='corrgrapher.html'>corrgrapher</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/datasets/UKDriverDeaths.html'>Seatbelts</a></span>)[,<span class='fl'>1</span>:<span class='fl'>7</span>] <span class='co'># drop the binary target variable</span>
-<span class='no'>cgr</span> <span class='kw'>&lt;-</span> <span class='fu'>create_corrgrapher</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span class='error'>Error in create_corrgrapher(df): could not find function "create_corrgrapher"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cgr</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot(cgr): object 'cgr' not found</span></div></pre>
+<span class='no'>cgr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='corrgrapher.html'>corrgrapher</a></span>(<span class='no'>df</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>cgr</span>)</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

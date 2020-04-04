@@ -60,7 +60,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -106,7 +106,7 @@
   </ul>
 </li>
         <li>
-  <a href="https://github.com/MrDomani/CorrGrapheR">
+  <a href="https://github.com/MrDomani/CorrGrapheR/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -142,6 +142,11 @@
           <p class="section-desc"></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -157,12 +162,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="generate_html.html">generate_html()</a></code> </p>
-        </td>
-        <td><p>Generate HTML report</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="knit_print.corrgrapher.html">knit_print.corrgrapher()</a></code> </p>
         </td>
         <td><p>Knitr S3 methods</p></td>
@@ -172,16 +171,21 @@
           <p><code><a href="plot.corrgrapher.html">plot(<i>&lt;corrgrapher&gt;</i>)</a></code> </p>
         </td>
         <td><p>Visualize correlations in a data frame</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="save_cgr_to_html.html">save_cgr_to_html()</a></code> </p>
+        </td>
+        <td><p>Generate &amp; save HTML report</p></td>
       </tr>
     </tbody>
     </table>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

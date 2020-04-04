@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a CorrGrapheR object — create_corrgrapher • CorrGrapheR</title>
+<title>Generate &amp; save HTML report — save_cgr_to_html • CorrGrapheR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Create a CorrGrapheR object — create_corrgrapher" />
-<meta property="og:description" content="Create a CorrGrapheR object before passing it to plot()." />
+<meta property="og:title" content="Generate &amp; save HTML report — save_cgr_to_html" />
+<meta property="og:description" content="Create an interactive document in HTML based on corrgrapher object." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -108,7 +108,7 @@
   </ul>
 </li>
         <li>
-  <a href="https://github.com/MrDomani/CorrGrapheR">
+  <a href="https://github.com/MrDomani/CorrGrapheR/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -126,83 +126,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a CorrGrapheR object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MrDomani/CorrGrapheR/blob/master/R/create_corrgrapher.R'><code>R/create_corrgrapher.R</code></a></small>
-    <div class="hidden name"><code>create_corrgrapher.Rd</code></div>
+    <h1>Generate &amp; save HTML report</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MrDomani/CorrGrapheR/blob/master/R/save_cgr_to_html.R'><code>R/save_cgr_to_html.R</code></a></small>
+    <div class="hidden name"><code>save_cgr_to_html.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a CorrGrapheR object before passing it to <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>.</p>
+    <p>Create an interactive document in HTML based on <code>corrgrapher</code> object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_corrgrapher</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for explainer</span>
-<span class='fu'>create_corrgrapher</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>feature_importance</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>)
-)
-
-<span class='co'># S3 method for default</span>
-<span class='fu'>create_corrgrapher</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>),
-  <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>save_cgr_to_html</span>(<span class='no'>cgr</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"report.html"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>a <code>data.frame</code>, in which for all <code>numeric</code> columns calling <code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code> makes sense.</p></td>
+      <th>cgr</th>
+      <td><p>An object of <code>corrgrapher</code> class. See <code><a href='corrgrapher.html'>corrgrapher</a></code> function.</p></td>
+    </tr>
+    <tr>
+      <th>file</th>
+      <td><p>File to write content to; passed directly to <code><a href='https://rdrr.io/pkg/htmltools/man/save_html.html'>save_html</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>If <code>file</code> exists, should it be overwritten?</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other parameters.</p></td>
-    </tr>
-    <tr>
-      <th>cutoff</th>
-      <td><p>a number. Corelations below this are treated as <strong>no</strong> corelation. Edges corresponding to them will <strong>not</strong> be included in the graph.</p></td>
-    </tr>
-    <tr>
-      <th>feature_importance</th>
-      <td><p>(Optional) an object of <code>feature importance_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>ingredients::feature_importance</a></code> function. If not supported, calculated inside function.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>passed directly to <code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code> function.</p></td>
-    </tr>
-    <tr>
-      <th>values</th>
-      <td><p>(Optional) a <code>data.frame</code> with information abour size of the nodes, containing columns <code>value</code> and <code>label</code> (consistent with colnames of <code>x</code>). Deafult set to equal for all nodes, or (for <code>explainer</code>) importance of variables.</p></td>
+      <td><p>Other parameters</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>corrgrapher</code> object.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>A file of <code>file</code> name will be generated with either 1 or 2 elements:</p><ul>
+<li><p>for <code>explainer</code>, a graph and partial dependency plot on the side.</p></li>
+<li><p>for <code>data.frame</code>, just a graph.</p></li>
+</ul>
 
-    <div class='dont-index'><p><code><a href='plot.corrgrapher.html'>plot.corrgrapher</a></code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/datasets/UKDriverDeaths.html'>Seatbelts</a></span>)[,<span class='fl'>1</span>:<span class='fl'>7</span>] <span class='co'># drop the binary target variable</span>
-<span class='no'>cgr</span> <span class='kw'>&lt;-</span> <span class='fu'>create_corrgrapher</span>(<span class='no'>df</span>)</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
