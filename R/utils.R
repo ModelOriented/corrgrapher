@@ -1,14 +1,14 @@
 # Utils for creating HTML and knitr output
-wrap_with_html_tag <- function(x, encode = TRUE, dir = tempdir(), ...) {
-  if (!'corrgrapher' %in% class(x))
-    stop("x must be of corrgrapher class")
-  if ('pds' %in% names(x)) {
-    x <- create_tabset(x, encode, dir)
+wrap_with_html_tag <- function(cgr, ...) {
+  if (!'corrgrapher' %in% class(cgr))
+    stop("cgr must be of corrgrapher class")
+  if ('pds' %in% names(cgr)) {
+    x <- create_tabset(cgr)
     x <-
       attachDependencies(
         x,
         value = htmlDependency(
-          src = system.file('CSS', package = 'CorrGrapheR'),
+          src = system.file('d3js', package = 'CorrGrapheR'),
           version = '0.2',
           name = 'CorrGrapheRCSS',
           stylesheet = 'report.css'
@@ -16,31 +16,30 @@ wrap_with_html_tag <- function(x, encode = TRUE, dir = tempdir(), ...) {
       )
   }
   else
-    x <- plot(x)
+    x <- plot(cgr)
   x
 }
 
-create_tabset <- function(x, encode = TRUE, dir = tempdir()){
-  x_graph <- plot(x, width = '100%',height = '100%')
-  x_graph <- visNetwork::visOptions(x_graph, nodesIdSelection = list(selected = 1))
-  x_graph <- visNetwork::visEvents(x_graph, type = 'once', afterDrawing = 'addEventToSelect')
-  x_graph <- visNetwork::visEvents(x_graph, 
+create_tabset <- function(cgr){
+  cgr_graph <- plot(cgr, width = '100%',height = '100%')
+  cgr_graph <- visNetwork::visOptions(cgr_graph, nodesIdSelection = list(selected = 1))
+  cgr_graph <- visNetwork::visEvents(cgr_graph, type = 'once', afterDrawing = 'addEventToSelect')
+  cgr_graph <- visNetwork::visEvents(cgr_graph, 
                                      selectNode = 'showPlotOnSelect')
   base_id <- paste('cgr_content', as.character(round(runif(1, min = 1e5, max = 1e6-1))), sep = '_')
+  
   plots <- tagList(
     lapply({
-      fact <- x$nodes$label
+      fact <- cgr$nodes$label
       chr <- attr(fact, 'levels')[as.integer(fact)]
       chr
       }, function(name){
       tags$div(
         id = paste(base_id, name, sep = '_'),
         class = 'cgr_tabcontent',
-        insert_image(
-          suppressWarnings(ingredients:::plot.aggregated_profiles_explainer(x$pds,
-                          variables = name)),
-          encode = encode,
-          dir = dir
+        encode_image(
+          suppressWarnings(ingredients:::plot.aggregated_profiles_explainer(cgr$pds,
+                          variables = name))
           )
       )
     })
@@ -52,7 +51,7 @@ create_tabset <- function(x, encode = TRUE, dir = tempdir()){
     tags$div(
       class = 'cgr_graph',
       id = paste(base_id, 'graph', sep = '_'),
-      x_graph
+      cgr_graph
       ),
     tags$div(
       id = paste(base_id, 'tabpanel', sep = '_'),
@@ -62,16 +61,16 @@ create_tabset <- function(x, encode = TRUE, dir = tempdir()){
     includeScript(system.file('d3js', 'graph-plot_communication.js', package = 'CorrGrapheR')),
     tags$script(paste0(
       'document.getElementById(\'',
-      paste(base_id, x$nodes[x$nodes$id == 1,'label'], sep = '_'),
+      paste(base_id, cgr$nodes[cgr$nodes$id == 1,'label'], sep = '_'),
       '\').style.display = "block";'
     ))
   )
 }
 
-insert_image <- function(plt, tf = NULL, encode = TRUE, dir = tempdir()){
+encode_image <- function(plt, tf = NULL){
   # plt - obiekt, który da się zapisać do .png za pomocą png()
   if(is.null(tf)){
-    tf <- tempfile(fileext = '.png', tmpdir = dir)
+    tf <- tempfile(fileext = '.png')
     file.create(tf)
   }
   else{
@@ -79,19 +78,12 @@ insert_image <- function(plt, tf = NULL, encode = TRUE, dir = tempdir()){
     file.create(tf)
   }
   suppressMessages(ggplot2::ggsave(tf, plt,
-                                   width = 75,
-                                   height = 75,
+                                   width = 125,
+                                   height = 125,
                                    units = 'mm'))
-  if(encode){
   txt <- RCurl::base64Encode(readBin(tf, "raw", file.info(tf)[1, "size"]), "txt")
   file.remove(tf)
   encoded_image_src <- sprintf('data:image/png;base64,%s', txt)
   tags$img(src = encoded_image_src,
            class = 'cgr_image')
-  }
-  else{
-    tags$img(src = tf,
-             class = 'cgr_image'
-    )
-  }
 }

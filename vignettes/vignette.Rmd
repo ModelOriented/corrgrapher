@@ -1,7 +1,6 @@
 ---
 title: "Vignette"
 author: "Paweł Morgen"
-  
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette}
@@ -13,7 +12,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE)
 data('fifa_cgr', package = 'CorrGrapheR')
-data('dragons_cgr', package = 'CorrGrapheR')
 ```
 
 ## CorrGrapheR
@@ -99,7 +97,7 @@ fifa_cgr
 
 ## Example 3 - dragons dataset
 
-```{r dragons_setup, eval=FALSE}
+```{r dragons_setup}
 library(ranger)
 data(dragons, package='DALEX')
 model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
