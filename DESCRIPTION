@@ -15,8 +15,8 @@ Imports: visNetwork,
     DALEX,
     ingredients,
     htmltools,
-    plotly,
-    RCurl
+    RCurl,
+    ggplot2
 Suggests: 
     knitr,
     rmarkdown,

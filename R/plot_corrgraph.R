@@ -4,7 +4,7 @@
 #' @description 
 #' Visualize correlations between variables stored in columns, using previously created \code{corrgrapher} object.
 #' 
-#' @param x a \code{corrgrapher} object. See \code{\link{create_corrgrapher}}.
+#' @param x a \code{corrgrapher} object. See \code{\link{corrgrapher}}.
 #' @param ... other parameters, passed directly to \code{\link{visNetwork}} function (such as \code{main}, \code{submain}, \code{width}, \code{height} etc.)
 #' @return A \code{\link{visNetwork}} object; graph. On this graph, the edges are treated as springs. 
 #'   The variables correlated \strong{strongly} (positively or negatively) are \strong{close} to each other, 
