@@ -13,7 +13,7 @@ knit_print.corrgrapher <- function(x, ...){
   knit_dir <- knitr::opts_knit$get('root.dir')
   # knitr::opts_knit$set(results = 'asis')
   dir_path <- file.path(knit_dir, 'cgr_plots')
-  if(length(dir_path) == 0) dir_path <- file.path(getwd(), 'cgr_plots')
+  if(length(dir_path) == 0) dir_path <- tempdir()
   if(!dir.exists(dir_path))dir.create(dir_path)
   x <- wrap_with_html_tag(x, encode = TRUE, dir = dir_path)
   htmltools::knit_print.shiny.tag(x)

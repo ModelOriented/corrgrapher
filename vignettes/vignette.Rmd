@@ -1,8 +1,9 @@
 ---
 title: "Vignette"
 author: "Paweł Morgen"
-  
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    pandoc_args: ["--self-contained"]
 vignette: >
   %\VignetteIndexEntry{Vignette}
   %\VignetteEngine{knitr::rmarkdown}
