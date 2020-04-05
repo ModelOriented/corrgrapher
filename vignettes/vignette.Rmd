@@ -17,7 +17,7 @@ data('fifa_cgr', package = 'CorrGrapheR')
 
 ## The problem
 
-Data analysis (and creating models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding corelations between variables proves to be difficult ($n$ variables means $n(n-1) / 2$ pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readabele (and therefore meaningful) it becomes.  
+Data analysis (and creating models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding corelations between variables proves to be difficult ($n$ variables means $n(n-1) / 2$ pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readable (and therefore meaningful) it becomes.  
 
 ## Package CorrGrapheR
 
@@ -126,6 +126,7 @@ fifa_cgr
 The figure is interactive - feel free to select a variable from a drag-drop selector or to click on the node. 
 
 What we can extract from the figure:
+
  * The key variables are `movement_reactions`, `age`, `skill_ball_control`, `attacking_finishing` and `skill_dribling`
  * The features containing goalkeepers' skills are **very** highly correlated with each other and negatively correlated with the rest
  * The features contining defenders' skills are correlated with each other and with `mentality_interceptions`
@@ -138,11 +139,12 @@ In this example, we shall take a look at smaller, artificial dataset containing 
 
 Once again, let us set up a model, which will predict color of dragon based on the remaining, numerical variables.
 
-```{r dragons_setup}
+```{r dragons_setup, warning=FALSE}
 library(ranger)
 data(dragons, package='DALEX')
 model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
-model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour)
+model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour,
+                            verbose = FALSE)
 model_fi <- ingredients::feature_importance(model_exp, 
                                             loss_function = DALEX::loss_accuracy, 
                                             type = 'raw')
@@ -157,7 +159,11 @@ dragons_cgr <- corrgrapher(model_exp,
 dragons_cgr
 ```
 
-Here we see, that the variables are mostly **not** corelated. We identify all corelations instantly.
+Here we see, that the variables are mostly **not** corelated. We identify all corelations instantly:
+
+ * `height` and `weight`
+ * `scars` and `life_length`
+ * `number_of_lost_teeth` and `life_length` .
 
 ## HTML Report
 

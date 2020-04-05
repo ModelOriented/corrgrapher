@@ -66,11 +66,12 @@ corrgrapher(df) %>%
 ## ----fifa_plot----------------------------------------------------------------
 fifa_cgr
 
-## ----dragons_setup------------------------------------------------------------
+## ----dragons_setup, warning=FALSE---------------------------------------------
 library(ranger)
 data(dragons, package='DALEX')
 model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
-model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour)
+model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour,
+                            verbose = FALSE)
 model_fi <- ingredients::feature_importance(model_exp, 
                                             loss_function = DALEX::loss_accuracy, 
                                             type = 'raw')
