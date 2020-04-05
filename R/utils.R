@@ -38,7 +38,7 @@ create_tabset <- function(cgr){
         id = paste(base_id, name, sep = '_'),
         class = 'cgr_tabcontent',
         insert_image(
-          suppressWarnings(ingredients:::plot.aggregated_profiles_explainer(x$pds,
+          suppressWarnings(ingredients:::plot.aggregated_profiles_explainer(cgr$pds,
                           variables = name)),
           container_id = paste(base_id, name, sep = '_'),
           dir = dir
