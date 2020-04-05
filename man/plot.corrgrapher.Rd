@@ -7,7 +7,7 @@
 \method{plot}{corrgrapher}(x, ...)
 }
 \arguments{
-\item{x}{a \code{corrgrapher} object. See \code{\link{create_corrgrapher}}.}
+\item{x}{a \code{corrgrapher} object. See \code{\link{corrgrapher}}.}
 
 \item{...}{other parameters, passed directly to \code{\link{visNetwork}} function (such as \code{main}, \code{submain}, \code{width}, \code{height} etc.)}
 }

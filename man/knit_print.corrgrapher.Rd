@@ -7,7 +7,7 @@
 knit_print.corrgrapher(x, ...)
 }
 \arguments{
-\item{x}{An object of \code{corrgrapher} class. See \code{\link{craete_corrgrapher}} function.}
+\item{x}{An object of \code{corrgrapher} class. See \code{\link{corrgrapher}} function.}
 
 \item{...}{Other parameters, passed directly to \code{\link[htmltools]{knit_print.shiny.tag}}}
 }

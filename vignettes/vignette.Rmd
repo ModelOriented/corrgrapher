@@ -15,7 +15,11 @@ knitr::opts_chunk$set(echo = TRUE,
 data('fifa_cgr', package = 'CorrGrapheR')
 ```
 
-## CorrGrapheR
+## The problem
+
+Data analysis (and creating models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding corelations between variables proves to be difficult ($n$ variables means $n(n-1) / 2$ pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readabele (and therefore meaningful) it becomes.  
+
+## Package CorrGrapheR
 
 This package aims to plot correlations between variables in form of a graph. Variables correlated with each other shall be close (posivitely and negatively alike), and weakly correlated  - far from each other.
 
@@ -23,6 +27,18 @@ It is achieved through a physical simulation, where the nodes are treated as poi
 
 ## Example 1 - Seatbelts
 
+Let's take a look at one of datasets available in R - `Seatbelts`. It contains information about road casualties in Great Britain in 1969-84 period, and has following columns:
+
+ * `DriversKilled` - amount of car **drivers** killed
+ * `drivers` - amount of car **drivers** killed or seriously injured
+ * `front` - amount of **front-seat passangers** killed or seriously injured
+ * `rear` - amount of **rear-seat passangers** killed or seriously injured
+ * `kms` - distance driven
+ * `PetrolPrice` - petrol price
+ * `VanKilled` - number of van **drivers** killed.
+ * `law` - binary variable; was the law enforcing seatbelt use in effect?
+ 
+For our purposes, since Pearson's correlation index is irrelevant for binary variables, we drop the `law` variable.
 ```{r cars, message=FALSE}
 library('CorrGrapheR')
 library('magrittr')
@@ -30,6 +46,8 @@ df <- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
 corrgrapher(df) %>%
   plot()
 ```
+
+As expected, we see, that all variables regarding casualties are correlated with each other, but `rear` and `VanKilled` weaker than others. We also observe the negative correlation between `PetrolPrice` and variables `drivers`, `DriversKilled` and `front`.
 
 ```{r titanic, eval=FALSE, include=FALSE}
 library("randomForest")
@@ -48,6 +66,12 @@ corrgrapher(explain_titanic_rf, feature_importance = feature_importance_titanic_
 ```
 
 ## Example 2 - FIFA
+
+Let's look at something more challenging to visualize. The dataset for FIFA 19 soccer game (more info [here](https://www.kaggle.com/karangadiya/fifa19) and [here](https://github.com/pbiecek/explainFIFA19)) contains 89 columns of data about soccer players from all around the world. Visualizing it is a non-trivial task.
+
+Here, let us introduce to a way of combining the `CorrGrapheR` package with packages from [DrWhyAI family](https://modeloriented.github.io/DrWhy/). The `CorrrapheR` function may take an `explainer` object (created with the help of `DALEX` package), extract the data from it, and add extra features to the displayed figure.
+
+For this use-case, let us create a model based on numerical variables, that will predict the value in EUR of soccer players.
 
 ```{r fifa_show, eval=FALSE}
 library("gbm")
@@ -80,8 +104,6 @@ fifa_gbm_exp <- DALEX::explain(fifa_gbm,
                         predict_function = function(m,x) 
                           10^predict(m, x, n.trees = 250))
 
-# Create table with feature importance info - not necessary
-
 fifa_feat <- ingredients::feature_importance(fifa_gbm_exp)
 fifa_pd <- ingredients::partial_dependency(fifa_gbm_exp)
 # Finally, create a corrgrapher object
@@ -90,13 +112,31 @@ fifa_cgr <- corrgrapher(fifa_gbm_exp, cutoff = 0.4,
                         partial_dependency = fifa_pd)
 ```
 
+The visualisation is enriched with:
+
+ * Incorporation of importance of variables for the output of the model, using the size of nodes. The bigger the nodes, the more important they are
+ * Partial dependency plots, displayed on the side.
+ 
 Thanks to implementation of `knit_print()` method, an object of class `corrgrapher` can be displayed simply by calling it:
 
 ```{r fifa_plot}
 fifa_cgr
 ```
 
+The figure is interactive - feel free to select a variable from a drag-drop selector or to click on the node. 
+
+What we can extract from the figure:
+ * The key variables are `movement_reactions`, `age`, `skill_ball_control`, `attacking_finishing` and `skill_dribling`
+ * The features containing goalkeepers' skills are **very** highly correlated with each other and negatively correlated with the rest
+ * The features contining defenders' skills are correlated with each other and with `mentality_interceptions`
+ * `movement_sprint_speed` is correlated with `movement_acceleration`
+ * ...
+ 
 ## Example 3 - dragons dataset
+
+In this example, we shall take a look at smaller, artificial dataset containing some information about a population of dragons. It is a useful example, because here we can observe a situation, where correlations are rare.
+
+Once again, let us set up a model, which will predict color of dragon based on the remaining, numerical variables.
 
 ```{r dragons_setup}
 library(ranger)
@@ -117,6 +157,8 @@ dragons_cgr <- corrgrapher(model_exp,
 dragons_cgr
 ```
 
+Here we see, that the variables are mostly **not** corelated. We identify all corelations instantly.
+
 ## HTML Report
 
 If you wish to save info about single `corrgrapher` object, use `save_cgr_to_html()` function:
@@ -125,3 +167,5 @@ If you wish to save info about single `corrgrapher` object, use `save_cgr_to_htm
 ## NOT RUN
 save_cgr_to_html(fifa_cgr)
 ```
+
+It will produce a HTML file, containing a similar output the one from chunks above.

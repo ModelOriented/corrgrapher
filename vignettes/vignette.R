@@ -56,8 +56,6 @@ corrgrapher(df) %>%
 #                          predict_function = function(m,x)
 #                            10^predict(m, x, n.trees = 250))
 #  
-#  # Create table with feature importance info - not necessary
-#  
 #  fifa_feat <- ingredients::feature_importance(fifa_gbm_exp)
 #  fifa_pd <- ingredients::partial_dependency(fifa_gbm_exp)
 #  # Finally, create a corrgrapher object
