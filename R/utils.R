@@ -37,12 +37,12 @@ create_tabset <- function(cgr){
       tags$div(
         id = paste(base_id, name, sep = '_'),
         class = 'cgr_tabcontent',
-        suppressWarnings(plotly::ggplotly(
-          ingredients:::plot.aggregated_profiles_explainer(cgr$pds,
-                                                           variables = name),
-          width = 500,
-          height = 500
-        ))
+        insert_image(
+          suppressWarnings(ingredients:::plot.aggregated_profiles_explainer(x$pds,
+                          variables = name)),
+          container_id = paste(base_id, name, sep = '_'),
+          dir = dir
+          )
       )
     })
   )
@@ -69,7 +69,7 @@ create_tabset <- function(cgr){
   )
 }
 
-encode_image <- function(plt, tf = NULL){
+insert_image <- function(plt, container_id, tf = NULL, dir = tempdir()){
   # plt - obiekt, który da się zapisać do .png za pomocą png()
   if(is.null(tf)){
     tf <- tempfile(fileext = '.png')
@@ -86,6 +86,13 @@ encode_image <- function(plt, tf = NULL){
   txt <- RCurl::base64Encode(readBin(tf, "raw", file.info(tf)[1, "size"]), "txt")
   file.remove(tf)
   encoded_image_src <- sprintf('data:image/png;base64,%s', txt)
-  tags$img(src = encoded_image_src,
-           class = 'cgr_image')
+  tags$script(paste0("var img = document.createElement(\"img\");",
+                     "img.classList.add(\"cgr_image\");",
+                     "img.src = \"",
+                     encoded_image_src,
+                     "\";",
+                     "var src = document.getElementById(\"",
+                     container_id,
+                     "\");",
+                     "src.appendChild(img);"))
 }

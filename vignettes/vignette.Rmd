@@ -1,7 +1,8 @@
 ---
 title: "Vignette"
 author: "Paweł Morgen"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
 vignette: >
   %\VignetteIndexEntry{Vignette}
   %\VignetteEngine{knitr::rmarkdown}
