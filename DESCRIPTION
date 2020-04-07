@@ -1,7 +1,7 @@
 Package: CorrGrapheR
 Type: Package
 Title: Plot Correlations Between Variables In A Data Frame
-Version: 0.2
+Version: 0.4
 Encoding: UTF-8
 Date: 2020-03-10
 Author: Pawel Morgen
@@ -28,5 +28,5 @@ Suggests:
     shiny
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
-URL: https://MrDomani.github.io/CorrGrapheR/, https://github.com/MrDomani/CorrGrapheR
-BugReports: https://github.com/MrDomani/CorrGrapheR/issues
+URL: https://modeloriented.github.io/CorrGrapheR/, https://github.com/ModelOriented/CorrGrapheR
+BugReports: https://github.com/ModelOriented/CorrGrapheR/issues

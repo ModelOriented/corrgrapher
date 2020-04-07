@@ -3,6 +3,7 @@
 S3method(corrgrapher,default)
 S3method(corrgrapher,explainer)
 S3method(plot,corrgrapher)
+export(calculate_correlations)
 export(corrgrapher)
 export(knit_print.corrgrapher)
 export(save_cgr_to_html)
