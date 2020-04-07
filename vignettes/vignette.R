@@ -7,8 +7,10 @@ data('fifa_cgr', package = 'CorrGrapheR')
 library('CorrGrapheR')
 library('magrittr')
 df <- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
-corrgrapher(df) %>%
-  plot()
+cgr <- corrgrapher(df)
+
+## ----cars_plot----------------------------------------------------------------
+cgr
 
 ## ----titanic, eval=FALSE, include=FALSE---------------------------------------
 #  library("randomForest")

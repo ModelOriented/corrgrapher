@@ -39,12 +39,20 @@ Let's take a look at one of datasets available in R - `Seatbelts`. It contains i
  * `law` - binary variable; was the law enforcing seatbelt use in effect?
  
 For our purposes, since Pearson's correlation index is irrelevant for binary variables, we drop the `law` variable.
+
+Thanks to implementation of `knit_print()` method, an object of class `corrgrapher` can be displayed simply by calling it:
+
 ```{r cars, message=FALSE}
 library('CorrGrapheR')
 library('magrittr')
 df <- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
-corrgrapher(df) %>%
-  plot()
+cgr <- corrgrapher(df)
+```
+
+Thanks to implementation of `knit_print()` method, an object of class `corrgrapher` can be displayed simply by calling it:
+
+```{r cars_plot}
+cgr
 ```
 
 As expected, we see, that all variables regarding casualties are correlated with each other, but `rear` and `VanKilled` weaker than others. We also observe the negative correlation between `PetrolPrice` and variables `drivers`, `DriversKilled` and `front`.
@@ -116,8 +124,6 @@ The visualisation is enriched with:
 
  * Incorporation of importance of variables for the output of the model, using the size of nodes. The bigger the nodes, the more important they are
  * Partial dependency plots, displayed on the side.
- 
-Thanks to implementation of `knit_print()` method, an object of class `corrgrapher` can be displayed simply by calling it:
 
 ```{r fifa_plot}
 fifa_cgr
