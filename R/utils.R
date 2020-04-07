@@ -2,21 +2,16 @@
 wrap_with_html_tag <- function(cgr, ...) {
   if (!'corrgrapher' %in% class(cgr))
     stop("cgr must be of corrgrapher class")
-  if ('pds' %in% names(cgr)) {
-    x <- create_tabset(cgr)
-    x <-
-      attachDependencies(
-        x,
-        value = htmlDependency(
-          src = system.file('d3js', package = 'CorrGrapheR'),
-          version = '0.2',
-          name = 'CorrGrapheRCSS',
-          stylesheet = 'report.css'
-        )
-      )
-  }
-  else
-    x <- plot(cgr)
+  x <- create_tabset(cgr)
+  x <- attachDependencies(
+    x,
+    value = htmlDependency(
+      src = system.file('d3js', package = 'CorrGrapheR'),
+      version = '0.2',
+      name = 'CorrGrapheRCSS',
+      stylesheet = 'report.css'
+    )
+  )
   x
 }
 
@@ -34,17 +29,21 @@ create_tabset <- function(cgr){
       chr <- attr(fact, 'levels')[as.integer(fact)]
       chr
       }, function(name){
-      tags$div(
-        id = paste(base_id, name, sep = '_'),
-        class = 'cgr_tabcontent',
-        insert_image(
-          suppressWarnings(ingredients:::plot.aggregated_profiles_explainer(cgr$pds,
-                          variables = name)),
-          container_id = paste(base_id, name, sep = '_'),
-          dir = dir
+        if('pds' %in% names(cgr))
+          plt <- suppressWarnings(
+            ingredients:::plot.aggregated_profiles_explainer(cgr$pds,
+                                                              variables = name))
+        else plt <- plot_distribution(cgr$data[[name]], name)
+        tags$div(
+          id = paste(base_id, name, sep = '_'),
+          class = 'cgr_tabcontent',
+          insert_image(
+            plt,
+            container_id = paste(base_id, name, sep = '_'),
+            dir = dir
           )
-      )
-    })
+        )
+      })
   )
   
   tags$div(
@@ -67,6 +66,19 @@ create_tabset <- function(cgr){
       '\').style.display = "block";'
     ))
   )
+}
+
+plot_distribution <- function(x, label){
+  # plot for x being a simple numeric or factor
+  d <- data.frame(x = x)
+  plt <- ggplot2::ggplot(data = d, ggplot2::aes(x = x)) +
+    ggplot2::xlab(label) +
+    ggplot2::labs(title = paste0('Distribution of ',label, ' variable'))
+  if(is.numeric(x))
+    plt <- plt + ggplot2::geom_histogram()
+  else
+    plt <- plt + ggplot2::geom_bar()
+  plt
 }
 
 insert_image <- function(plt, container_id, tf = NULL, dir = tempdir()){

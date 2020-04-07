@@ -59,6 +59,7 @@ A \code{corrgrapher} object, consisting of following fields:
 \item{\code{nodes} - a \code{data.frame} to pass as argument \code{nodes} to \code{\link{visNetwork}} function}
 \item{\code{edges} - a \code{data.frame} to pass as argument \code{edges} to \code{\link{visNetwork}} function}
 \item{\code{pds} (if x was of \code{explainer} class) - a splitted \code{partial_dependency_explainer} object. Each item has information about single variable. Passed to \code{\link[ingredients]{plot.aggregated_profiles_explainer}}}
+\item{\code{data} - data used to create the object.}
 }
 }
 \description{
