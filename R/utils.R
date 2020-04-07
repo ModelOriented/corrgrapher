@@ -93,7 +93,7 @@ insert_image <- function(plt, container_id, tf = NULL, dir = tempdir()){
   }
   suppressMessages(ggplot2::ggsave(tf, plt,
                                    width = 125,
-                                   height = 125,
+                                   height = 100,
                                    units = 'mm'))
   txt <- RCurl::base64Encode(readBin(tf, "raw", file.info(tf)[1, "size"]), "txt")
   file.remove(tf)
