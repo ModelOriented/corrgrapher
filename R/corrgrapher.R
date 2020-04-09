@@ -11,8 +11,8 @@
 #' }
 #' @param ... other arguments.
 #' @param cutoff a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.
-#' @param method passed directly to \code{\link[stats]{cor}} function. 
 #' @param values a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.
+#' @param cor_functions a named \code{list} o functions to pass to \code{\link{calculate_cors}}. Must contain necessary functions from \code{num_num_f}, \code{num_cat_f} or \code{cat_cat_f}. Must contain also \code{max_cor}
 #' @param feature_importance an object of \code{feature importance_explainer} class, created by \code{\link[ingredients]{feature_importance}} function. If supported, the argument \code{feature_importance_opts} will be ignored.
 #' @param partial_dependency an object of \code{aggregated_profile_explainer} class, created by \code{\link[ingredients]{partial_dependency}} function. If supported, the argument \code{partial_dependency_opts} will be ignored.
 #' @param feature_importance_opts a \code{list} of parameters to pass to \code{\link[ingredients]{feature_importance}} function. This argument will be ignored if \code{feature_importance} is supported.
@@ -42,8 +42,9 @@ corrgrapher <- function(x, ...){
 
 corrgrapher.explainer <- function(x,
                                   cutoff = 0.2,
-                                  method = c('pearson', 'kendall', 'spearman'),
+                                  # method = c('pearson', 'kendall', 'spearman'),
                                   values = NULL,
+                                  cor_functions = list(),
                                   ...,
                                   feature_importance = NULL,
                                   partial_dependency = NULL,
@@ -98,7 +99,7 @@ corrgrapher.explainer <- function(x,
   
   x <- x$data
   cgr <- NextMethod(cutoff = cutoff,
-                    method = method,
+                    # method = method,
                     values = values,
                     ...)
   # categorical_pds <- ingredients::partial_dependence(x, variable_type = 'categorical')
@@ -113,15 +114,15 @@ corrgrapher.explainer <- function(x,
 
 corrgrapher.default <- function(x,
                                 cutoff = 0.2,
-                                method = c('pearson', 'kendall', 'spearman'),
+                                # method = c('pearson', 'kendall', 'spearman'),
                                 values = NULL,
+                                cor_functions = list(),
                                 ...) {
   # if(is.null(colorer)) colorer <- colorRampPalette(c('#9fe5bd80', '#77d1be80','#46bac280','#4590c480', '#371ea380'))
   if(!is.data.frame(x)) stop('x must be a data.frame')
   if(length(cutoff) > 1 || !is.numeric(cutoff)) stop('cutoff must be a single number')
   if(cutoff >= 1) warning('cutoff > 1. Interpreting as no cutoff')
   if(cutoff <= 0) warning('cutoff <= 0. Cutting off all edges')
-  
   if(is.null(values)) values <- data.frame(value = rep(5 * sqrt(ncol(x)), ncol(x)),
                                        label = colnames(x))
   else {
@@ -131,12 +132,9 @@ corrgrapher.default <- function(x,
     if(!is.numeric(values$value)) stop('if supported, values$value must be numeric')
     values <- values[,c('label', 'value')]
   }
-  # else values$value <- normalize(values$value, 
-  #                         out_mean = 5 * sqrt(ncol(x)),
-  #                         out_sd = sqrt(ncol(x)))
-  # 
-  nums <- unlist(lapply(x, is.numeric))
-  x <- x[,nums]
+  
+  if(!is.null(cor_functions) && !is.list(cor_functions)) stop(paste0('If supplied, cor_functions must be list, not', class(cor_functions)[1]))
+  cor_functions <- cor_functions[names(formals(calculate_cors))[-1]]
   
   nodes <- data.frame(id = 1:ncol(x),
                       label = colnames(x),
@@ -147,7 +145,8 @@ corrgrapher.default <- function(x,
   nodes <- merge(nodes, values, 
                  by.x = 'label',
                  by.y = 'label')
-  corelations <- as.vector(stats::cor(x, method = method))
+  corelations <- as.vector(do.call(calculate_cors,
+                                   append(cor_functions, list(x), after = 0)))
   
   edges <- data.frame(corelations = corelations, 
                       from = rep(1:ncol(x), each = ncol(x)),

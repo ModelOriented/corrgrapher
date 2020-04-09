@@ -11,8 +11,8 @@ corrgrapher(x, ...)
 \method{corrgrapher}{explainer}(
   x,
   cutoff = 0.2,
-  method = c("pearson", "kendall", "spearman"),
   values = NULL,
+  cor_functions = list(),
   ...,
   feature_importance = NULL,
   partial_dependency = NULL,
@@ -20,13 +20,7 @@ corrgrapher(x, ...)
   partial_dependency_opts = NULL
 )
 
-\method{corrgrapher}{default}(
-  x,
-  cutoff = 0.2,
-  method = c("pearson", "kendall", "spearman"),
-  values = NULL,
-  ...
-)
+\method{corrgrapher}{default}(x, cutoff = 0.2, values = NULL, cor_functions = list(), ...)
 }
 \arguments{
 \item{x}{an object to be used to select the method, which must satisfy conditions:
@@ -41,9 +35,9 @@ or supply options to call the functions inside (\code{feature_importance_opts} a
 
 \item{cutoff}{a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.}
 
-\item{method}{passed directly to \code{\link[stats]{cor}} function.}
-
 \item{values}{a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.}
+
+\item{cor_functions}{a named \code{list} o functions to pass to \code{\link{calculate_cors}}. Must contain necessary functions from \code{num_num_f}, \code{num_cat_f} or \code{cat_cat_f}. Must contain also \code{max_cor}}
 
 \item{feature_importance}{an object of \code{feature importance_explainer} class, created by \code{\link[ingredients]{feature_importance}} function. If supported, the argument \code{feature_importance_opts} will be ignored.}
 
