@@ -12,26 +12,26 @@ cgr <- corrgrapher(df)
 ## ----cars_plot----------------------------------------------------------------
 cgr
 
-## ----titanic, eval=FALSE, include=FALSE---------------------------------------
-#  library("randomForest")
-#  
-#  titanic <- na.omit(titanic)
-#  model_titanic_rf <- randomForest(survived == "yes" ~ .,
-#                                   data = titanic)
-#  explain_titanic_rf <- DALEX::explain(model_titanic_rf,
-#                                data = titanic[,-9],
-#                                y = titanic$survived == "yes",
-#                                label = "Random Forest")
-#  feature_importance_titanic_rf <- ingredients::feature_importance(explain_titanic_rf)
-#  
-#  corrgrapher(explain_titanic_rf, feature_importance = feature_importance_titanic_rf) %>%
-#    plot()
+## ----titanic, cache=TRUE------------------------------------------------------
+library(ranger)
+library(ingredients)
+library(DALEX)
+data("titanic_imputed", package='DALEX')
+tit_model <- ranger(survived ~ ., data = titanic_imputed, num.trees = 100)
+tit_model_exp <- explain(tit_model,
+                         data = titanic_imputed[,-8],
+                         y = titanic_imputed[, 8],
+                         verbose = FALSE)
+tit_cgr <- corrgrapher(tit_model_exp)
+
+## ----titanic_plot-------------------------------------------------------------
+tit_cgr
 
 ## ----fifa_show, eval=FALSE----------------------------------------------------
 #  library("gbm")
 #  
 #  data('fifa20', package = 'CorrGrapheR')
-#  fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,25:26,45:78)]
+#  fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,26,45:78)]
 #  
 #  # Value is skewed. Will be much easier to model sqrt(Value).
 #  
@@ -63,25 +63,10 @@ cgr
 #  # Finally, create a corrgrapher object
 #  fifa_cgr <- corrgrapher(fifa_gbm_exp, cutoff = 0.4,
 #                          feature_importance = fifa_feat,
-#                          partial_dependency = fifa_pd)
+#                          partial_dependency = list(numerical = fifa_pd))
 
 ## ----fifa_plot----------------------------------------------------------------
 fifa_cgr
-
-## ----dragons_setup, warning=FALSE---------------------------------------------
-library(ranger)
-data(dragons, package='DALEX')
-model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
-model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour,
-                            verbose = FALSE)
-model_fi <- ingredients::feature_importance(model_exp, 
-                                            loss_function = DALEX::loss_accuracy, 
-                                            type = 'raw')
-model_pd <- ingredients::partial_dependence(model_exp, N=100, grid_points = 81)
-
-dragons_cgr <- corrgrapher(model_exp, 
-                       feature_importance = model_fi,
-                       partial_dependency = model_pd)
 
 ## ----dragons_plot-------------------------------------------------------------
 dragons_cgr

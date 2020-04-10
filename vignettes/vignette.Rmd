@@ -55,37 +55,73 @@ Thanks to implementation of `knit_print()` method, an object of class `corrgraph
 cgr
 ```
 
+On the side a simple plot with distribution of variables is displayed. The figure is interactive - feel free to select a variable from a drag-drop selector or to click on the node. 
+
 As expected, we see, that all variables regarding casualties are correlated with each other, but `rear` and `VanKilled` weaker than others. We also observe the negative correlation between `PetrolPrice` and variables `drivers`, `DriversKilled` and `front`.
 
-```{r titanic, eval=FALSE, include=FALSE}
-library("randomForest")
+## Comparable coefficients of corelation
 
-titanic <- na.omit(titanic)
-model_titanic_rf <- randomForest(survived == "yes" ~ .,
-                                 data = titanic)
-explain_titanic_rf <- DALEX::explain(model_titanic_rf,
-                              data = titanic[,-9],
-                              y = titanic$survived == "yes",
-                              label = "Random Forest")
-feature_importance_titanic_rf <- ingredients::feature_importance(explain_titanic_rf)
+Computing comparable corelation coefficients between variables of different types (numerical - numerical, numerical - categorical, categorical - categorical) is a non-trivial problem. In this package, when encountering data with different kinds of variables, we use the following methodology:
 
-corrgrapher(explain_titanic_rf, feature_importance = feature_importance_titanic_rf) %>% 
-  plot()
-```
+1. First, the $p$-values are calculated of 3 different statistical tests: 
 
-## Example 2 - FIFA
+ * Pearson's corelation test (`cor.test`) for 2 numerical variables
+ * Kruskal's test (`kruskal.test`) for a numerical and categorical variable
+ * Chi-squared test (`chisq.test`) for 2 categorical variables
+ 
+2. Then, the $-log_{10}(p)$ is calculated and treated as ma measure of correlation betwenn variables. All results above 100 ($p$-value < $10^{-100}$) are treated as absolute correlation and their value is reduced to 100
 
-Let's look at something more challenging to visualize. The dataset for FIFA 19 soccer game (more info [here](https://www.kaggle.com/karangadiya/fifa19) and [here](https://github.com/pbiecek/explainFIFA19)) contains 89 columns of data about soccer players from all around the world. Visualizing it is a non-trivial task.
+3. Finally, results are scaled to fit inside$[0,1]$ .
+
+## Example 2 - Titanic
+
+Dataset with information about passangers of Titanic is a good example of dataset with both numerical (`age`, `fare`, `sibsp`, `parch`) and categorical(`gender`, `embarked`, `country`,  `survived`) data. Let us buid a model to predict, whether a passanger survived the sinking or not.
 
 Here, let us introduce to a way of combining the `CorrGrapheR` package with packages from [DrWhyAI family](https://modeloriented.github.io/DrWhy/). The `CorrrapheR` function may take an `explainer` object (created with the help of `DALEX` package), extract the data from it, and add extra features to the displayed figure.
 
-For this use-case, let us create a model based on numerical variables, that will predict the value in EUR of soccer players.
+The visualisation is enriched with:
+
+ * Incorporation of importance of variables for the output of the model, using the size of nodes. The bigger the nodes, the more important they are
+ * Partial dependency plots, displayed on the side.
+
+```{r titanic, cache=TRUE}
+library(ranger)
+library(ingredients)
+library(DALEX)
+data("titanic_imputed", package='DALEX')
+tit_model <- ranger(survived ~ ., data = titanic_imputed, num.trees = 100)
+tit_model_exp <- explain(tit_model,
+                         data = titanic_imputed[,-8],
+                         y = titanic_imputed[, 8],
+                         verbose = FALSE)
+tit_cgr <- corrgrapher(tit_model_exp)
+```
+
+```{r titanic_plot}
+tit_cgr
+```
+
+What can we learn from the figure:
+
+ * The most important variable is `gender` - women were given priority to access evacuation boats. 
+ * Right after it are variables `class` (1st class was privileged) and `age` (children also were given priority during evacuation).
+ * We also see, that `fare` was an important variable, but it was **very** strongly connected to `class` variable - no surprise there.
+ * Surprisingly, `class` is strongly correlated with `gender` and `embarked`.
+ * Finally, `parch` (amount of parents/children aboard) and `sibsp`(amount of spouses/siblings abroad) are strongly connected. It would indicate, that travelling with whole family was a common occurance.
+
+
+## Example 3 - FIFA
+
+Let's look at something more challenging to visualize. The dataset for FIFA 19 soccer game (more info [here](https://www.kaggle.com/karangadiya/fifa19) and [here](https://github.com/pbiecek/explainFIFA19)) contains 89 columns of data about soccer players from all around the world. Visualizing it is a non-trivial task.
+
+For this use-case, let us create a model based on numerical variables (42 in total), that will predict the value in EUR of soccer players.
+
 
 ```{r fifa_show, eval=FALSE}
 library("gbm")
 
 data('fifa20', package = 'CorrGrapheR')
-fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,25:26,45:78)]
+fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,26,45:78)]
 
 # Value is skewed. Will be much easier to model sqrt(Value).
 
@@ -117,19 +153,14 @@ fifa_pd <- ingredients::partial_dependency(fifa_gbm_exp)
 # Finally, create a corrgrapher object
 fifa_cgr <- corrgrapher(fifa_gbm_exp, cutoff = 0.4, 
                         feature_importance = fifa_feat,
-                        partial_dependency = fifa_pd)
+                        partial_dependency = list(numerical = fifa_pd))
 ```
 
-The visualisation is enriched with:
 
- * Incorporation of importance of variables for the output of the model, using the size of nodes. The bigger the nodes, the more important they are
- * Partial dependency plots, displayed on the side.
 
 ```{r fifa_plot}
 fifa_cgr
 ```
-
-The figure is interactive - feel free to select a variable from a drag-drop selector or to click on the node. 
 
 What we can extract from the figure:
 
@@ -139,14 +170,13 @@ What we can extract from the figure:
  * `movement_sprint_speed` is correlated with `movement_acceleration`
  * ...
  
-## Example 3 - dragons dataset
+## Example 4 - dragons dataset
 
 In this example, we shall take a look at smaller, artificial dataset containing some information about a population of dragons. It is a useful example, because here we can observe a situation, where correlations are rare.
 
 Once again, let us set up a model, which will predict color of dragon based on the remaining, numerical variables.
 
-```{r dragons_setup, warning=FALSE}
-library(ranger)
+```{r dragons_setup, warning=FALSE, cache=TRUE}
 data(dragons, package='DALEX')
 model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
 model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour,
@@ -154,11 +184,12 @@ model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour,
 model_fi <- ingredients::feature_importance(model_exp, 
                                             loss_function = DALEX::loss_accuracy, 
                                             type = 'raw')
-model_pd <- ingredients::partial_dependence(model_exp, N=100, grid_points = 81)
 
-dragons_cgr <- corrgrapher(model_exp, 
-                       feature_importance = model_fi,
-                       partial_dependency = model_pd)
+dragons_cgr <- corrgrapher(
+  model_exp,
+  feature_importance_opts = list(loss_function = DALEX::loss_accuracy,
+                                 type = 'raw')
+)
 ```
 
 ```{r dragons_plot}
