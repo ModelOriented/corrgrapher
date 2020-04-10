@@ -141,8 +141,8 @@
 <span class='fu'>corrgrapher</span>(
   <span class='no'>x</span>,
   <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>),
   <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cor_functions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
   <span class='no'>...</span>,
   <span class='kw'>feature_importance</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>partial_dependency</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -151,13 +151,7 @@
 )
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>corrgrapher</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pearson"</span>, <span class='st'>"kendall"</span>, <span class='st'>"spearman"</span>),
-  <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'>corrgrapher</span>(<span class='no'>x</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cor_functions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,12 +174,12 @@ or supply options to call the functions inside (<code>feature_importance_opts</c
       <td><p>a number. Corelations below this are treated as <strong>no</strong> corelation. Edges corresponding to them will <strong>not</strong> be included in the graph.</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>passed directly to <code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code> function.</p></td>
-    </tr>
-    <tr>
       <th>values</th>
       <td><p>a <code>data.frame</code> with information abour size of the nodes, containing columns <code>value</code> and <code>label</code> (consistent with colnames of <code>x</code>). Deafult set to equal for all nodes, or (for <code>explainer</code>) importance of variables.</p></td>
+    </tr>
+    <tr>
+      <th>cor_functions</th>
+      <td><p>a named <code>list</code> o functions to pass to <code><a href='calculate_cors.html'>calculate_cors</a></code>. Must contain necessary functions from <code>num_num_f</code>, <code>num_cat_f</code> or <code>cat_cat_f</code>. Must contain also <code>max_cor</code></p></td>
     </tr>
     <tr>
       <th>feature_importance</th>
@@ -193,7 +187,7 @@ or supply options to call the functions inside (<code>feature_importance_opts</c
     </tr>
     <tr>
       <th>partial_dependency</th>
-      <td><p>an object of <code>aggregated_profile_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependency</a></code> function. If supported, the argument <code>partial_dependency_opts</code> will be ignored.</p></td>
+      <td><p>a named <code>list</code> with 2 fields: <code>numerical</code> and <code>categorical</code> of object(s) of <code>aggregated_profile_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependency</a></code> function with argument <code>variable_type</code> equal either to "numerical" or "categorical" respectively. If only one kind of data was used, use a list with 1 object. If supported, the argument <code>partial_dependency_opts</code> will be ignored.</p></td>
     </tr>
     <tr>
       <th>feature_importance_opts</th>
@@ -201,7 +195,7 @@ or supply options to call the functions inside (<code>feature_importance_opts</c
     </tr>
     <tr>
       <th>partial_dependency_opts</th>
-      <td><p>a <code>list</code> of parameters to pass to <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependency</a></code> function. This argument will be ignored if <code>partial_dependency</code> is supported.</p></td>
+      <td><p>a <code>list</code> of parameters to pass to <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependency</a></code> function. Alternatively, a list with 2 fields: <code>numerical</code> and <code>categorical</code> with different sets of options for profiles of different kinds of variables. This argument will be ignored if <code>partial_dependency</code> is supported.</p></td>
     </tr>
     </table>
 
