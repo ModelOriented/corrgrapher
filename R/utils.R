@@ -23,6 +23,7 @@ create_tabset <- function(cgr){
                                      selectNode = 'showPlotOnSelect')
   base_id <- paste('cgr_content', as.character(round(runif(1, min = 1e5, max = 1e6-1))), sep = '_')
   
+  nums <- which_variables_are_numeric(cgr$data)
   plots <- tagList(
     lapply({
       fact <- cgr$nodes$label
@@ -30,9 +31,14 @@ create_tabset <- function(cgr){
       chr
       }, function(name){
         if('pds' %in% names(cgr))
-          plt <- suppressWarnings(
-            ingredients:::plot.aggregated_profiles_explainer(cgr$pds,
-                                                              variables = name))
+          if(nums[name])
+            plt <- suppressWarnings(
+              ingredients:::plot.aggregated_profiles_explainer(cgr$pds[['numerical']],
+                                                                variables = name))
+          else
+            plt <- suppressWarnings(
+              ingredients:::plot.aggregated_profiles_explainer(cgr$pds[['categorical']],
+                                                               variables = name))
         else plt <- plot_distribution(cgr$data[[name]], name)
         tags$div(
           id = paste(base_id, name, sep = '_'),
@@ -108,3 +114,12 @@ insert_image <- function(plt, container_id, tf = NULL, dir = tempdir()){
                      "\");",
                      "src.appendChild(img);"))
 }
+
+which_variables_are_numeric <- function(data) {
+  if (is.matrix(data)) {
+    apply(data[,, drop = FALSE], 2, is.numeric)
+  } else {
+    sapply(data[,, drop = FALSE], is.numeric)
+  }
+}
+

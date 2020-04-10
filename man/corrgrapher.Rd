@@ -41,11 +41,11 @@ or supply options to call the functions inside (\code{feature_importance_opts} a
 
 \item{feature_importance}{an object of \code{feature importance_explainer} class, created by \code{\link[ingredients]{feature_importance}} function. If supported, the argument \code{feature_importance_opts} will be ignored.}
 
-\item{partial_dependency}{an object of \code{aggregated_profile_explainer} class, created by \code{\link[ingredients]{partial_dependency}} function. If supported, the argument \code{partial_dependency_opts} will be ignored.}
+\item{partial_dependency}{a named \code{list} with 2 fields: \code{numerical} and \code{categorical} of object(s) of \code{aggregated_profile_explainer} class, created by \code{\link[ingredients]{partial_dependency}} function with argument \code{variable_type} equal either to "numerical" or "categorical" respectively. If only one kind of data was used, use a list with 1 object. If supported, the argument \code{partial_dependency_opts} will be ignored.}
 
 \item{feature_importance_opts}{a \code{list} of parameters to pass to \code{\link[ingredients]{feature_importance}} function. This argument will be ignored if \code{feature_importance} is supported.}
 
-\item{partial_dependency_opts}{a \code{list} of parameters to pass to \code{\link[ingredients]{partial_dependency}} function. This argument will be ignored if \code{partial_dependency} is supported.}
+\item{partial_dependency_opts}{a \code{list} of parameters to pass to \code{\link[ingredients]{partial_dependency}} function. Alternatively, a list with 2 fields: \code{numerical} and \code{categorical} with different sets of options for profiles of different kinds of variables. This argument will be ignored if \code{partial_dependency} is supported.}
 }
 \value{
 A \code{corrgrapher} object, consisting of following fields:

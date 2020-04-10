@@ -82,8 +82,10 @@ When \code{x} is a \code{table}, it is treated as contingency table. No dimnames
 
 
 By default, the function calculates p_value of statistical tests (\code{\link{cor.test}} for 2 \code{numeric}, \code{\link{chisq.test}} for \code{\link{factor}} and \code{\link{kruskal.test}} for mixed).
-Then, the correlation coefficients are calculated as \code{-log10(p_value)}. Any results above 10 are treated as absolute correlation and cut to 10. 
-The results are then divided by 10 to fit inside [0,1].
+Then, the correlation coefficients are calculated as \code{-log10(p_value)}. Any results above 100 are treated as absolute correlation and cut to 100. 
+The results are then divided by 100 to fit inside [0,1].
+
+If only \code{numeric} data was supplied, the function used is \code{\link[stats]{cor.test}}.
 }
 
 \section{Custom functions}{

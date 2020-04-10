@@ -27,8 +27,10 @@
 #' @section Default functions:
 #' 
 #' By default, the function calculates p_value of statistical tests (\code{\link{cor.test}} for 2 \code{numeric}, \code{\link{chisq.test}} for \code{\link{factor}} and \code{\link{kruskal.test}} for mixed).
-#' Then, the correlation coefficients are calculated as \code{-log10(p_value)}. Any results above 10 are treated as absolute correlation and cut to 10. 
-#' The results are then divided by 10 to fit inside [0,1].
+#' Then, the correlation coefficients are calculated as \code{-log10(p_value)}. Any results above 100 are treated as absolute correlation and cut to 100. 
+#' The results are then divided by 100 to fit inside [0,1].
+#' 
+#' If only \code{numeric} data was supplied, the function used is \code{\link[stats]{cor.test}}.
 #' 
 #' @section Custom functions:
 #' 
@@ -130,7 +132,7 @@ calculate_cors.table <- function(x,
   }
   else {
     cat_cat_f <- function(x) -log10(chisq.test(x)[['p.value']])
-    max_cor <- 10
+    max_cor <- 100
   }
   df <- as.data.frame(x, responseName = 'Frequency')
   pairs <- combn(names(dimnames(x)), 2)
@@ -163,10 +165,16 @@ calculate_cors.default <- function(x,
                         num_cat_f = sum(nums) >= 1 && sum(cats) >= 1,
                         cat_cat_f = sum(cats) > 1)
   if(all(c(is.null(num_num_f), is.null(num_cat_f), is.null(cat_cat_f)))){
-    num_num_f <- function(x, y) -log10(cor.test(x, y)[['p.value']])
-    num_cat_f <- function(x, y) -log10(kruskal.test(x, y)[['p.value']])
-    cat_cat_f <- function(x, y) -log10(chisq.test(x, y)[['p.value']])
-    max_cor <- 10
+    if(!necessary_fs$num_cat_f && !necessary_fs$cat_cat_f){
+      num_num_f <- function(x, y) cor.test(x, y)[['estimate']]
+      max_cor <- 1
+    }
+    else {
+      num_num_f <- function(x, y) -log10(cor.test(x, y)[['p.value']])
+      num_cat_f <- function(x, y) -log10(kruskal.test(x, y)[['p.value']])
+      cat_cat_f <- function(x, y) -log10(chisq.test(x, y)[['p.value']])
+      max_cor <- 100
+    }
   } else{
     if(is.null(max_cor)) stop('max_cor must be provided')
     for(f_type in names(necessary_fs)){
