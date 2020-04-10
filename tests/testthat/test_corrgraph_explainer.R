@@ -1,4 +1,4 @@
-context('corrgrapher working properly for explainers')
+context('corrgrapher working properly for explainers on numerical data')
 
 options(check.attributes = FALSE)
 set.seed(2020)
@@ -15,6 +15,7 @@ class(expected_fi) <- 'data.frame'
 colnames(expected_fi) <- c('label', 'value')
 expected_fi <- expected_fi[order(expected_fi$label),]
 expected_fi$label <- factor(expected_fi$label)
+model_pd_list <- list(numerical = model_pd)
 
 test_that(
   'Function is working properly with just necessary arguments',
@@ -30,7 +31,7 @@ test_that('Values argument working', {
   expect_equal({
     df <- corrgrapher(model_exp,
                       values = custom_values,
-                      partial_dependency = model_pd)[['nodes']][, c('label', 'value')]
+                      partial_dependency = model_pd_list)[['nodes']][, c('label', 'value')]
     df[order(df$label),]
   },
   custom_values)})
@@ -41,7 +42,7 @@ test_that('Values argument overrides feature_importance_*',{
       model_exp,
       values = custom_values,
       feature_importance = model_fi,
-      partial_dependency = model_pd
+      partial_dependency = model_pd_list
     )
   )
   expect_equal({
@@ -56,7 +57,7 @@ test_that('Values argument overrides feature_importance_*',{
       model_exp,
       values = custom_values,
       feature_importance_opts = list(),
-      partial_dependency = model_pd
+      partial_dependency = model_pd_list
     )
   )
   expect_equal({
@@ -72,7 +73,7 @@ test_that('Feature_importance argument working',{
   expect_equal({
     cgr <- corrgrapher(model_exp,
                        feature_importance = model_fi,
-                       partial_dependency = model_pd)
+                       partial_dependency = model_pd_list)
     df <- cgr$nodes[,c('label','value')]
     df[order(df$label),]
   },
@@ -85,7 +86,7 @@ test_that('Feature_importance_opts argument working',{
     cgr <- corrgrapher(model_exp,
                        feature_importance_opts = list(loss_function = DALEX::loss_accuracy, 
                                                       type = 'raw'),
-                       partial_dependency = model_pd)
+                       partial_dependency = model_pd_list)
     df <- cgr$nodes[,c('label','value')]
     df[order(df$label),]
   },
@@ -97,9 +98,9 @@ test_that('Partial_dependency argument working',{
   expect_equal({
     corrgrapher(model_exp,
     feature_importance = model_fi,
-    partial_dependency = model_pd)[['pds']]
+    partial_dependency = model_pd_list)[['pds']]
     },
-    model_pd)
+    model_pd_list)
 })
 
 test_that('Partial_dependency_opts argument working',{
@@ -107,7 +108,7 @@ test_that('Partial_dependency_opts argument working',{
     corrgrapher(model_exp,
                 feature_importance = model_fi,
                 partial_dependency_opts = list(N = 100,
-                                               grid_points = 81))[['pds']]
+                                               grid_points = 81))[['pds']][['numerical']]
   },
   model_pd,
   tolerance = 0.1)
@@ -116,11 +117,19 @@ test_that('Partial_dependency_opts argument working',{
 test_that('Partial_dependency overrides partial_dependency_opts',{
   expect_warning(cgr <- corrgrapher(model_exp,
                              feature_importance = model_fi,
-                             partial_dependency = model_pd,
+                             partial_dependency = model_pd_list,
                              partial_dependency_opts = list(N = 1000,
                                                             grid_point = 41)))
-  expect_equal(cgr$pds,
+  expect_equal(cgr$pds[['numerical']],
                model_pd)
+})
+
+test_that('cor_functions argument working properly',{
+  expect_equal(cgr <- corrgrapher(model_exp,
+                                  feature_importance = model_fi,
+                                  partial_dependency = model_pd_list,
+                                  cor_functions = list(num_num_f = cor,
+                                                       max_cor = max_cor)))
 })
   
 test_that("Output type",{
@@ -138,5 +147,12 @@ test_that('Incorrect argument partial_dependency caught', {
   expect_error(corrgrapher(model_exp, 
                            feature_importance = model_fi,
                            partial_dependency = 'ABC'),
-               regexp = 'partial_dependency must be of aggregated_profiles_explainer class')
+               regexp = 'partial_dependency must be a list')
+  expect_error(corrgrapher(model_exp,
+                           feature_importance = model_fi,
+                           partial_dependency = list(a = 'ABC')))
+  expect_error(corrgrapher(model_exp,
+                           feature_importance = model_fi,
+                           partial_dependency = list(numerical = 'ABC')))
 })
+
