@@ -15,9 +15,7 @@ corrgrapher(x, ...)
   cor_functions = list(),
   ...,
   feature_importance = NULL,
-  partial_dependency = NULL,
-  feature_importance_opts = NULL,
-  partial_dependency_opts = NULL
+  partial_dependence = NULL
 )
 
 \method{corrgrapher}{default}(x, cutoff = 0.2, values = NULL, cor_functions = list(), ...)
@@ -26,9 +24,9 @@ corrgrapher(x, ...)
 \item{x}{an object to be used to select the method, which must satisfy conditions:
 \itemize{
 \item{if \code{data.frame} (default), columns with type \code{numeric} will be selected and called with \code{\link{cor}}.}
-\item{if \code{explainer}, methods \code{\link[ingredients]{feature_importance}} and \code{\link[ingredients]{partial_dependency}} must not return an error. 
-Supply them as arguments(\code{feature_importance} or \code{partial_dependency}) 
-or supply options to call the functions inside (\code{feature_importance_opts} and \code{partial_dependency})}
+\item{if \code{explainer}, methods \code{\link[ingredients]{feature_importance}} and \code{\link[ingredients]{partial_dependence}} must not return an error. 
+Supply them as arguments(\code{feature_importance} or \code{partial_dependence}) 
+or supply options to call the functions inside (\code{feature_importance_opts} and \code{partial_dependence})}
 }}
 
 \item{...}{other arguments.}
@@ -39,20 +37,19 @@ or supply options to call the functions inside (\code{feature_importance_opts} a
 
 \item{cor_functions}{a named \code{list} o functions to pass to \code{\link{calculate_cors}}. Must contain necessary functions from \code{num_num_f}, \code{num_cat_f} or \code{cat_cat_f}. Must contain also \code{max_cor}}
 
-\item{feature_importance}{an object of \code{feature importance_explainer} class, created by \code{\link[ingredients]{feature_importance}} function. If supported, the argument \code{feature_importance_opts} will be ignored.}
+\item{feature_importance}{Either: \itemize{
+\item{an object of \code{feature importance_explainer} class, created by \code{\link[ingredients]{feature_importance}} function, or}
+\item{a named \code{list} of parameters to pass to \code{\link[ingredients]{feature_importance}} function.}
+}}
 
-\item{partial_dependency}{a named \code{list} with 2 fields: \code{numerical} and \code{categorical} of object(s) of \code{aggregated_profile_explainer} class, created by \code{\link[ingredients]{partial_dependency}} function with argument \code{variable_type} equal either to "numerical" or "categorical" respectively. If only one kind of data was used, use a list with 1 object. If supported, the argument \code{partial_dependency_opts} will be ignored.}
-
-\item{feature_importance_opts}{a \code{list} of parameters to pass to \code{\link[ingredients]{feature_importance}} function. This argument will be ignored if \code{feature_importance} is supported.}
-
-\item{partial_dependency_opts}{a \code{list} of parameters to pass to \code{\link[ingredients]{partial_dependency}} function. Alternatively, a list with 2 fields: \code{numerical} and \code{categorical} with different sets of options for profiles of different kinds of variables. This argument will be ignored if \code{partial_dependency} is supported.}
+\item{partial_dependence}{a named \code{list} with 2 elements: \code{numerical} and \code{categorical}. Both of them should be of \code{aggregated_profile_explainer} class, created by \code{\link[ingredients]{partial_dependence}} function, or a named \code{list} of parameters to pass to \code{\link[ingredients]{partial_dependence}}. If only one kind of data was used, use a list with 1 object.}
 }
 \value{
 A \code{corrgrapher} object, consisting of following fields:
 \itemize{
 \item{\code{nodes} - a \code{data.frame} to pass as argument \code{nodes} to \code{\link{visNetwork}} function}
 \item{\code{edges} - a \code{data.frame} to pass as argument \code{edges} to \code{\link{visNetwork}} function}
-\item{\code{pds} (if x was of \code{explainer} class) - a splitted \code{partial_dependency_explainer} object. Each item has information about single variable. Passed to \code{\link[ingredients]{plot.aggregated_profiles_explainer}}}
+\item{\code{pds} (if x was of \code{explainer} class) - a splitted \code{aggregated_profiles_explainer} object. Each item has information about single variable. Passed to \code{\link[ingredients]{plot.aggregated_profiles_explainer}}}
 \item{\code{data} - data used to create the object.}
 }
 }

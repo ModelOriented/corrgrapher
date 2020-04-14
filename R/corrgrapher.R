@@ -5,24 +5,24 @@
 #' @param x an object to be used to select the method, which must satisfy conditions:
 #' \itemize{
 #' \item{if \code{data.frame} (default), columns with type \code{numeric} will be selected and called with \code{\link{cor}}.}
-#' \item{if \code{explainer}, methods \code{\link[ingredients]{feature_importance}} and \code{\link[ingredients]{partial_dependency}} must not return an error. 
-#' Supply them as arguments(\code{feature_importance} or \code{partial_dependency}) 
-#' or supply options to call the functions inside (\code{feature_importance_opts} and \code{partial_dependency})}
+#' \item{if \code{explainer}, methods \code{\link[ingredients]{feature_importance}} and \code{\link[ingredients]{partial_dependence}} must not return an error. 
+#' Supply them as arguments(\code{feature_importance} or \code{partial_dependence}) 
+#' or supply options to call the functions inside (\code{feature_importance_opts} and \code{partial_dependence})}
 #' }
 #' @param ... other arguments.
 #' @param cutoff a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.
 #' @param values a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.
 #' @param cor_functions a named \code{list} o functions to pass to \code{\link{calculate_cors}}. Must contain necessary functions from \code{num_num_f}, \code{num_cat_f} or \code{cat_cat_f}. Must contain also \code{max_cor}
-#' @param feature_importance an object of \code{feature importance_explainer} class, created by \code{\link[ingredients]{feature_importance}} function. If supported, the argument \code{feature_importance_opts} will be ignored.
-#' @param partial_dependency a named \code{list} with 2 fields: \code{numerical} and \code{categorical} of object(s) of \code{aggregated_profile_explainer} class, created by \code{\link[ingredients]{partial_dependency}} function with argument \code{variable_type} equal either to "numerical" or "categorical" respectively. If only one kind of data was used, use a list with 1 object. If supported, the argument \code{partial_dependency_opts} will be ignored.
-#' @param feature_importance_opts a \code{list} of parameters to pass to \code{\link[ingredients]{feature_importance}} function. This argument will be ignored if \code{feature_importance} is supported.
-#' @param partial_dependency_opts a \code{list} of parameters to pass to \code{\link[ingredients]{partial_dependency}} function. Alternatively, a list with 2 fields: \code{numerical} and \code{categorical} with different sets of options for profiles of different kinds of variables. This argument will be ignored if \code{partial_dependency} is supported.
-
+#' @param feature_importance Either: \itemize{
+#' \item{an object of \code{feature importance_explainer} class, created by \code{\link[ingredients]{feature_importance}} function, or}
+#' \item{a named \code{list} of parameters to pass to \code{\link[ingredients]{feature_importance}} function.}
+#' }
+#' @param partial_dependence a named \code{list} with 2 elements: \code{numerical} and \code{categorical}. Both of them should be of \code{aggregated_profile_explainer} class, created by \code{\link[ingredients]{partial_dependence}} function, or a named \code{list} of parameters to pass to \code{\link[ingredients]{partial_dependence}}. If only one kind of data was used, use a list with 1 object.
 #' @return A \code{corrgrapher} object, consisting of following fields:
 #' \itemize{
 #' \item{\code{nodes} - a \code{data.frame} to pass as argument \code{nodes} to \code{\link{visNetwork}} function}
 #' \item{\code{edges} - a \code{data.frame} to pass as argument \code{edges} to \code{\link{visNetwork}} function}
-#' \item{\code{pds} (if x was of \code{explainer} class) - a splitted \code{partial_dependency_explainer} object. Each item has information about single variable. Passed to \code{\link[ingredients]{plot.aggregated_profiles_explainer}}}
+#' \item{\code{pds} (if x was of \code{explainer} class) - a splitted \code{aggregated_profiles_explainer} object. Each item has information about single variable. Passed to \code{\link[ingredients]{plot.aggregated_profiles_explainer}}}
 #' \item{\code{data} - data used to create the object.}
 #' }
 #' @examples
@@ -47,83 +47,20 @@ corrgrapher.explainer <- function(x,
                                   cor_functions = list(),
                                   ...,
                                   feature_importance = NULL,
-                                  partial_dependency = NULL,
-                                  feature_importance_opts = NULL,
-                                  partial_dependency_opts = NULL) {
+                                  partial_dependence = NULL) {
   # Check the parameters:
   # values and feature_importance:
   if (is.null(values)) {
-    if (is.null(feature_importance)) {
-      if (!is.null(feature_importance_opts)) {
-        values <-
-          do.call(ingredients::feature_importance,
-                  append(feature_importance_opts, list(x = x), after = 0))
-      } else
-        values <- ingredients::feature_importance(x)
-    } else {
-      if (!'feature_importance_explainer' %in% class(feature_importance))
-        stop('feature_importance must be of feature_importance_explainer class')
-      if (!is.null(feature_importance_opts))
-        warning(
-          'feature_importance and feature_importance_opts supported; ignoring feature_importance_opts'
-        )
-      values <- feature_importance
-    }
-    values <- values[values$permutation == 0,]
-    names(values)[names(values) %in% c('variable', 'dropout_loss', 'label')] <-
-      c('label', 'value', 'model_label')
+    check_feature_importance(feature_importance)
+    values <- process_feature_importance(feature_importance, x)
   } else{
     if (!is.null(feature_importance))
-      warning('Supplied values and feature_importance. Ignoring feature_importance')
-    if(!is.null(feature_importance_opts))
-      warning('Supplied values and feature_importance_opts. Ignoring feature_importance')
+      warning('Supplied `values` and `feature_importance`. Ignoring `feature_importance`')
   }
   
-  # partial_dependency:
-  
-  nums <- which_variables_are_numeric(x$data)
-  cats <- !nums
-  if (is.null(partial_dependency)) {
-    partial_dependency <- list()
-    if (!is.null(partial_dependency_opts)) {
-      if(!is.list(partial_dependency_opts)) stop('partial_dependency_opts must be a list')
-      if(length(setdiff(names(partial_dependency_opts), c('numerical', 'categorical'))) == 0){
-        partial_dependency_opts_num <- partial_dependency_opts[['numerical']]
-        partial_dependency_opts_cat <- partial_dependency_opts[['categorical']]
-      } else
-        partial_dependency_opts_num <- partial_dependency_opts_cat <- partial_dependency_opts[['categorical']]
-      
-      partial_dependency_opts_num[['x']] <- x
-      partial_dependency_opts_cat[['x']] <- x
-      partial_dependency_opts_num[['variable_type']] <- 'numerical'
-      partial_dependency_opts_cat[['variable_type']] <- 'categorical'
-      
-      
-      if(any(nums)) 
-        partial_dependency$numerical <- 
-          do.call(ingredients::partial_dependency,
-                  partial_dependency_opts_num)
-      if(any(cats)) 
-        partial_dependency$numerical <- 
-        do.call(ingredients::partial_dependency,
-                partial_dependency_opts_cat)
-    } else{
-      if(any(nums))
-        partial_dependency$numerical <- ingredients::partial_dependency(x, variable_type = 'numerical')
-      if(any(cats)) 
-        partial_dependency$categorical <- ingredients::partial_dependency(x, variable_type = 'categorical')
-    }
-  } else {
-    needed <- list(numerical = any(nums),
-                   categorical = any(cats))
-    if(!is.list(partial_dependency)) stop('partial_dependency must be a list')
-    if(needed$numerical && !'aggregated_profiles_explainer' %in% class(partial_dependency[['numerical']])) stop('profiles for numerical data are necessary')
-    if(needed$categorical && !'aggregated_profiles_explainer' %in% class(partial_dependency[['categorical']])) stop('profiles for categorical data are necessary')
-    if (!is.null(partial_dependency_opts))
-      warning(
-        'partial_dependence and partial_dependence_opts supported; ignoring partial_dependency_opts'
-      )
-  }
+  # partial_dependence:
+  check_partial_dependence(partial_dependence, x)
+  partial_dependence <- process_partial_dependence(partial_dependence, x)
   
   x <- x$data
   cgr <- NextMethod(cutoff = cutoff,
@@ -131,10 +68,7 @@ corrgrapher.explainer <- function(x,
                     values = values,
                     cor_functions = cor_functions,
                     ...)
-  # categorical_pds <- ingredients::partial_dependence(x, variable_type = 'categorical')
-  # categorical_pds_list <- split(categorical_pds, categorical_pds[['_vname_']], drop = TRUE)
-  # cgr$pds <- append(numerical_pds_list, categorical_pds_list)
-  cgr$pds <- partial_dependency
+  cgr$pds <- partial_dependence
   cgr
 }
 
