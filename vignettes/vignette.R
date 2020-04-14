@@ -68,6 +68,18 @@ tit_cgr
 ## ----fifa_plot----------------------------------------------------------------
 fifa_cgr
 
+## ----dragons_setup, warning=FALSE, cache=TRUE---------------------------------
+data(dragons, package='DALEX')
+model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
+model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour,
+                            verbose = FALSE)
+
+dragons_cgr <- corrgrapher(
+  model_exp,
+  feature_importance = list(loss_function = DALEX::loss_accuracy,
+                                 type = 'raw')
+)
+
 ## ----dragons_plot-------------------------------------------------------------
 dragons_cgr
 
