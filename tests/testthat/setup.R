@@ -2,6 +2,8 @@ library(ranger)
 library(randomForest)
 library(DALEX)
 
+set.seed(2020)
+
 data(dragons, package='DALEX')
 model <- ranger::ranger(colour ~ ., data = dragons, num.trees = 100, probability = TRUE)
 model_exp <- DALEX::explain(model, data = dragons[,-5], y = dragons$colour)
@@ -31,7 +33,5 @@ data("Seatbelts")
 df <- as.data.frame(Seatbelts)[,-8]
 cgr_df <- corrgrapher(df)
 cgr_df_mixed <- corrgrapher(titanic_imputed[,-8])
-
-
 
 print('helper ended!')
