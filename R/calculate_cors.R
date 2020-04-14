@@ -19,15 +19,17 @@
 #' 
 #' When \code{x} is a \code{matrix}, it is converted to \code{data.frame} using \code{\link{as.data.frame.matrix}}.
 #' 
-#' When \code{x} is a \code{explainer}, the tests are performed on its \code{data} field.
+#' When \code{x} is a \code{explainer}, the tests are performed on its \code{data} element.
 #' 
 #' When \code{x} is a \code{table}, it is treated as contingency table. No dimnames of it may be named \code{Frequency}.
 #' 
 #' 
 #' @section Default functions:
 #' 
-#' By default, the function calculates p_value of statistical tests (\code{\link{cor.test}} for 2 \code{numeric}, \code{\link{chisq.test}} for \code{\link{factor}} and \code{\link{kruskal.test}} for mixed).
+#' By default, the function calculates p_value of statistical tests ( \code{\link[stats]{cor.test}} for 2 \code{numeric}, \code{\link[stats]{chisq.test}} for \code{factor} and \code{\link[stats]{kruskal.test}} for mixed).
+#' 
 #' Then, the correlation coefficients are calculated as \code{-log10(p_value)}. Any results above 100 are treated as absolute correlation and cut to 100. 
+#' 
 #' The results are then divided by 100 to fit inside [0,1].
 #' 
 #' If only \code{numeric} data was supplied, the function used is \code{\link[stats]{cor.test}}.
@@ -68,6 +70,14 @@
 #' my_f <- function(x,y) cor.test(x, y, method = 'spearman', exact=FALSE)$estimate
 #' calculate_cors(num_mtcars, num_num_f = my_f, max_cor = 1)
 #' 
+#' @seealso  \code{\link[stats]{cor.test}}, \code{\link[stats]{chisq.test}}, \code{\link[stats]{kruskal.test}}
+#' 
+#' @importFrom stats cor.test
+#' @importFrom stats chisq.test
+#' @importFrom stats kruskal.test
+#' @importFrom stats xtabs
+#' @importFrom utils combn
+#' 
 #' @rdname calculate_cors
 #' @export
 
@@ -79,19 +89,6 @@ calculate_cors <- function(x,
   UseMethod('calculate_cors')
   
 }
-
-
-# cor.test - przyjmuje x i y
-# chisq.test - przyjmuje x i y
-# kruskal test - przyjmuje x i y; y JEST FAKTOREM
-# Założenia:
-# 1) x jest data.framem z kolumnami typu numeric i factor
-# kolumny numeric interpretujemy jako zmienne ciągłe, a typu factor - jako kategoryczne
-# 2) każda z funkcji *_f przyjmuje 2 wartości: x i y i zwraca 1 wartość - liczbę z przedziału (0,1)
-# 3) Zwracana jest macierz n x n, gdzie n - ilość kolumn w x. 
-
-# Uwaga: użytkonik modyfikujący funkcje powinien mieć świadomość, że wyniki trudno się porównuje.
-# Docelowo ma działać dla data.frame (default), explainer i table
 
 #' @rdname calculate_cors
 #' @export
@@ -121,6 +118,8 @@ calculate_cors.matrix <- function(x,
 #' @export
 
 calculate_cors.table <- function(x,
+                                 num_num_f = NULL,
+                                 num_cat_f = NULL,
                                  cat_cat_f = NULL,
                                  max_cor = NULL) {
   if(!is.null(cat_cat_f)){
