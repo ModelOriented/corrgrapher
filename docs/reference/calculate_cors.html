@@ -133,7 +133,7 @@ categorical - categorical
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate correlation coefficients</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/CorrGrapheR/blob/master/R/correlations.R'><code>R/correlations.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/CorrGrapheR/blob/master/R/calculate_cors.R'><code>R/calculate_cors.R</code></a></small>
     <div class="hidden name"><code>calculate_cors.Rd</code></div>
     </div>
 
@@ -174,7 +174,13 @@ using 3 different functions for 3 different possible pairs of vairables:</p><ul>
 )
 
 <span class='co'># S3 method for table</span>
-<span class='fu'>calculate_cors</span>(<span class='no'>x</span>, <span class='kw'>cat_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max_cor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>calculate_cors</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>num_num_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>num_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cat_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>max_cor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>calculate_cors</span>(
@@ -222,16 +228,16 @@ On the diagonal, values from <code>max_cor</code> are set.</p>
 
 <p>When <code>x</code> is a <code>data.frame</code>, all columns of <code>numeric</code> type are treated as numeric variables and all columns of <code>factor</code> type are treated as categorical variables. Columns of other types are ignored.</p>
 <p>When <code>x</code> is a <code>matrix</code>, it is converted to <code>data.frame</code> using <code><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame.matrix</a></code>.</p>
-<p>When <code>x</code> is a <code>explainer</code>, the tests are performed on its <code>data</code> field.</p>
+<p>When <code>x</code> is a <code>explainer</code>, the tests are performed on its <code>data</code> element.</p>
 <p>When <code>x</code> is a <code>table</code>, it is treated as contingency table. No dimnames of it may be named <code>Frequency</code>.</p>
     <h2 class="hasAnchor" id="default-functions"><a class="anchor" href="#default-functions"></a>Default functions</h2>
 
     
 
 
-<p>By default, the function calculates p_value of statistical tests (<code><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></code> for 2 <code>numeric</code>, <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test</a></code> for <code><a href='https://rdrr.io/r/base/factor.html'>factor</a></code> and <code><a href='https://rdrr.io/r/stats/kruskal.test.html'>kruskal.test</a></code> for mixed).
-Then, the correlation coefficients are calculated as <code>-log10(p_value)</code>. Any results above 100 are treated as absolute correlation and cut to 100. 
-The results are then divided by 100 to fit inside [0,1].</p>
+<p>By default, the function calculates p_value of statistical tests ( <code><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></code> for 2 <code>numeric</code>, <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test</a></code> for <code>factor</code> and <code><a href='https://rdrr.io/r/stats/kruskal.test.html'>kruskal.test</a></code> for mixed).</p>
+<p>Then, the correlation coefficients are calculated as <code>-log10(p_value)</code>. Any results above 100 are treated as absolute correlation and cut to 100.</p>
+<p>The results are then divided by 100 to fit inside [0,1].</p>
 <p>If only <code>numeric</code> data was supplied, the function used is <code><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></code>.</p>
     <h2 class="hasAnchor" id="custom-functions"><a class="anchor" href="#custom-functions"></a>Custom functions</h2>
 
@@ -247,6 +253,9 @@ For example, for a <code>matrix</code> with <code>numeric</code> data only <code
 On the other hand, for a <code>table</code> only <code>cat_cat_f</code> is required.</p>
 <p>All <code>*_f</code> parameters must be functions, which accept 2 parameters (<code>numeric</code> or <code>factor</code> vectors respectively)
 and return a single number from [0,max_num]. The <code>num_cat_f</code> must accept <code>numeric</code> argument as first and <code>factor</code> argument as second.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></code>, <code><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test</a></code>, <code><a href='https://rdrr.io/r/stats/kruskal.test.html'>kruskal.test</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

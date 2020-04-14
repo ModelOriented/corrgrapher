@@ -145,9 +145,7 @@
   <span class='kw'>cor_functions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(),
   <span class='no'>...</span>,
   <span class='kw'>feature_importance</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>partial_dependency</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>feature_importance_opts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>partial_dependency_opts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>partial_dependence</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )
 
 <span class='co'># S3 method for default</span>
@@ -160,9 +158,9 @@
       <th>x</th>
       <td><p>an object to be used to select the method, which must satisfy conditions:</p><ul>
 <li><p>if <code>data.frame</code> (default), columns with type <code>numeric</code> will be selected and called with <code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code>.</p></li>
-<li><p>if <code>explainer</code>, methods <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>feature_importance</a></code> and <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependency</a></code> must not return an error. 
-Supply them as arguments(<code>feature_importance</code> or <code>partial_dependency</code>) 
-or supply options to call the functions inside (<code>feature_importance_opts</code> and <code>partial_dependency</code>)</p></li>
+<li><p>if <code>explainer</code>, methods <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>feature_importance</a></code> and <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependence</a></code> must not return an error. 
+Supply them as arguments(<code>feature_importance</code> or <code>partial_dependence</code>) 
+or supply options to call the functions inside (<code>feature_importance_opts</code> and <code>partial_dependence</code>)</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -183,19 +181,14 @@ or supply options to call the functions inside (<code>feature_importance_opts</c
     </tr>
     <tr>
       <th>feature_importance</th>
-      <td><p>an object of <code>feature importance_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>feature_importance</a></code> function. If supported, the argument <code>feature_importance_opts</code> will be ignored.</p></td>
+      <td><p>Either:</p><ul>
+<li><p>an object of <code>feature importance_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>feature_importance</a></code> function, or</p></li>
+<li><p>a named <code>list</code> of parameters to pass to <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>feature_importance</a></code> function.</p></li>
+</ul></td>
     </tr>
     <tr>
-      <th>partial_dependency</th>
-      <td><p>a named <code>list</code> with 2 fields: <code>numerical</code> and <code>categorical</code> of object(s) of <code>aggregated_profile_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependency</a></code> function with argument <code>variable_type</code> equal either to "numerical" or "categorical" respectively. If only one kind of data was used, use a list with 1 object. If supported, the argument <code>partial_dependency_opts</code> will be ignored.</p></td>
-    </tr>
-    <tr>
-      <th>feature_importance_opts</th>
-      <td><p>a <code>list</code> of parameters to pass to <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>feature_importance</a></code> function. This argument will be ignored if <code>feature_importance</code> is supported.</p></td>
-    </tr>
-    <tr>
-      <th>partial_dependency_opts</th>
-      <td><p>a <code>list</code> of parameters to pass to <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependency</a></code> function. Alternatively, a list with 2 fields: <code>numerical</code> and <code>categorical</code> with different sets of options for profiles of different kinds of variables. This argument will be ignored if <code>partial_dependency</code> is supported.</p></td>
+      <th>partial_dependence</th>
+      <td><p>a named <code>list</code> with 2 elements: <code>numerical</code> and <code>categorical</code>. Both of them should be of <code>aggregated_profile_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependence</a></code> function, or a named <code>list</code> of parameters to pass to <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependence</a></code>. If only one kind of data was used, use a list with 1 object.</p></td>
     </tr>
     </table>
 
@@ -204,7 +197,7 @@ or supply options to call the functions inside (<code>feature_importance_opts</c
     <p>A <code>corrgrapher</code> object, consisting of following fields:</p><ul>
 <li><p><code>nodes</code> - a <code>data.frame</code> to pass as argument <code>nodes</code> to <code>visNetwork</code> function</p></li>
 <li><p><code>edges</code> - a <code>data.frame</code> to pass as argument <code>edges</code> to <code>visNetwork</code> function</p></li>
-<li><p><code>pds</code> (if x was of <code>explainer</code> class) - a splitted <code>partial_dependency_explainer</code> object. Each item has information about single variable. Passed to <code><a href='https://rdrr.io/pkg/ingredients/man/plot.aggregated_profiles_explainer.html'>plot.aggregated_profiles_explainer</a></code></p></li>
+<li><p><code>pds</code> (if x was of <code>explainer</code> class) - a splitted <code>aggregated_profiles_explainer</code> object. Each item has information about single variable. Passed to <code><a href='https://rdrr.io/pkg/ingredients/man/plot.aggregated_profiles_explainer.html'>plot.aggregated_profiles_explainer</a></code></p></li>
 <li><p><code>data</code> - data used to create the object.</p></li>
 </ul>
 
