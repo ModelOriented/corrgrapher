@@ -1,6 +1,14 @@
 # funkcje sprawdzają parametry i zwracają przetworzone wartości
 # rozdzielamy process() od check()
 
+
+#' Check feature_importance argument
+#' 
+#' Test, whether feature_importance argument is valid, and raise errors in case.
+#' 
+#' @param feature_importance Object to check.
+#' 
+#' @noRd
 check_feature_importance <- function(feature_importance){
   if(!'feature_importance_explainer' %in% class(feature_importance) &
      !is.list(feature_importance) &
@@ -10,6 +18,19 @@ check_feature_importance <- function(feature_importance){
          call. = FALSE)
 }
 
+#' Process feature_importance argument
+#' 
+#' Extract or calculate importance of features, depending on argument
+#' 
+#' @param feature_importance Object to process.
+#' 
+#' @details 
+#' 
+#' If feature_importance is a feature_importance_explainer, it is simply passed further.
+#' If it is NULL, it is calculated with default parameters.
+#' If it's a list, it's assumed to be a list of arguments to pass to feature_importance().
+#' 
+#' @noRd
 process_feature_importance <- function(feature_importance, x){
   # 1) obiekt klasy feature_importance_explainer
   if('feature_importance_explainer' %in% class(feature_importance))
@@ -27,6 +48,16 @@ process_feature_importance <- function(feature_importance, x){
   colnames(values) <- c('label', 'value')
   values
 }
+
+#' Check partial_dependency argument
+#' 
+#' Test, whether partial_dependency argument is valid, and raise errors in case.
+#' 
+#' @param partial_dependence Object to check.
+#' @param x Explainer, based on which partial_dependence was created.
+#' 
+#' @noRd
+
 
 check_partial_dependence <- function(partial_dependence, x){
   nums <- which_variables_are_numeric(x$data)
@@ -59,12 +90,26 @@ check_partial_dependence <- function(partial_dependence, x){
       stop(
         paste0(
           '`partial_dependence[[categorical]]`, if supported, must be a partial_dependence_explainer or list, not',
-          class(feature_importance)[1]
+          class(partial_dependence)[1]
         ),
         call. = FALSE
       )
   }
 }
+
+#' Process partial_dependence argument
+#' 
+#' Extract or calculate partial_dependences, depending on argument
+#' 
+#' @param partial_dependece Object to process.
+#' @param x Explainer, based on which partial_dependence was created
+#' 
+#' @details 
+#' partial dependence must be a list with numerical and categorical, depending on which are necessary for x.
+#' If these elements are of partial_dependence_explainer class, they are simply passed further.
+#' If it's a list, it's assumed to be a list of arguments to pass to partial_dependence().
+#' 
+#' @noRd
 
 process_partial_dependence <- function(partial_dependence, x){
   # 1) czego potrzebujemy
@@ -96,11 +141,29 @@ process_partial_dependence <- function(partial_dependence, x){
   partial_dependence
 }
 
+#' Check cutoff argument
+#' 
+#' Test, whether cutoff argument is valid, and raise errors in case.
+#' 
+#' @param cutoff Object to check.
+#' 
+#' @noRd
+
 check_cutoff <- function(cutoff){
   if(length(cutoff) > 1 || !is.numeric(cutoff)) stop('cutoff must be a single number')
   if(cutoff >= 1) warning('cutoff > 1. Interpreting as no cutoff')
   if(cutoff <= 0) warning('cutoff <= 0. Cutting off all edges')
 }
+
+#' Check values argument
+#' 
+#' Test, whether values argument is valid, and raise errors in case.
+#' 
+#' @param values Object to check.
+#' @param x A data.frame passed to corrgraopher(), for which the values are supported.
+#' 
+#' @noRd
+
 
 check_values <- function(values, x){
   if(!is.data.frame(values)) stop('if suported, values must be a data.frame')

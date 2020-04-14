@@ -1,15 +1,15 @@
 context('utils working properly')
 
-# create_tabset --------------------------------------- 
+# wrap_with_html_tag --------------------------------------- 
 
-test_that('create_tabset working properly with numerical data', {
-  expect_is(create_tabset(cgr_exp), 'shiny.tag')
-  expect_is(create_tabset(cgr_df), 'shiny.tag')
+test_that('wrap_with_html_tag working properly with numerical data', {
+  expect_is(wrap_with_html_tag(cgr_exp), 'shiny.tag')
+  expect_is(wrap_with_html_tag(cgr_df), 'shiny.tag')
 })
 
-test_that('create_tabset working properly with mixed data', {
-  expect_is(create_tabset(tit_cgr_exp), 'shiny.tag')
-  expect_is(create_tabset(cgr_df_mixed), 'shiny.tag')
+test_that('wrap_with_html_tag working properly with mixed data', {
+  expect_is(wrap_with_html_tag(tit_cgr_exp), 'shiny.tag')
+  expect_is(wrap_with_html_tag(cgr_df_mixed), 'shiny.tag')
 })
 
 # insert_image ---------------------------------------
