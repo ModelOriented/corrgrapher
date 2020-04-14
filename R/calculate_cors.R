@@ -155,10 +155,14 @@ calculate_cors.default <- function(x,
                                       max_cor = NULL) {
   # sprawdzenie poprawności i potrzebnych funkcji
   if(!is.data.frame(x)) stop(paste0('x must be a data.frame, not ', class(x)))
-  nums <- sapply(x, is.numeric)
-  cats <- sapply(x, is.factor)
-  if(sum(nums) + sum(cats) < ncol(x)) warning(paste0('Ignoring columns:',
-                                           colnames(x)[!nums & !cats]))
+  nums <- which_variables_are_numeric(x)
+  cats <- sapply(x[,,drop=FALSE], is.factor)
+  if(sum(nums) + sum(cats) < ncol(x)) warning(
+    paste0('Ignoring columns:',
+           do.call(paste, append(as.list(colnames(x)[!nums & !cats]),
+                                 list(sep = ', ')))
+    )
+  )
   
   # Określamy, które z funkcji są niezbędne
   necessary_fs <- list(num_num_f = sum(nums) > 1,
@@ -172,7 +176,7 @@ calculate_cors.default <- function(x,
     else {
       num_num_f <- function(x, y) -log10(cor.test(x, y)[['p.value']])
       num_cat_f <- function(x, y) -log10(kruskal.test(x, y)[['p.value']])
-      cat_cat_f <- function(x, y) -log10(chisq.test(x, y)[['p.value']])
+      cat_cat_f <- function(x, y) suppressWarnings(-log10(chisq.test(x, y)[['p.value']]))
       max_cor <- 100
     }
   } else{

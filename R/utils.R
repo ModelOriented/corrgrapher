@@ -122,4 +122,3 @@ which_variables_are_numeric <- function(data) {
     sapply(data[,, drop = FALSE], is.numeric)
   }
 }
-

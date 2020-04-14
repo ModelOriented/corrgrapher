@@ -83,21 +83,17 @@ corrgrapher.default <- function(x,
                                 ...) {
   # if(is.null(colorer)) colorer <- colorRampPalette(c('#9fe5bd80', '#77d1be80','#46bac280','#4590c480', '#371ea380'))
   if(!is.data.frame(x)) stop('x must be a data.frame')
-  if(length(cutoff) > 1 || !is.numeric(cutoff)) stop('cutoff must be a single number')
-  if(cutoff >= 1) warning('cutoff > 1. Interpreting as no cutoff')
-  if(cutoff <= 0) warning('cutoff <= 0. Cutting off all edges')
+  check_cutoff(cutoff)
   if(is.null(values)) values <- data.frame(value = rep(5 * sqrt(ncol(x)), ncol(x)),
                                        label = colnames(x))
   else {
-    if(!is.data.frame(values)) stop('if suported, values must be a data.frame')
-    if(length(setdiff(c('label', 'value'), colnames(values))) > 0) stop('if suported, values must contain "label" and "value" columns')
-    if(length(setdiff(colnames(x), values[['label']])) > 0) stop('if supported, values$label must contain all colnames(x)')
-    if(!is.numeric(values$value)) stop('if supported, values$value must be numeric')
+    check_values(values, x)
     values <- values[,c('label', 'value')]
   }
   
-  if(!is.null(cor_functions) && !is.list(cor_functions)) stop(paste0('If supplied, cor_functions must be list, not', class(cor_functions)[1]))
-  cor_functions <- cor_functions[names(formals(calculate_cors))[-1]]
+  if(!is.null(cor_functions) && !is.list(cor_functions)) 
+    stop(paste0('If supplied, cor_functions must be list, not', class(cor_functions)[1]))
+  cor_functions$x <- x
   
   nodes <- data.frame(id = 1:ncol(x),
                       label = colnames(x),
@@ -109,7 +105,7 @@ corrgrapher.default <- function(x,
                  by.x = 'label',
                  by.y = 'label')
   corelations <- as.vector(do.call(calculate_cors,
-                                   append(cor_functions, list(x = x), after = 0)))
+                                   cor_functions))
   
   edges <- data.frame(corelations = corelations, 
                       from = rep(1:ncol(x), each = ncol(x)),

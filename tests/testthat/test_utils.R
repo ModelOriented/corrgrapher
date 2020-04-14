@@ -1,6 +1,20 @@
-context('encode_image working properly')
+context('utils working properly')
+
+# create_tabset --------------------------------------- 
+
+test_that('create_tabset working properly with numerical data', {
+  expect_is(create_tabset(cgr_exp), 'shiny.tag')
+  expect_is(create_tabset(cgr_df), 'shiny.tag')
+})
+
+test_that('create_tabset working properly with mixed data', {
+  expect_is(create_tabset(tit_cgr_exp), 'shiny.tag')
+  expect_is(create_tabset(cgr_df_mixed), 'shiny.tag')
+})
+
+# insert_image ---------------------------------------
+
 library(ggplot2)
-data("dragons", package = 'DALEX')
 pl <- ggplot(dragons, aes(x = height,
                           y = weight)) +
   geom_point()
@@ -23,6 +37,13 @@ test_that('handles existing file error',{
   expect_error({
     file.create(file.path(absolutePath, 'dont_append_me.png'))
     insert_image(pl, container_id, file.path(absolutePath('dont_append_me.png')))
-    })
+  })
 })
 file.remove(file.path(absolutePath, 'dont_append_me.png'))
+
+# plot_distribution ---------------------------------
+
+test_that('plot_distibution working properly',{
+  expect_is(plot_distribution(dragons$height, 'height'), 'gg')
+  expect_is(plot_distribution(dragons$colour, 'colour'), 'gg')
+})

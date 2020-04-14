@@ -95,3 +95,16 @@ process_partial_dependence <- function(partial_dependence, x){
   }
   partial_dependence
 }
+
+check_cutoff <- function(cutoff){
+  if(length(cutoff) > 1 || !is.numeric(cutoff)) stop('cutoff must be a single number')
+  if(cutoff >= 1) warning('cutoff > 1. Interpreting as no cutoff')
+  if(cutoff <= 0) warning('cutoff <= 0. Cutting off all edges')
+}
+
+check_values <- function(values, x){
+  if(!is.data.frame(values)) stop('if suported, values must be a data.frame')
+  if(length(setdiff(c('label', 'value'), colnames(values))) > 0) stop('if suported, values must contain "label" and "value" columns')
+  if(length(setdiff(colnames(x), values[['label']])) > 0) stop('if supported, values$label must contain all colnames(x)')
+  if(!is.numeric(values$value)) stop('if supported, values$value must be numeric')
+}
