@@ -25,8 +25,11 @@ Suggests:
     gbm,
     randomForest,
     ranger,
-    shiny
+    shiny,
+    spelling,
+    covr
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
 URL: https://modeloriented.github.io/CorrGrapheR/, https://github.com/ModelOriented/CorrGrapheR
 BugReports: https://github.com/ModelOriented/CorrGrapheR/issues
+Language: en-US
