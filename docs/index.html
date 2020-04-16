@@ -66,7 +66,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/vignette.html">Vignette</a>
+      <a href="articles/Customization.html">Customization</a>
+    </li>
+    <li>
+      <a href="articles/Introduction.html">Introduction to CorrGrapheR</a>
     </li>
   </ul>
 </li>
@@ -88,12 +91,45 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
+
 <div id="corrgrapher" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#corrgrapher" class="anchor"></a>CorrGrapheR</h1></div>
-<p>A package for Mi^2 Lab to visualize correlations between variables.</p>
-<p>Feel free to take a look at <a href="https://modeloriented.github.io/CorrGrapheR/articles/vignette.html">vignette</a>.</p>
+<p>Visualize correlations between variables in datasets</p>
+<div id="the-problem-with-pairs" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-problem-with-pairs" class="anchor"></a>The problem with pairs</h2>
+<p>Data analysis (and creating ML models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding corelations between variables proves to be difficult (<code>n</code>variables means <code>n(n-1)/2</code> pairs of variables). Furthermore, the mainstream method of visualizing them (i.e.Â correlation matrix) has its limits; the more variables, the less readable (and therefore meaningful) it becomes.</p>
 </div>
+<div id="the-solution---less-numbers-more-layout" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-solution---less-numbers-more-layout" class="anchor"></a>The solution - less numbers, more layout</h2>
+<p>This package aims to plot correlations between variables in form of a graph. Each node on it is associated with single variable. Variables correlated with each other (posivitely and negatively alike) shall be close, and weakly correlated - far from each other.</p>
+<p>It is achieved through a physical simulation, where the nodes are treated as points with mass (and are pushing each other away) and edges are treated as mass-less springs. The length of a spring depends on absolute value of correlation between connected nodes. The bigger the correlation, the shorter the spring.</p>
+</div>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>Install the <code>CorrGrapheR</code> package from GitHub.</p>
+<pre><code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">devtools::install_github("ModelOriented/CorrGrapheR")</a></code></pre>
+</div>
+<div id="example-of-use" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-of-use" class="anchor"></a>Example of use</h2>
+<pre><code><a href="https://rdrr.io/pkg/CorrGrapheR/man">library('CorrGrapheR')
+library('magrittr')
+df &lt;- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
+cgr &lt;- corrgrapher(df)
+cgr</a></code></pre>
+</div>
+<div id="see-also" class="section level2">
+<h2 class="hasAnchor">
+<a href="#see-also" class="anchor"></a>See also</h2>
+<p>Feel free to take a look at <a href="https://modeloriented.github.io/CorrGrapheR/articles/vignette.html">introduction</a> at <a href="https://modeloriented.github.io/CorrGrapheR/index.html">package site</a>.</p>
+</div>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -119,7 +155,14 @@
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/ModelOriented/CorrGrapheR"><img src="https://travis-ci.org/ModelOriented/CorrGrapheR.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://codecov.io/gh/ModelOriented/CorrGrapheR?branch=master"><img src="https://codecov.io/gh/ModelOriented/CorrGrapheR/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
