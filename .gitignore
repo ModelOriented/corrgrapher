@@ -44,3 +44,4 @@ report.html
 lib/*
 
 vignettes/test.Rmd
+inst/doc

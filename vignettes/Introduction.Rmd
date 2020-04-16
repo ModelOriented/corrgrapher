@@ -11,7 +11,9 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      message = FALSE)
+                      message = FALSE,
+                      collapse = TRUE,
+                      comment = "#>")
 load(system.file('extdata', 'fifa_cgr.rda', package = 'CorrGrapheR'))
 ```
 
@@ -61,7 +63,7 @@ As expected, we see, that all variables regarding casualties are correlated with
 
 ## Comparable corelation coefficients 
 
-Computing comparable corelation coefficients between variables of different types (numerical - numerical, numerical - categorical, categorical - categorical) is a non-trivial problem. In this package, when encountering data with different kinds of variables, a following methodology is used:
+Calcuating comparable corelation coefficients between variables of different types (numerical - numerical, numerical - categorical, categorical - categorical) is a non-trivial problem. In this package, when encountering data with different kinds of variables, a following methodology is used:
 
 1. First, the $p$-values are calculated of 3 different statistical tests: 
 

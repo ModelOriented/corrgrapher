@@ -1,0 +1,114 @@
+---
+title: "Customization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{customization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(CorrGrapheR)
+```
+
+## Custom correlation coefficients
+
+### calculate_cors function
+
+As mentioned in introduction, calculating comparable corelation coefficients between variables of different types is a non-trivial problem. The `CorrGrapheR` package provides user with ability to experiment with different measures of correlation, using `calculate_cors` function.
+
+The `num_num_f`, `num_cat_f` and `cat_cat_f` arguments should be functions, used to calculate correlation coefficients between different pairs variables, respectively. Each of them should take 2 arguments (vectors of equal length; for `num_num_f` - both `numeric`, for `cat_cat_f` - both `factor`, for `num_cat_f` - **first** `numeric` and **second** `factor`) and return a single number. It should be intepretable in the following way: the bigger its absolute value, the stronger correlation between variables. If it's negative - the variables are negatively correlated.
+
+When supplying custom functions, a `max_cor` argument is required. It should be a single number indicating strongest possible correlation (like 1 in Pearson's `cor.test`). It is used when calculating correlation between the same variables, to trim accidental results above it and to scale final results into $[-1,1]$ range.
+
+The `calculate_cors` returns a correlation `matrix`, similarly to `cor`.
+
+```{r cors}
+df <- as.data.frame(datasets::Seatbelts)[,1:5]
+f1 <- function(x, y) cor.test(x, y, method = 'pearson')$estimate
+f2 <- function(x, y) cor.test(x, y, method = 'kendall')$estimate
+f3 <- function(x, y) cor.test(x, y, method = 'spearman', exact = FALSE)$estimate
+calculate_cors(df, num_num_f = f1, max_cor = 1)
+calculate_cors(df, num_num_f = f2, max_cor = 1)
+calculate_cors(df, num_num_f = f3, max_cor = 1)
+```
+
+As we see, user has to supply only necessary functions for given `x` argument. For a `data.frame` only with `numeric` data only `num_num_f` is required. 
+
+Since correlation meaures for different data variables are **not** comparable in most cases, it requried from the user to **always** supply **all** necessary functions. Naturally, user might supply function identical to the default:
+
+```{r cors_mixed}
+data(dragons, package = 'DALEX')
+f1 <- function(x, y) -log10(cor.test(x, y, method = 'spearman', exact = FALSE)$p.value)
+f2 <- function(x, y) -log10(kruskal.test(x, y)$p.value)
+calculate_cors(dragons, 
+               num_num_f = f1, 
+               num_cat_f = f2,
+               max_cor = 100)
+```
+
+### Inside corrgrapher function
+
+`calculate_cors` is called inside `corrgrapher` function. User may pass custom functions to it via `cor_functions` argument. It should be a named `list` with `num_num_f`, `num_cat_f`, `cat_cat_f` and `max_cor` elements.
+
+```{r cors_passed}
+corrgrapher(df,
+            cor_functions = list(num_num_f = f1, 
+                                 num_cat_f = f2, 
+                                 max_cor = 100))
+```
+
+## Custom feature importance
+
+When `corrgrapher` function is called on an `explainer` object, it calculates inside importance of features (variables) using `ingredients::feature_importance` function. User may (sometimes should) supply `feature_importance` argument as either:
+
+ * An object created using `ingredients::feature_importance` on **the same** `explainer`, or
+ * A named list of parameters to pass to `ingredients::feature_importance` called inside `corrgrapher` function.
+ 
+Remember, do **not** change `variables` and `variable_groups` arguments.
+ 
+```{r feat, cache=TRUE}
+library(ranger)
+library(DALEX)
+data("titanic_imputed", package='DALEX')
+tit_model <- ranger(survived ~ ., data = titanic_imputed, num.trees = 100)
+tit_model_exp <- explain(tit_model,
+                         data = titanic_imputed[,-8],
+                         y = titanic_imputed[, 8],
+                         verbose = FALSE)
+tit_model_fi <- ingredients::feature_importance(tit_model_exp,
+                                                B = 5,
+                                                loss_function = loss_accuracy)
+tit_cgr_1 <- corrgrapher(tit_model_exp, feature_importance = tit_model_fi)
+tit_cgr_2 <- corrgrapher(tit_model_exp, 
+                         feature_importance = list(B = 20,
+                                                   loss_function = loss_one_minus_auc))
+tit_cgr_1
+tit_cgr_2
+```
+
+## Custom partial dependence
+
+Similarly to `feature_importance`, user may (sometimes should) supply `partial_dependency` argument. Do **not** change `variable_type`, `variables` or `variable_splits` arguments.
+
+```{r pds, cache=TRUE}
+tit_model_pds <- ingredients::partial_dependence(tit_model_exp, grid_points = 50, N = 100)
+
+tit_cgr_3 <- corrgrapher(tit_model_exp, 
+                         feature_importance = tit_model_fi,
+                         partial_dependency = tit_model_pds)
+tit_cgr_4 <- corrgrapher(tit_model_exp, 
+                         feature_importance = tit_model_fi,
+                         partial_dependency = list(grid_points = 101,
+                                                   N = 200))
+
+tit_cgr_3
+tit_cgr_4
+```
