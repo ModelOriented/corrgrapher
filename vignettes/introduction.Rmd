@@ -1,5 +1,5 @@
 ---
-title: "Vignette"
+title: "Introduction to CorrGrapheR"
 author: "Paweł Morgen"
 output: 
   rmarkdown::html_vignette:
@@ -12,7 +12,7 @@ vignette: >
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE)
-data('fifa_cgr', package = 'CorrGrapheR')
+load(system.file('extdata', 'fifa_cgr.rda', package = 'CorrGrapheR'))
 ```
 
 ## The problem
@@ -59,9 +59,9 @@ On the side a simple plot with distribution of variables is displayed. The figur
 
 As expected, we see, that all variables regarding casualties are correlated with each other, but `rear` and `VanKilled` weaker than others. We also observe the negative correlation between `PetrolPrice` and variables `drivers`, `DriversKilled` and `front`.
 
-## Comparable coefficients of corelation
+## Comparable corelation coefficients 
 
-Computing comparable corelation coefficients between variables of different types (numerical - numerical, numerical - categorical, categorical - categorical) is a non-trivial problem. In this package, when encountering data with different kinds of variables, we use the following methodology:
+Computing comparable corelation coefficients between variables of different types (numerical - numerical, numerical - categorical, categorical - categorical) is a non-trivial problem. In this package, when encountering data with different kinds of variables, a following methodology is used:
 
 1. First, the $p$-values are calculated of 3 different statistical tests: 
 
@@ -71,7 +71,7 @@ Computing comparable corelation coefficients between variables of different type
  
 2. Then, the $-log_{10}(p)$ is calculated and treated as ma measure of correlation betwenn variables. All results above 100 ($p$-value < $10^{-100}$) are treated as absolute correlation and their value is reduced to 100
 
-3. Finally, results are scaled to fit inside$[0,1]$ .
+3. Finally, results are scaled to fit inside $[0,1]$ .
 
 ## Example 2 - Titanic
 
@@ -209,3 +209,6 @@ save_cgr_to_html(fifa_cgr)
 ```
 
 It will produce a HTML file, containing a similar output the one from chunks above.
+
+## See also
+
