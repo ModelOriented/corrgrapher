@@ -35,6 +35,6 @@ cgr
 
 ## See also
 
-Feel free to take a look at
-[introduction](https://modeloriented.github.io/CorrGrapheR/articles/vignette.html) at
+Feel free to take a look at articles about
+[introduction](https://modeloriented.github.io/CorrGrapheR/articles/Introduction.html) and [customization](https://modeloriented.github.io/CorrGrapheR/articles/Customization.html) at
 [package site](https://modeloriented.github.io/CorrGrapheR/index.html).
