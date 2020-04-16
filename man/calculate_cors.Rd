@@ -57,7 +57,7 @@ calculate_cors(
 
 \item{cat_cat_f}{A \code{function} used to determine correlation coefficient between a pair of categorical variables}
 
-\item{max_cor}{A number used to indicate absolute corelation (like 1 in \code{cor}). Must be supplied if any of \code{*_f} arguments is supplied.}
+\item{max_cor}{A number used to indicate absolute correlation (like 1 in \code{cor}). Must be supplied if any of \code{*_f} arguments is supplied.}
 }
 \value{
 A symmetrical \code{matrix} A of size n x n, where n - amount of columns in \code{x} (or dimensions for \code{table}).
@@ -100,8 +100,8 @@ If only \code{numeric} data was supplied, the function used is \code{\link[stats
 
 
 Creating consistent measures for correlation coefficients, which are comparable for different kinds of variables, is a non-trivial task.
-Therefore, if user wishes to use custom function for calculating correlaction coefficients, he must provide \strong{all} necessary functions.
-Using a custom function for one case and a default for the other is consiously not supported. 
+Therefore, if user wishes to use custom function for calculating correlation coefficients, he must provide \strong{all} necessary functions.
+Using a custom function for one case and a default for the other is consciously not supported. 
 Naturally, user may supply a copy of default functions at his own responsibility.
 
 Function \code{calculate_cors} chooses, which parameters of \code{*_f} are required based on data supported. 

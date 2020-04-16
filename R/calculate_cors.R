@@ -11,7 +11,7 @@
 #' @param num_num_f A \code{function} used to determine correlation coefficient between a pair of numeric variables
 #' @param num_cat_f A \code{function} used to determine correlation coefficient between a pair of numeric and categorical variable
 #' @param cat_cat_f A \code{function} used to determine correlation coefficient between a pair of categorical variables
-#' @param max_cor A number used to indicate absolute corelation (like 1 in \code{cor}). Must be supplied if any of \code{*_f} arguments is supplied.
+#' @param max_cor A number used to indicate absolute correlation (like 1 in \code{cor}). Must be supplied if any of \code{*_f} arguments is supplied.
 #' 
 #' @section X argument:
 #' 
@@ -37,8 +37,8 @@
 #' @section Custom functions:
 #' 
 #' Creating consistent measures for correlation coefficients, which are comparable for different kinds of variables, is a non-trivial task.
-#' Therefore, if user wishes to use custom function for calculating correlaction coefficients, he must provide \strong{all} necessary functions.
-#' Using a custom function for one case and a default for the other is consiously not supported. 
+#' Therefore, if user wishes to use custom function for calculating correlation coefficients, he must provide \strong{all} necessary functions.
+#' Using a custom function for one case and a default for the other is consciously not supported. 
 #' Naturally, user may supply a copy of default functions at his own responsibility.
 #' 
 #' Function \code{calculate_cors} chooses, which parameters of \code{*_f} are required based on data supported. 

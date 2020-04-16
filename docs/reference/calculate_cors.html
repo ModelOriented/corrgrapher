@@ -215,7 +215,7 @@ using 3 different functions for 3 different possible pairs of vairables:</p><ul>
     </tr>
     <tr>
       <th>max_cor</th>
-      <td><p>A number used to indicate absolute corelation (like 1 in <code>cor</code>). Must be supplied if any of <code>*_f</code> arguments is supplied.</p></td>
+      <td><p>A number used to indicate absolute correlation (like 1 in <code>cor</code>). Must be supplied if any of <code>*_f</code> arguments is supplied.</p></td>
     </tr>
     </table>
 
@@ -248,8 +248,8 @@ On the diagonal, values from <code>max_cor</code> are set.</p>
 
 
 <p>Creating consistent measures for correlation coefficients, which are comparable for different kinds of variables, is a non-trivial task.
-Therefore, if user wishes to use custom function for calculating correlaction coefficients, he must provide <strong>all</strong> necessary functions.
-Using a custom function for one case and a default for the other is consiously not supported. 
+Therefore, if user wishes to use custom function for calculating correlation coefficients, he must provide <strong>all</strong> necessary functions.
+Using a custom function for one case and a default for the other is consciously not supported. 
 Naturally, user may supply a copy of default functions at his own responsibility.</p>
 <p>Function <code>calculate_cors</code> chooses, which parameters of <code>*_f</code> are required based on data supported. 
 For example, for a <code>matrix</code> with <code>numeric</code> data only <code>num_num_f</code> is required. 

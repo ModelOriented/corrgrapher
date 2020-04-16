@@ -10,8 +10,8 @@
 #' or supply options to call the functions inside (\code{feature_importance_opts} and \code{partial_dependence})}
 #' }
 #' @param ... other arguments.
-#' @param cutoff a number. Corelations below this are treated as \strong{no} corelation. Edges corresponding to them will \strong{not} be included in the graph.
-#' @param values a \code{data.frame} with information abour size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Deafult set to equal for all nodes, or (for \code{explainer}) importance of variables.
+#' @param cutoff a number. Correlations below this are treated as \strong{no} correlation. Edges corresponding to them will \strong{not} be included in the graph.
+#' @param values a \code{data.frame} with information about size of the nodes, containing columns \code{value} and \code{label} (consistent with colnames of \code{x}). Default set to equal for all nodes, or (for \code{explainer}) importance of variables.
 #' @param cor_functions a named \code{list} o functions to pass to \code{\link{calculate_cors}}. Must contain necessary functions from \code{num_num_f}, \code{num_cat_f} or \code{cat_cat_f}. Must contain also \code{max_cor}
 #' @param feature_importance Either: \itemize{
 #' \item{an object of \code{feature importance_explainer} class, created by \code{\link[ingredients]{feature_importance}} function, or}

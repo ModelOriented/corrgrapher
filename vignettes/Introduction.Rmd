@@ -19,11 +19,11 @@ load(system.file('extdata', 'fifa_cgr.rda', package = 'CorrGrapheR'))
 
 ## The problem
 
-Data analysis (and creating models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding corelations between variables proves to be difficult ($n$ variables means $n(n-1) / 2$ pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readable (and therefore meaningful) it becomes.  
+Data analysis (and creating models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding correlations between variables proves to be difficult ($n$ variables means $n(n-1) / 2$ pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readable (and therefore meaningful) it becomes.  
 
 ## Package CorrGrapheR
 
-This package aims to plot correlations between variables in form of a graph. Variables correlated with each other shall be close (posivitely and negatively alike), and weakly correlated  - far from each other.
+This package aims to plot correlations between variables in form of a graph. Variables correlated with each other shall be close (positively and negatively alike), and weakly correlated  - far from each other.
 
 It is achieved through a physical simulation, where the nodes are treated as points with mass (and are pushing each other away) and edges are treated as mass-less springs. The length of a spring depends on absolute value of correlation between connected nodes. The bigger the correlation, the shorter the spring.
 
@@ -33,8 +33,8 @@ Let's take a look at one of datasets available in R - `Seatbelts`. It contains i
 
  * `DriversKilled` - amount of car **drivers** killed
  * `drivers` - amount of car **drivers** killed or seriously injured
- * `front` - amount of **front-seat passangers** killed or seriously injured
- * `rear` - amount of **rear-seat passangers** killed or seriously injured
+ * `front` - amount of **front-seat passengers** killed or seriously injured
+ * `rear` - amount of **rear-seat passengers** killed or seriously injured
  * `kms` - distance driven
  * `PetrolPrice` - petrol price
  * `VanKilled` - number of van **drivers** killed.
@@ -61,27 +61,27 @@ On the side a simple plot with distribution of variables is displayed. The figur
 
 As expected, we see, that all variables regarding casualties are correlated with each other, but `rear` and `VanKilled` weaker than others. We also observe the negative correlation between `PetrolPrice` and variables `drivers`, `DriversKilled` and `front`.
 
-## Comparable corelation coefficients 
+## Comparable correlation coefficients 
 
-Calcuating comparable corelation coefficients between variables of different types (numerical - numerical, numerical - categorical, categorical - categorical) is a non-trivial problem. In this package, when encountering data with different kinds of variables, a following methodology is used:
+Calculating comparable correlation coefficients between variables of different types (numerical - numerical, numerical - categorical, categorical - categorical) is a non-trivial problem. In this package, when encountering data with different kinds of variables, a following methodology is used:
 
 1. First, the $p$-values are calculated of 3 different statistical tests: 
 
- * Pearson's corelation test (`cor.test`) for 2 numerical variables
+ * Pearson's correlation test (`cor.test`) for 2 numerical variables
  * Kruskal's test (`kruskal.test`) for a numerical and categorical variable
  * Chi-squared test (`chisq.test`) for 2 categorical variables
  
-2. Then, the $-log_{10}(p)$ is calculated and treated as ma measure of correlation betwenn variables. All results above 100 ($p$-value < $10^{-100}$) are treated as absolute correlation and their value is reduced to 100
+2. Then, the $-log_{10}(p)$ is calculated and treated as ma measure of correlation between variables. All results above 100 ($p$-value < $10^{-100}$) are treated as absolute correlation and their value is reduced to 100
 
 3. Finally, results are scaled to fit inside $[0,1]$ .
 
 ## Example 2 - Titanic
 
-Dataset with information about passangers of Titanic is a good example of dataset with both numerical (`age`, `fare`, `sibsp`, `parch`) and categorical(`gender`, `embarked`, `country`,  `survived`) data. Let us buid a model to predict, whether a passanger survived the sinking or not.
+Dataset with information about passengers of Titanic is a good example of dataset with both numerical (`age`, `fare`, `sibsp`, `parch`) and categorical(`gender`, `embarked`, `country`,  `survived`) data. Let us build a model to predict, whether a passenger survived the sinking or not.
 
 Here, let us introduce to a way of combining the `CorrGrapheR` package with packages from [DrWhyAI family](https://modeloriented.github.io/DrWhy/). The `CorrrapheR` function may take an `explainer` object (created with the help of `DALEX` package), extract the data from it, and add extra features to the displayed figure.
 
-The visualisation is enriched with:
+The visualization is enriched with:
 
  * Incorporation of importance of variables for the output of the model, using the size of nodes. The bigger the nodes, the more important they are
  * Partial dependency plots, displayed on the side.
@@ -109,7 +109,7 @@ What can we learn from the figure:
  * Right after it are variables `class` (1st class was privileged) and `age` (children also were given priority during evacuation).
  * We also see, that `fare` was an important variable, but it was **very** strongly connected to `class` variable - no surprise there.
  * Surprisingly, `class` is strongly correlated with `gender` and `embarked`.
- * Finally, `parch` (amount of parents/children aboard) and `sibsp`(amount of spouses/siblings abroad) are strongly connected. It would indicate, that travelling with whole family was a common occurance.
+ * Finally, `parch` (amount of parents/children aboard) and `sibsp`(amount of spouses/siblings abroad) are strongly connected. It would indicate, that traveling with whole family was a common occurance.
 
 
 ## Example 3 - FIFA
@@ -168,7 +168,7 @@ What we can extract from the figure:
 
  * The key variables are `movement_reactions`, `age`, `skill_ball_control`, `attacking_finishing` and `skill_dribling`
  * The features containing goalkeepers' skills are **very** highly correlated with each other and negatively correlated with the rest
- * The features contining defenders' skills are correlated with each other and with `mentality_interceptions`
+ * The features containing defenders' skills are correlated with each other and with `mentality_interceptions`
  * `movement_sprint_speed` is correlated with `movement_acceleration`
  * ...
  
@@ -195,7 +195,7 @@ dragons_cgr <- corrgrapher(
 dragons_cgr
 ```
 
-Here we see, that the variables are mostly **not** corelated. We identify all corelations instantly:
+Here we see, that the variables are mostly **not** correlated. We identify all correlations instantly:
 
  * `height` and `weight`
  * `scars` and `life_length`
