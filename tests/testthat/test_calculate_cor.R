@@ -10,6 +10,8 @@ titanic_imputed <- titanic_imputed[,-8]
 mtcars$vs <- factor(mtcars$vs, labels = c('V-shaped', 'straight'))
 mtcars$am <- factor(mtcars$am, labels = c('automatic', 'manual'))
 
+data("HairEyeColor")
+
 test_that('calculate_cors working properly for numeric data',{
   expect_is({cors <- calculate_cors(Seatbelts)
   cors}, 'matrix')
@@ -39,6 +41,16 @@ test_that('calculate_cors working properly for mixed data with non-binary cats',
   expect_true(isSymmetric(cors))
   expect_equal(colnames(cors), colnames(titanic_imputed))
   expect_equal(rownames(cors), colnames(titanic_imputed))
+})
+
+test_that('calculate_cors working properly for categorical data in contingency table',{
+  expect_is({cors <- calculate_cors(HairEyeColor)
+  cors}, 'matrix')
+  expect_equal(ncol(cors), length(dim(HairEyeColor)))
+  expect_equal(nrow(cors), length(dim(HairEyeColor)))
+  expect_true(isSymmetric(cors))
+  expect_equal(colnames(cors), names(dimnames(HairEyeColor)))
+  expect_equal(rownames(cors), names(dimnames(HairEyeColor)))
 })
 
 test_that('numeric data requires only num_num_f',{
