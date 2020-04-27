@@ -5,9 +5,7 @@
 [![Codecov test coverage](https://codecov.io/gh/ModelOriented/CorrGrapheR/branch/master/graph/badge.svg)](https://codecov.io/gh/ModelOriented/CorrGrapheR?branch=master)
 <!-- badges: end -->
 # CorrGrapheR
-Visualize correlations between variables in datasets
-
-![](hex.png)
+Visualize correlations between variables in datasets. <img src="man/figures/logo.png" align="right" width="150"/>
 
 ## The problem with pairs
 
