@@ -112,3 +112,7 @@ tit_cgr_4 <- corrgrapher(tit_model_exp,
 tit_cgr_3
 tit_cgr_4
 ```
+
+## See also
+
+[Introduction](https://modeloriented.github.io/CorrGrapheR/articles/Introduction.html) vignette for overall overview of the package.

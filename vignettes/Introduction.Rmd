@@ -213,3 +213,4 @@ It will produce a HTML file, containing a similar output the one from chunks abo
 
 ## See also
 
+[Customization](https://modeloriented.github.io/CorrGrapheR/articles/Customization.html) vignette covering supplying options to functions.
