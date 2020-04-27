@@ -1,5 +1,5 @@
 <!-- badges: start -->
-[![R build status](https://github.com/ModelOriented/DALEX/workflows/R-CMD-check/badge.svg)](https://github.com/ModelOriented/DALEX/actions?query=workflow%3AR-CMD-check)
+[![R build status](https://github.com/ModelOriented/CorrGrapheR/workflows/R-CMD-check/badge.svg)](https://github.com/ModelOriented/CorrGrapheR/actions?query=workflow%3AR-CMD-check)
 
 [![Travis build status](https://travis-ci.org/ModelOriented/CorrGrapheR.svg?branch=master)](https://travis-ci.org/ModelOriented/CorrGrapheR)
 [![Codecov test coverage](https://codecov.io/gh/ModelOriented/CorrGrapheR/branch/master/graph/badge.svg)](https://codecov.io/gh/ModelOriented/CorrGrapheR?branch=master)
