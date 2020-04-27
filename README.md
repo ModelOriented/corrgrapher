@@ -7,6 +7,8 @@
 # CorrGrapheR
 Visualize correlations between variables in datasets
 
+![](hex.png)
+
 ## The problem with pairs
 
 Data analysis (and creating ML models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding corelations between variables proves to be difficult (`n`variables means `n(n-1)/2` pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readable (and therefore meaningful) it becomes.  
