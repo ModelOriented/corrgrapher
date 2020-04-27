@@ -27,7 +27,6 @@ devtools::install_github("ModelOriented/CorrGrapheR")
 
 ```
 library('CorrGrapheR')
-library('magrittr')
 df <- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
 cgr <- corrgrapher(df)
 cgr
