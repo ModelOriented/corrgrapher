@@ -5,3 +5,5 @@
 ^Meta$
 ^\.travis\.yml$
 ^codecov\.yml$
+^appveyor\.yml$
+^.github$
