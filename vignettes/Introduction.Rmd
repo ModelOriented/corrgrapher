@@ -113,21 +113,21 @@ What can we learn from the figure:
 
 ## Example 3 - FIFA
 
-Let's look at something more challenging to visualize. The dataset for FIFA 19 soccer game (more info [here](https://www.kaggle.com/karangadiya/fifa19) and [here](https://github.com/pbiecek/explainFIFA19)) contains 89 columns of data about soccer players from all around the world. Visualizing it is a non-trivial task.
+Let's look at something more challenging to visualize. The dataset for FIFA 20 soccer game (more info [here](https://www.kaggle.com/stefanoleone992/fifa-20-complete-player-dataset) and [here](https://github.com/pbiecek/explainFIFA20)) contains 89 columns of data about soccer players from all around the world. Visualizing it is a non-trivial task.
 
 For this use-case, let us create a model based on numerical variables (42 in total), that will predict the value in EUR of soccer players.
-
 
 ```{r fifa_show, eval=FALSE}
 library("gbm")
 
-data('fifa20', package = 'CorrGrapheR')
+library("readr")
+fifa20 <- as.data.frame(read_csv("players_20.csv"))
+
 fifa20_selected <- fifa20[,c(4,5,7,8,11:13,17,26,45:78)]
 
 # Value is skewed. Will be much easier to model sqrt(Value).
 
 fifa20_selected$value_eur <- log10(fifa20_selected$value_eur)
-fifa20_selected$team_position <- factor(fifa20_selected$team_position)
 fifa20_selected <- na.omit(fifa20_selected)
 fifa20_selected <- fifa20_selected[fifa20_selected$value_eur > 0,]
 fifa20_selected <- fifa20_selected[!duplicated(fifa20_selected[,1]),]
