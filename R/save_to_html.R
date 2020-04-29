@@ -13,7 +13,7 @@
 #' }
 #' @import htmltools
 #' @export
-save_cgr_to_html <- function(cgr, file = 'report.html', overwrite = FALSE,...){
+save_to_html <- function(cgr, file = 'report.html', overwrite = FALSE,...){
   if(!'corrgrapher' %in% class(cgr)) stop("cgr must be of corrgrapher class")
   if(file.exists(file)) {
     if(!overwrite) stop(paste(file, 'exists!'))

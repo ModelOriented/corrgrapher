@@ -202,11 +202,11 @@ Here we see, that the variables are mostly **not** correlated. We identify all c
 
 ## HTML Report
 
-If you wish to save info about single `corrgrapher` object, use `save_cgr_to_html()` function:
+If you wish to save info about single `corrgrapher` object, use `save_to_html()` function:
 
 ```{r html, eval=FALSE}
 ## NOT RUN
-save_cgr_to_html(fifa_cgr)
+save_to_html(fifa_cgr)
 ```
 
 It will produce a HTML file, containing a similar output the one from chunks above.
