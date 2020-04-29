@@ -64,7 +64,7 @@ check_partial_dependence <- function(partial_dependence, x){
   cats <- !nums
   if(is.null(partial_dependence)) return()
   if(!is.list(partial_dependence)) stop(paste0('`partial_dependence`, if supported, must be a list, not', 
-                                               class(feature_importance)[1]), 
+                                               class(partial_dependece)[1]), 
                                         call. = FALSE)
   if('aggregated_profiles_explainer' %in% class(partial_dependence)) stop('`partial_dependence_explainer` must be wrapped with list and named `numerical` or `categorical`')
   # partial_dependence jest listą
@@ -77,7 +77,7 @@ check_partial_dependence <- function(partial_dependence, x){
       stop(
         paste0(
           '`partial_dependence[[numerical]]`, if supported, must be a partial_dependence_explainer or list, not',
-          class(feature_importance)[1]
+          class(partial_dependence)[1]
         ),
         call. = FALSE
       )

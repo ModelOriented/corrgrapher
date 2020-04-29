@@ -71,7 +71,7 @@
 #' calculate_cors(num_mtcars, num_num_f = my_f, max_cor = 1)
 #' 
 #' @seealso  \code{\link[stats]{cor.test}}, \code{\link[stats]{chisq.test}}, \code{\link[stats]{kruskal.test}}
-#' 
+#' @importFrom stats setNames
 #' @importFrom stats cor.test
 #' @importFrom stats chisq.test
 #' @importFrom stats kruskal.test

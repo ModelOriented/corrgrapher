@@ -16,9 +16,9 @@ Imports: visNetwork,
     ingredients,
     htmltools,
     RCurl,
-    ggplot2
+    ggplot2,
+    knitr
 Suggests: 
-    knitr,
     rmarkdown,
     testthat,
     gbm,

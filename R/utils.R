@@ -8,7 +8,8 @@
 #' A shiny.tag created with htmltools, consisting of 2 divs.
 #' In one graph is inserted.
 #' The other is a 'tabset' with plots of features/variables, shown on the side, with 1 feature at a time.
-#' @importFrom graphics plot
+#' @importFrom stats runif
+#' @import htmltools
 #' @noRd
 wrap_with_html_tag <- function(cgr) {
   if (!'corrgrapher' %in% class(cgr))

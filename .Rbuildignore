@@ -6,3 +6,5 @@
 ^\.travis\.yml$
 ^codecov\.yml$
 ^.github$
+^report.html$
+^_pkgdown.yml$
