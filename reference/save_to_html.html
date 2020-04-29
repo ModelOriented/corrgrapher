@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Knitr S3 methods — knit_print.corrgrapher • CorrGrapheR</title>
+<title>Generate &amp; save HTML report — save_to_html • CorrGrapheR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,8 +52,8 @@
 
 
 
-<meta property="og:title" content="Knitr S3 methods — knit_print.corrgrapher" />
-<meta property="og:description" content="This method allows corrgrapher objects to be displayed nicely in knitr/rmarkdown documents." />
+<meta property="og:title" content="Generate &amp; save HTML report — save_to_html" />
+<meta property="og:description" content="Create an interactive document in HTML based on corrgrapher object." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -147,34 +147,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Knitr S3 methods</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/CorrGrapheR/blob/master/R/knit_print_corrgrapher.R'><code>R/knit_print_corrgrapher.R</code></a></small>
-    <div class="hidden name"><code>knit_print.corrgrapher.Rd</code></div>
+    <h1>Generate &amp; save HTML report</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ModelOriented/CorrGrapheR/blob/master/R/save_to_html.R'><code>R/save_to_html.R</code></a></small>
+    <div class="hidden name"><code>save_to_html.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This method allows <code>corrgrapher</code> objects to be displayed nicely in knitr/rmarkdown documents.</p>
+    <p>Create an interactive document in HTML based on <code>corrgrapher</code> object.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for corrgrapher</span>
-<span class='fu'>knit_print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>save_to_html</span>(<span class='no'>cgr</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"report.html"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>cgr</th>
       <td><p>An object of <code>corrgrapher</code> class. See <code><a href='corrgrapher.html'>corrgrapher</a></code> function.</p></td>
     </tr>
     <tr>
+      <th>file</th>
+      <td><p>File to write content to; passed directly to <code><a href='https://rdrr.io/pkg/htmltools/man/save_html.html'>save_html</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>If <code>file</code> exists, should it be overwritten?</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>Other parameters, passed directly to <code><a href='https://rdrr.io/pkg/htmltools/man/knitr_methods.html'>knit_print.shiny.tag</a></code></p></td>
+      <td><p>Other parameters</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>2 objects will be displayed: graph of correlations on the left and a plot on the right. 
+    <p>A file of <code>file</code> name will be generated with 2 elements: graph of correlations in the middle and a plot on the right. 
 If <code>x</code> was created from <code>explainer</code>, the plot will visualize partial dependency
 of the currently selected variable.
 In other case, the plot will visualize distribution of the variable.</p>

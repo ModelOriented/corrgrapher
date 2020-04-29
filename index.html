@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plot Correlations Between Variables In A Data Frame • CorrGrapheR</title>
+<title>Plot Correlations Between Variables in a Data Frame • CorrGrapheR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -19,8 +19,8 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- dalexverse --><link href="dalexverse.css" rel="stylesheet">
 <link href="dalexverse-2.css" rel="stylesheet">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Plot Correlations Between Variables In A Data Frame">
-<meta property="og:description" content="This package aims to plot correlations between variables in form of a graph. 
+<script src="pkgdown.js"></script><meta property="og:title" content="Plot Correlations Between Variables in a Data Frame">
+<meta property="og:description" content="Plot correlations between variables in form of a graph. 
   Variables strongly correlated with each other (negatively or positively) shall be close,
   correlated weakly - far from each other.">
 <meta property="og:image" content="/logo.png">
@@ -52,7 +52,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.4</span>
+          <span class="version version-default">0.6</span>
         </div>
       </div>
     </div>
@@ -110,12 +110,12 @@
 <div id="the-problem-with-pairs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-problem-with-pairs" class="anchor"></a>The problem with pairs</h2>
-<p>Data analysis (and creating ML models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding corelations between variables proves to be difficult (<code>n</code>variables means <code>n(n-1)/2</code> pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readable (and therefore meaningful) it becomes.</p>
+<p>Data analysis (and creating ML models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding correlations between variables proves to be difficult (<code>n</code>variables means <code>n(n-1)/2</code> pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readable (and therefore meaningful) it becomes.</p>
 </div>
 <div id="the-solution---less-numbers-more-layout" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-solution---less-numbers-more-layout" class="anchor"></a>The solution - less numbers, more layout</h2>
-<p>This package aims to plot correlations between variables in form of a graph. Each node on it is associated with single variable. Variables correlated with each other (posivitely and negatively alike) shall be close, and weakly correlated - far from each other.</p>
+<p>This package aims to plot correlations between variables in form of a graph. Each node on it is associated with single variable. Variables correlated with each other (positively and negatively alike) shall be close, and weakly correlated - far from each other.</p>
 <p>It is achieved through a physical simulation, where the nodes are treated as points with mass (and are pushing each other away) and edges are treated as mass-less springs. The length of a spring depends on absolute value of correlation between connected nodes. The bigger the correlation, the shorter the spring.</p>
 </div>
 <div id="installation" class="section level2">
@@ -159,7 +159,8 @@ cgr</a></code></pre>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Pawel Morgen <br><small class="roles"> Maintainer </small>  </li>
+<li>Pawel Morgen <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Przemyslaw Biecek <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -174,7 +175,7 @@ cgr</a></code></pre>
 
 
       <footer><div class="copyright">
-  <p>Developed by Pawel Morgen.</p>
+  <p>Developed by Pawel Morgen, Przemyslaw Biecek.</p>
 </div>
 
 <div class="pkgdown">

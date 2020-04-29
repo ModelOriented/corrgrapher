@@ -53,7 +53,8 @@
 
 
 <meta property="og:title" content="Create a CorrGrapheR object — corrgrapher" />
-<meta property="og:description" content="Create a CorrGrapheR object before passing it to plot()." />
+<meta property="og:description" content="This is the main function of CorrGrapheR package. It does necessary calculations and creates a corrgrapher object. 
+Feel free to pass it into plot, include it in knitr report or generate a simple HTML." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -98,7 +99,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.4</span>
+          <span class="version version-default">0.6</span>
         </div>
       </div>
     </div>
@@ -153,7 +154,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Create a CorrGrapheR object before passing it to <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>.</p>
+    <p>This is the main function of <code>CorrGrapheR</code> package. It does necessary calculations and creates a <code>corrgrapher</code> object. 
+Feel free to pass it into <code>plot</code>, include it in knitr report or generate a simple HTML.</p>
     </div>
 
     <pre class="usage"><span class='fu'>corrgrapher</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -169,6 +171,9 @@
   <span class='kw'>partial_dependence</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )
 
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>corrgrapher</span>(<span class='no'>x</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cor_functions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='no'>...</span>)
+
 <span class='co'># S3 method for default</span>
 <span class='fu'>corrgrapher</span>(<span class='no'>x</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cor_functions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='no'>...</span>)</pre>
 
@@ -178,10 +183,10 @@
     <tr>
       <th>x</th>
       <td><p>an object to be used to select the method, which must satisfy conditions:</p><ul>
-<li><p>if <code>data.frame</code> (default), columns with type <code>numeric</code> will be selected and called with <code><a href='https://rdrr.io/r/stats/cor.html'>cor</a></code>.</p></li>
+<li><p>if <code>data.frame</code> (default), columns of <code>numeric</code> type must contain numerical variables and columns of <code>factor</code> class must contain categorical variables. Columns of other types will be ignored.</p></li>
 <li><p>if <code>explainer</code>, methods <code><a href='https://rdrr.io/pkg/ingredients/man/feature_importance.html'>feature_importance</a></code> and <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependence</a></code> must not return an error. 
-Supply them as arguments(<code>feature_importance</code> or <code>partial_dependence</code>) 
-or supply options to call the functions inside (<code>feature_importance_opts</code> and <code>partial_dependence</code>)</p></li>
+See also arguments <code>feature_importance</code> and <code>partial_dependence</code>.</p></li>
+<li><p>if <code>matrix</code>, it will be converted with <code><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></code>.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -198,7 +203,7 @@ or supply options to call the functions inside (<code>feature_importance_opts</c
     </tr>
     <tr>
       <th>cor_functions</th>
-      <td><p>a named <code>list</code> o functions to pass to <code><a href='calculate_cors.html'>calculate_cors</a></code>. Must contain necessary functions from <code>num_num_f</code>, <code>num_cat_f</code> or <code>cat_cat_f</code>. Must contain also <code>max_cor</code></p></td>
+      <td><p>a named <code>list</code> of functions to pass to <code><a href='calculate_cors.html'>calculate_cors</a></code>. Must contain necessary functions from <code>num_num_f</code>, <code>num_cat_f</code> or <code>cat_cat_f</code>. Must contain also <code>max_cor</code></p></td>
     </tr>
     <tr>
       <th>feature_importance</th>
@@ -209,26 +214,30 @@ or supply options to call the functions inside (<code>feature_importance_opts</c
     </tr>
     <tr>
       <th>partial_dependence</th>
-      <td><p>a named <code>list</code> with 2 elements: <code>numerical</code> and <code>categorical</code>. Both of them should be of <code>aggregated_profile_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependence</a></code> function, or a named <code>list</code> of parameters to pass to <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependence</a></code>. If only one kind of data was used, use a list with 1 object.</p></td>
+      <td><p>a named <code>list</code> with 2 elements: <code>numerical</code> and <code>categorical</code>. Both of them should be either:</p><ul>
+<li><p>an object of <code>aggregated_profile_explainer</code> class, created by <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependence</a></code> function, or</p></li>
+<li><p>a named <code>list</code> of parameters to pass to <code><a href='https://rdrr.io/pkg/ingredients/man/partial_dependence.html'>partial_dependence</a></code>.</p></li>
+</ul><p>If only one kind of data was used, use a list with 1 object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>corrgrapher</code> object, consisting of following fields:</p><ul>
+    <p>A <code>corrgrapher</code> object. Essentially a <code>list</code>, consisting of following fields:</p><ul>
 <li><p><code>nodes</code> - a <code>data.frame</code> to pass as argument <code>nodes</code> to <code>visNetwork</code> function</p></li>
 <li><p><code>edges</code> - a <code>data.frame</code> to pass as argument <code>edges</code> to <code>visNetwork</code> function</p></li>
-<li><p><code>pds</code> (if x was of <code>explainer</code> class) - a splitted <code>aggregated_profiles_explainer</code> object. Each item has information about single variable. Passed to <code><a href='https://rdrr.io/pkg/ingredients/man/plot.aggregated_profiles_explainer.html'>plot.aggregated_profiles_explainer</a></code></p></li>
+<li><p><code>pds</code> (if x was of <code>explainer</code> class) - a <code>list</code> with 2 elements: <code>numerical</code> and <code>categorical</code>. Each of them contains an object of <code>aggregated_profiles_explainer</code> used to create partial dependency plots.</p></li>
 <li><p><code>data</code> - data used to create the object.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='plot.corrgrapher.html'>plot.corrgrapher</a></code></p></div>
+    <div class='dont-index'><p><code><a href='plot.corrgrapher.html'>plot.corrgrapher</a></code>, <code><a href='knit_print.corrgrapher.html'>knit_print.corrgrapher</a></code>, <code><a href='save_to_html.html'>save_to_html</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># drop the binary target variable</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/datasets/UKDriverDeaths.html'>Seatbelts</a></span>)[,<span class='fl'>1</span>:<span class='fl'>7</span>]
+    <pre class="examples"><div class='input'><span class='co'># convert the category variable</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/datasets/UKDriverDeaths.html'>Seatbelts</a></span>)
+<span class='no'>df</span>$<span class='no'>law</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>df</span>$<span class='no'>law</span>)
 <span class='no'>cgr</span> <span class='kw'>&lt;-</span> <span class='fu'>corrgrapher</span>(<span class='no'>df</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -241,7 +250,7 @@ or supply options to call the functions inside (<code>feature_importance_opts</c
 
       <footer>
       <div class="copyright">
-  <p>Developed by Pawel Morgen.</p>
+  <p>Developed by Pawel Morgen, Przemyslaw Biecek.</p>
 </div>
 
 <div class="pkgdown">
