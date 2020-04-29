@@ -1,5 +1,4 @@
 library(ranger)
-library(randomForest)
 library(DALEX)
 
 set.seed(2020)

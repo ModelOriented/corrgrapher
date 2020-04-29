@@ -1,10 +1,18 @@
 context('corrgrapher working properly')
 
 df <- as.data.frame(datasets::Seatbelts)[,1:7]
-cgr <- corrgrapher(df)
+data('freeny')
 
 test_that("Output type",{
-  expect_is(cgr, 'corrgrapher')
+  expect_is({
+    cgr <- corrgrapher(df)
+    cgr
+    }, 'corrgrapher')
+  expect_true(all(c("nodes", "edges") %in% names(cgr)))
+  expect_is({
+    cgr <- corrgrapher(freeny.x)
+    cgr
+  }, 'corrgrapher')
   expect_true(all(c("nodes", "edges") %in% names(cgr)))
 })
 

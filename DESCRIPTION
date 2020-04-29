@@ -21,11 +21,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    magrittr,
     gbm,
-    randomForest,
     ranger,
-    shiny,
     spelling,
     covr
 VignetteBuilder: knitr

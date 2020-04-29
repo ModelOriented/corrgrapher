@@ -1,6 +1,6 @@
 #' Create a CorrGrapheR object
 #' 
-#' Create a CorrGrapheR object before passing it to \code{plot()}. 
+#' This is the main function of \code{CorrGrapheR} package. It accepts
 #' @importFrom stats cor
 #' @param x an object to be used to select the method, which must satisfy conditions:
 #' \itemize{
@@ -70,6 +70,20 @@ corrgrapher.explainer <- function(x,
                     ...)
   cgr$pds <- partial_dependence
   cgr
+}
+
+#' @rdname corrgrapher
+#' @export
+corrgrapher.matrix <- function(x,
+                               cutoff = 0.2,
+                               values = NULL,
+                               cor_functions = list(),
+                               ...){
+  x <- as.data.frame(x)
+  NextMethod(cutoff = cutoff,
+             values = values,
+             cor_functions = cor_functions,
+             ...)
 }
 
 #' @rdname corrgrapher
