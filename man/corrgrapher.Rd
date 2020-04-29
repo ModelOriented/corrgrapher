@@ -56,13 +56,13 @@ A \code{corrgrapher} object. Essentially a \code{list}, consisting of following 
 \itemize{
 \item{\code{nodes} - a \code{data.frame} to pass as argument \code{nodes} to \code{\link{visNetwork}} function}
 \item{\code{edges} - a \code{data.frame} to pass as argument \code{edges} to \code{\link{visNetwork}} function}
-\item{\code{pds} (if x was of \code{explainer} class) - a splitted \code{aggregated_profiles_explainer} object. Each item has information about single variable. Passed to \code{\link[ingredients]{plot.aggregated_profiles_explainer}}}
+\item{\code{pds} (if x was of \code{explainer} class) - a \code{list} with 2 elements: \code{numerical} and \code{categorical}. Each of them contains an object of \code{aggregated_profiles_explainer} used to create partial dependency plots.}
 \item{\code{data} - data used to create the object.}
 }
 }
 \description{
 This is the main function of \code{CorrGrapheR} package. It does necessary calculations and creates a \code{corrgrapher} object. 
-Feel free to pass it into \code{\link{plot.corrgrapher}} or include it in knitr report with extra features.
+Feel free to pass it into \code{\link{plot.corrgrapher}}, include it in knitr report or generate a simple HTML.
 }
 \examples{
 # convert the category variable
@@ -71,5 +71,5 @@ df$law <- factor(df$law)
 cgr <- corrgrapher(df)
 }
 \seealso{
-\code{\link{plot.corrgrapher}}, \code{\link{knit.print.corrgrapher}}
+\code{\link{plot.corrgrapher}}, \code{\link{knit.print.corrgrapher}}, \code{\link{save_to_html}}
 }

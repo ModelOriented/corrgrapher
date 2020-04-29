@@ -8,6 +8,8 @@
 #' on the left and partial dependency plot on the right.
 #' In other case, just a graph will be displayed.
 #' 
+#' @importFrom knitr knit_print
+#' @method knit_print corrgrapher
 #' @export
 knit_print.corrgrapher <- function(x, ...){
   x <- wrap_with_html_tag(x)

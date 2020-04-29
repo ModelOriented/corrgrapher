@@ -4,7 +4,7 @@
 \alias{knit_print.corrgrapher}
 \title{Knitr S3 methods}
 \usage{
-knit_print.corrgrapher(x, ...)
+\method{knit_print}{corrgrapher}(x, ...)
 }
 \arguments{
 \item{x}{An object of \code{corrgrapher} class. See \code{\link{corrgrapher}} function.}

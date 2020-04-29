@@ -14,6 +14,7 @@
 #' cgr <- corrgrapher(df)
 #' plot(cgr)
 #' @seealso \code{\link{corrgrapher}}
+#' @method plot corrgrapher
 #' @export
 
 plot.corrgrapher <- function(x, ...){
