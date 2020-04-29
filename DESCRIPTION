@@ -6,7 +6,7 @@ Encoding: UTF-8
 Date: 2020-03-10
 Authors@R: c(person("Pawel", 
                     "Morgen", 
-                    email = seriousmorgen@protonmail.com,
+                    email = "seriousmorgen@protonmail.com",
                     role = c("aut", "cre")),
             person("Przemyslaw", 
                    "Biecek",
