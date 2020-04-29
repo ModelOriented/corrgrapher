@@ -30,12 +30,10 @@ wrap_with_html_tag <- function(cgr) {
         if('pds' %in% names(cgr))
           if(nums[name])
             plt <- suppressWarnings(
-              ingredients:::plot.aggregated_profiles_explainer(cgr$pds[['numerical']],
-                                                               variables = name))
+              plot(cgr$pds[['numerical']],variables = name))
           else
             plt <- suppressWarnings(
-              ingredients:::plot.aggregated_profiles_explainer(cgr$pds[['categorical']],
-                                                               variables = name))
+              plot(cgr$pds[['categorical']],variables = name))
           else plt <- plot_distribution(cgr$data[[name]], name)
           tags$div(
             id = paste(base_id, name, sep = '_'),
