@@ -217,7 +217,7 @@ using 3 different functions for 3 different possible pairs of vairables:</p><ul>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>object used to select method; <code>data.frame</code> by default.</p></td>
+      <td><p>object used to select method. See more below.</p></td>
     </tr>
     <tr>
       <th>num_num_f</th>
@@ -250,7 +250,7 @@ On the diagonal, values from <code>max_cor</code> are set.</p>
 <p>When <code>x</code> is a <code>data.frame</code>, all columns of <code>numeric</code> type are treated as numeric variables and all columns of <code>factor</code> type are treated as categorical variables. Columns of other types are ignored.</p>
 <p>When <code>x</code> is a <code>matrix</code>, it is converted to <code>data.frame</code> using <code><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame.matrix</a></code>.</p>
 <p>When <code>x</code> is a <code>explainer</code>, the tests are performed on its <code>data</code> element.</p>
-<p>When <code>x</code> is a <code>table</code>, it is treated as contingency table. No dimnames of it may be named <code>Frequency</code>.</p>
+<p>When <code>x</code> is a <code>table</code>, it is treated as contingency table. Its dimensions must be named, but none of them may be named <code>Frequency</code>.</p>
     <h2 class="hasAnchor" id="default-functions"><a class="anchor" href="#default-functions"></a>Default functions</h2>
 
     
@@ -268,7 +268,7 @@ On the diagonal, values from <code>max_cor</code> are set.</p>
 <p>Creating consistent measures for correlation coefficients, which are comparable for different kinds of variables, is a non-trivial task.
 Therefore, if user wishes to use custom function for calculating correlation coefficients, he must provide <strong>all</strong> necessary functions.
 Using a custom function for one case and a default for the other is consciously not supported. 
-Naturally, user may supply a copy of default functions at his own responsibility.</p>
+Naturally, user may supply copies of default functions at his own responsibility.</p>
 <p>Function <code>calculate_cors</code> chooses, which parameters of <code>*_f</code> are required based on data supported. 
 For example, for a <code>matrix</code> with <code>numeric</code> data only <code>num_num_f</code> is required. 
 On the other hand, for a <code>table</code> only <code>cat_cat_f</code> is required.</p>
