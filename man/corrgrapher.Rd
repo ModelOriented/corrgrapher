@@ -3,6 +3,7 @@
 \name{corrgrapher}
 \alias{corrgrapher}
 \alias{corrgrapher.explainer}
+\alias{corrgrapher.matrix}
 \alias{corrgrapher.default}
 \title{Create a CorrGrapheR object}
 \usage{
@@ -17,6 +18,8 @@ corrgrapher(x, ...)
   feature_importance = NULL,
   partial_dependence = NULL
 )
+
+\method{corrgrapher}{matrix}(x, cutoff = 0.2, values = NULL, cor_functions = list(), ...)
 
 \method{corrgrapher}{default}(x, cutoff = 0.2, values = NULL, cor_functions = list(), ...)
 }
@@ -54,7 +57,7 @@ A \code{corrgrapher} object, consisting of following fields:
 }
 }
 \description{
-Create a CorrGrapheR object before passing it to \code{plot()}.
+This is the main function of \code{CorrGrapheR} package. It accepts
 }
 \examples{
 # drop the binary target variable
