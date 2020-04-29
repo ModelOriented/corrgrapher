@@ -1,13 +1,13 @@
 #' Create a CorrGrapheR object
 #' 
-#' This is the main function of \code{CorrGrapheR} package. It accepts
+#' This is the main function of \code{CorrGrapheR} package. It does necessary calculations and creates a \code{corrgrapher} object. before visualization with \code{\link{plot.corrgrapher}} or 
 #' @importFrom stats cor
 #' @param x an object to be used to select the method, which must satisfy conditions:
 #' \itemize{
-#' \item{if \code{data.frame} (default), columns with type \code{numeric} will be selected and called with \code{\link{cor}}.}
+#' \item{if \code{data.frame} (default), columns of \code{numeric} type must contain numerical variables and columns of \code{factor} class must contain categorical variables. Columns of other types will be ignored.}
 #' \item{if \code{explainer}, methods \code{\link[ingredients]{feature_importance}} and \code{\link[ingredients]{partial_dependence}} must not return an error. 
-#' Supply them as arguments(\code{feature_importance} or \code{partial_dependence}) 
-#' or supply options to call the functions inside (\code{feature_importance_opts} and \code{partial_dependence})}
+#' See also arguments(\code{feature_importance} and \code{partial_dependence}).}
+#' \item{if \code{matrix}, it will be converted with \code{\link{as.data.frame.matrix}}.}
 #' }
 #' @param ... other arguments.
 #' @param cutoff a number. Correlations below this are treated as \strong{no} correlation. Edges corresponding to them will \strong{not} be included in the graph.
