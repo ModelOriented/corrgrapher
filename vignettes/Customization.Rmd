@@ -14,10 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(CorrGrapheR)
-```
-
 ## Custom correlation coefficients
 
 ### calculate_cors function
@@ -31,6 +27,7 @@ When supplying custom functions, a `max_cor` argument is required. It should be 
 The `calculate_cors` returns a correlation `matrix`, similarly to `cor`.
 
 ```{r cors}
+library(CorrGrapheR)
 df <- as.data.frame(datasets::Seatbelts)[,1:5]
 f1 <- function(x, y) cor.test(x, y, method = 'pearson')$estimate
 f2 <- function(x, y) cor.test(x, y, method = 'kendall')$estimate

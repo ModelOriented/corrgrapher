@@ -1,6 +1,6 @@
 Package: CorrGrapheR
 Type: Package
-Title: Plot Correlations Between Variables in a Data Frame
+Title: Plot Correlations Between Variables
 Version: 0.6
 Encoding: UTF-8
 Date: 2020-04-29
