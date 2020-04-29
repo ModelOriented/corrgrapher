@@ -62,7 +62,7 @@ A \code{corrgrapher} object. Essentially a \code{list}, consisting of following 
 }
 \description{
 This is the main function of \code{CorrGrapheR} package. It does necessary calculations and creates a \code{corrgrapher} object. 
-Feel free to pass it into \code{\link{plot.corrgrapher}}, include it in knitr report or generate a simple HTML.
+Feel free to pass it into \code{plot}, include it in knitr report or generate a simple HTML.
 }
 \examples{
 # convert the category variable
@@ -71,5 +71,5 @@ df$law <- factor(df$law)
 cgr <- corrgrapher(df)
 }
 \seealso{
-\code{\link{plot.corrgrapher}}, \code{\link{knit.print.corrgrapher}}, \code{\link{save_to_html}}
+\code{\link{plot.corrgrapher}}, \code{\link{knit_print.corrgrapher}}, \code{\link{save_to_html}}
 }

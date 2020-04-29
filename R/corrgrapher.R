@@ -1,7 +1,7 @@
 #' Create a CorrGrapheR object
 #' 
 #' This is the main function of \code{CorrGrapheR} package. It does necessary calculations and creates a \code{corrgrapher} object. 
-#' Feel free to pass it into \code{\link{plot.corrgrapher}}, include it in knitr report or generate a simple HTML. 
+#' Feel free to pass it into \code{plot}, include it in knitr report or generate a simple HTML. 
 #' @importFrom stats cor
 #' @param x an object to be used to select the method, which must satisfy conditions:
 #' \itemize{
@@ -35,7 +35,7 @@
 #' df <- as.data.frame(datasets::Seatbelts)
 #' df$law <- factor(df$law) 
 #' cgr <- corrgrapher(df)
-#' @seealso \code{\link{plot.corrgrapher}}, \code{\link{knit.print.corrgrapher}}, \code{\link{save_to_html}}
+#' @seealso \code{\link{plot.corrgrapher}}, \code{\link{knit_print.corrgrapher}}, \code{\link{save_to_html}}
 #' @rdname corrgrapher
 #' @export
 

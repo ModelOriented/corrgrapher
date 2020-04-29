@@ -12,10 +12,11 @@
 \item{...}{Other parameters, passed directly to \code{\link[htmltools]{knit_print.shiny.tag}}}
 }
 \value{
-If \code{x} was created from \code{explainer}, 2 objects will be displayed: graph of correlations
-on the left and partial dependency plot on the right.
-In other case, just a graph will be displayed.
+2 objects will be displayed: graph of correlations on the left and a plot on the right. 
+If \code{x} was created from \code{explainer}, the plot will visualize partial dependency
+of the currently selected variable.
+In other case, the plot will visualize distribution of the variable.
 }
 \description{
-These methods allow \code{corrgrapher} objects to be displayed nicely in knitr/rmarkdown documents.
+This method allows \code{corrgrapher} objects to be displayed nicely in knitr/rmarkdown documents.
 }

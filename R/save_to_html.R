@@ -6,12 +6,10 @@
 #' @param file File to write content to; passed directly to \code{\link[htmltools]{save_html}}.
 #' @param overwrite If \code{file} exists, should it be overwritten?
 #' @param ... Other parameters
-#' @return  A file of \code{file} name will be generated with either 1 or 2 elements: 
-#' \itemize{
-#' \item{for \code{explainer}, a graph and partial dependency plot on the side.}
-#' \item{for \code{data.frame}, just a graph.}
-#' }
-#' @import htmltools
+#' @return  A file of \code{file} name will be generated with 2 elements: graph of correlations in the middle and a plot on the right. 
+#' If \code{x} was created from \code{explainer}, the plot will visualize partial dependency
+#' of the currently selected variable.
+#' In other case, the plot will visualize distribution of the variable.#' @import htmltools
 #' @export
 save_to_html <- function(cgr, file = 'report.html', overwrite = FALSE,...){
   if(!'corrgrapher' %in% class(cgr)) stop("cgr must be of corrgrapher class")
