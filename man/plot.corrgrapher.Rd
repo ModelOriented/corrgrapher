@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_corrgraph.R
 \name{plot.corrgrapher}
 \alias{plot.corrgrapher}
-\title{Visualize correlations in a data frame}
+\title{Visualize correlations in a CorrGrapheR object}
 \usage{
 \method{plot}{corrgrapher}(x, ...)
 }
@@ -17,7 +17,7 @@ A \code{\link{visNetwork}} object; graph. On this graph, the edges are treated a
   and those not (or weakly) correlated - \strong{far} from each other.
 }
 \description{
-Visualize correlations between variables stored in columns, using previously created \code{corrgrapher} object.
+Visualize correlations between variables, using previously created \code{corrgrapher} object.
 }
 \examples{
 df <- as.data.frame(datasets::Seatbelts)[,1:7] # drop the binary target variable

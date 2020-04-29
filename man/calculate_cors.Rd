@@ -49,7 +49,7 @@ calculate_cors(
 )
 }
 \arguments{
-\item{x}{object used to select method; \code{data.frame} by default.}
+\item{x}{object used to select method. See more below.}
 
 \item{num_num_f}{A \code{function} used to determine correlation coefficient between a pair of numeric variables}
 
@@ -81,7 +81,7 @@ When \code{x} is a \code{matrix}, it is converted to \code{data.frame} using \co
 
 When \code{x} is a \code{explainer}, the tests are performed on its \code{data} element.
 
-When \code{x} is a \code{table}, it is treated as contingency table. No dimnames of it may be named \code{Frequency}.
+When \code{x} is a \code{table}, it is treated as contingency table. Its dimensions must be named, but none of them may be named \code{Frequency}.
 }
 
 \section{Default functions}{
@@ -102,7 +102,7 @@ If only \code{numeric} data was supplied, the function used is \code{\link[stats
 Creating consistent measures for correlation coefficients, which are comparable for different kinds of variables, is a non-trivial task.
 Therefore, if user wishes to use custom function for calculating correlation coefficients, he must provide \strong{all} necessary functions.
 Using a custom function for one case and a default for the other is consciously not supported. 
-Naturally, user may supply a copy of default functions at his own responsibility.
+Naturally, user may supply copies of default functions at his own responsibility.
 
 Function \code{calculate_cors} chooses, which parameters of \code{*_f} are required based on data supported. 
 For example, for a \code{matrix} with \code{numeric} data only \code{num_num_f} is required. 

@@ -1,4 +1,4 @@
-#' Knitr S3 methods
+#' Knitr S3 method
 #' 
 #' This method allows \code{corrgrapher} objects to be displayed nicely in knitr/rmarkdown documents.
 #' 

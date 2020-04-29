@@ -1,8 +1,8 @@
 #' @title
-#' Visualize correlations in a data frame
+#' Visualize correlations in a CorrGrapheR object
 #' 
 #' @description 
-#' Visualize correlations between variables stored in columns, using previously created \code{corrgrapher} object.
+#' Visualize correlations between variables, using previously created \code{corrgrapher} object.
 #' 
 #' @param x a \code{corrgrapher} object. See \code{\link{corrgrapher}}.
 #' @param ... other parameters, passed directly to \code{\link{visNetwork}} function (such as \code{main}, \code{submain}, \code{width}, \code{height} etc.)

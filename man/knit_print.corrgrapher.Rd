@@ -2,7 +2,7 @@
 % Please edit documentation in R/knit_print_corrgrapher.R
 \name{knit_print.corrgrapher}
 \alias{knit_print.corrgrapher}
-\title{Knitr S3 methods}
+\title{Knitr S3 method}
 \usage{
 \method{knit_print}{corrgrapher}(x, ...)
 }
