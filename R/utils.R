@@ -24,9 +24,7 @@ wrap_with_html_tag <- function(cgr) {
     nums <- which_variables_are_numeric(cgr$data)
     plots <- tagList(
       lapply({
-        fact <- cgr$nodes$label
-        chr <- attr(fact, 'levels')[as.integer(fact)]
-        chr
+        cgr$nodes$label
       }, function(name){
         if('pds' %in% names(cgr))
           if(nums[name])
