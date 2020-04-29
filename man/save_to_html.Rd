@@ -19,7 +19,7 @@ save_to_html(cgr, file = "report.html", overwrite = FALSE, ...)
 A file of \code{file} name will be generated with 2 elements: graph of correlations in the middle and a plot on the right. 
 If \code{x} was created from \code{explainer}, the plot will visualize partial dependency
 of the currently selected variable.
-In other case, the plot will visualize distribution of the variable.#' @import htmltools
+In other case, the plot will visualize distribution of the variable.
 }
 \description{
 Create an interactive document in HTML based on \code{corrgrapher} object.
