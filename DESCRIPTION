@@ -1,9 +1,9 @@
 Package: CorrGrapheR
 Type: Package
-Title: Plot Correlations Between Variables In A Data Frame
+Title: Plot Correlations Between Variables in a Data Frame
 Version: 0.6
 Encoding: UTF-8
-Date: 2020-03-10
+Date: 2020-04-29
 Authors@R: c(person("Pawel", 
                     "Morgen", 
                     email = "seriousmorgen@protonmail.com",
@@ -12,7 +12,7 @@ Authors@R: c(person("Pawel",
                    "Biecek",
                    role = c("aut")))
 Maintainer: Pawel Morgen <seriousmorgen@protonmail.com>
-Description: This package aims to plot correlations between variables in form of a graph. 
+Description: Plot correlations between variables in form of a graph. 
   Variables strongly correlated with each other (negatively or positively) shall be close,
   correlated weakly - far from each other.
 License: GPL (>= 2)
