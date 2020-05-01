@@ -27,7 +27,7 @@ When supplying custom functions, a `max_cor` argument is required. It should be 
 The `calculate_cors` returns a correlation `matrix`, similarly to `cor`.
 
 ```{r cors}
-library(CorrGrapheR)
+library(corrgrapher)
 df <- as.data.frame(datasets::Seatbelts)[,1:5]
 f1 <- function(x, y) cor.test(x, y, method = 'pearson')$estimate
 f2 <- function(x, y) cor.test(x, y, method = 'kendall')$estimate
@@ -112,4 +112,4 @@ tit_cgr_4
 
 ## See also
 
-[Introduction](https://modeloriented.github.io/CorrGrapheR/articles/Introduction.html) vignette for overall overview of the package.
+[Introduction](https://modeloriented.github.io/corrgrapher/articles/Introduction.html) vignette for overall overview of the package.

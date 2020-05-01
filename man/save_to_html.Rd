@@ -2,7 +2,7 @@
 % Please edit documentation in R/save_to_html.R
 \name{save_to_html}
 \alias{save_to_html}
-\title{Generate & save HTML report}
+\title{Generate and save HTML report}
 \usage{
 save_to_html(cgr, file = "report.html", overwrite = FALSE, ...)
 }

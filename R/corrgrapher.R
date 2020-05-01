@@ -1,6 +1,6 @@
-#' Create a CorrGrapheR object
+#' Create a \code{corrgrapher} object
 #' 
-#' This is the main function of \code{CorrGrapheR} package. It does necessary calculations and creates a \code{corrgrapher} object. 
+#' This is the main function of \code{corrgrapher} package. It does necessary calculations and creates a \code{corrgrapher} object. 
 #' Feel free to pass it into \code{plot}, include it in knitr report or generate a simple HTML. 
 #' @importFrom stats cor
 #' @param x an object to be used to select the method, which must satisfy conditions:

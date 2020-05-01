@@ -1,5 +1,5 @@
 #' @title
-#' Visualize correlations in a CorrGrapheR object
+#' Visualize correlations in a corrgrapher object
 #' 
 #' @description 
 #' Visualize correlations between variables, using previously created \code{corrgrapher} object.

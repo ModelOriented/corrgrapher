@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_corrgraph.R
 \name{plot.corrgrapher}
 \alias{plot.corrgrapher}
-\title{Visualize correlations in a CorrGrapheR object}
+\title{Visualize correlations in a corrgrapher object}
 \usage{
 \method{plot}{corrgrapher}(x, ...)
 }

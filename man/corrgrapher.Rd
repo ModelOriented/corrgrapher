@@ -5,7 +5,7 @@
 \alias{corrgrapher.explainer}
 \alias{corrgrapher.matrix}
 \alias{corrgrapher.default}
-\title{Create a CorrGrapheR object}
+\title{Create a \code{corrgrapher} object}
 \usage{
 corrgrapher(x, ...)
 
@@ -61,7 +61,7 @@ A \code{corrgrapher} object. Essentially a \code{list}, consisting of following 
 }
 }
 \description{
-This is the main function of \code{CorrGrapheR} package. It does necessary calculations and creates a \code{corrgrapher} object. 
+This is the main function of \code{corrgrapher} package. It does necessary calculations and creates a \code{corrgrapher} object. 
 Feel free to pass it into \code{plot}, include it in knitr report or generate a simple HTML.
 }
 \examples{

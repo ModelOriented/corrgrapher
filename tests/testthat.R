@@ -1,4 +1,4 @@
 library(testthat)
-library(CorrGrapheR)
+library(corrgrapher)
 
-test_check("CorrGrapheR")
+test_check("corrgrapher")

@@ -1,7 +1,7 @@
-Package: CorrGrapheR
+Package: corrgrapher
 Type: Package
 Title: Plot Correlations Between Variables
-Version: 0.6
+Version: 0.7
 Encoding: UTF-8
 Date: 2020-04-29
 Authors@R: c(person("Pawel", 
@@ -37,6 +37,6 @@ Suggests:
     covr
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
-URL: https://modeloriented.github.io/CorrGrapheR/, https://github.com/ModelOriented/CorrGrapheR
-BugReports: https://github.com/ModelOriented/CorrGrapheR/issues
+URL: https://modeloriented.github.io/corrgrapher/, https://github.com/ModelOriented/corrgrapher
+BugReports: https://github.com/ModelOriented/corrgrapher/issues
 Language: en-US

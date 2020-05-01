@@ -1,4 +1,4 @@
-#' Generate & save HTML report
+#' Generate and save HTML report
 #' 
 #' Create an interactive document in HTML based on \code{corrgrapher} object.
 #' 
@@ -21,7 +21,7 @@ save_to_html <- function(cgr, file = 'report.html', overwrite = FALSE,...){
   content <- wrap_with_html_tag(cgr)
   doc <- tags$html(
     tags$head(
-      #includeCSS(system.file('d3js', 'report.css', package = 'CorrGrapheR')),
+      #includeCSS(system.file('d3js', 'report.css', package = 'corrgrapher')),
       tags$title('CorrGrapheR report')
     ),
     tags$body(

@@ -1,4 +1,4 @@
-#' Prepare corrgrapher for knitr & html
+#' Prepare corrgrapher for knitr and html
 #' 
 #' Wrap corrgrapher with tags necessary to preview it with knitr or in HTML.
 #' 
@@ -60,7 +60,7 @@ wrap_with_html_tag <- function(cgr) {
         class = 'cgr_tabpanel',
         plots
       ),
-      includeScript(system.file('d3js', 'graph-plot_communication.js', package = 'CorrGrapheR')),
+      includeScript(system.file('d3js', 'graph-plot_communication.js', package = 'corrgrapher')),
       tags$script(paste0(
         'document.getElementById(\'',
         paste(base_id, cgr$nodes[cgr$nodes$id == 1,'label'], sep = '_'),
@@ -71,7 +71,7 @@ wrap_with_html_tag <- function(cgr) {
   x <- attachDependencies(
     x,
     value = htmlDependency(
-      src = system.file('d3js', package = 'CorrGrapheR'),
+      src = system.file('d3js', package = 'corrgrapher'),
       version = '0.2',
       name = 'CorrGrapheRCSS',
       stylesheet = 'report.css'
@@ -119,7 +119,7 @@ plot_distribution <- function(x, label){
 #' @noRd
 
 insert_image <- function(plt, container_id, tf = NULL, dir = tempdir()){
-  # plt - obiekt, który da się zapisać do .png za pomocą png()
+  # plt - an object that can be save with the png() function
   if(is.null(tf)){
     tf <- tempfile(fileext = '.png')
     file.create(tf)

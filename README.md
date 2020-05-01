@@ -1,10 +1,10 @@
-# CorrGrapheR <img src="man/figures/logo.png" align="right" width="150"/>
+# corrgrapher <img src="man/figures/logo.png" align="right" width="150"/>
 
 <!-- badges: start -->
-[![R build status](https://github.com/ModelOriented/CorrGrapheR/workflows/R-CMD-check/badge.svg)](https://github.com/ModelOriented/CorrGrapheR/actions?query=workflow%3AR-CMD-check)
+[![R build status](https://github.com/ModelOriented/corrgrapher/workflows/R-CMD-check/badge.svg)](https://github.com/ModelOriented/corrgrapher/actions?query=workflow%3AR-CMD-check)
 
-[![Travis build status](https://travis-ci.org/ModelOriented/CorrGrapheR.svg?branch=master)](https://travis-ci.org/ModelOriented/CorrGrapheR)
-[![Codecov test coverage](https://codecov.io/gh/ModelOriented/CorrGrapheR/branch/master/graph/badge.svg)](https://codecov.io/gh/ModelOriented/CorrGrapheR?branch=master)
+[![Travis build status](https://travis-ci.org/ModelOriented/corrgrapher.svg?branch=master)](https://travis-ci.org/ModelOriented/corrgrapher)
+[![Codecov test coverage](https://codecov.io/gh/ModelOriented/corrgrapher/branch/master/graph/badge.svg)](https://codecov.io/gh/ModelOriented/corrgrapher?branch=master)
 <!-- badges: end -->
 
 ## The problem with pairs
@@ -22,13 +22,13 @@ It is achieved through a physical simulation, where the nodes are treated as poi
 Install the `CorrGrapheR` package from GitHub.
 
 ```
-devtools::install_github("ModelOriented/CorrGrapheR")
+devtools::install_github("ModelOriented/corrgrapher")
 ```
 
 ## Example of use
 
 ```
-library('CorrGrapheR')
+library('corrgrapher')
 df <- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
 cgr <- corrgrapher(df)
 cgr

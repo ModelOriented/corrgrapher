@@ -1,7 +1,3 @@
-# funkcje sprawdzają parametry i zwracają przetworzone wartości
-# rozdzielamy process() od check()
-
-
 #' Check feature_importance argument
 #' 
 #' Test, whether feature_importance argument is valid, and raise errors in case.
