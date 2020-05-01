@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plot Correlations Between Variables • CorrGrapheR</title>
+<title>Plot Correlations Between Variables • corrgrapher</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -24,7 +24,7 @@
   it is useful to have a grip not only on individual series (AKA variables) available, 
   but also on relations between them. Unfortunately, 
   the task of understanding correlations between variables proves to be difficult. 
-  CorrGrapheR package aims to plot correlations between variables in form of a graph. 
+  corrgrapher package aims to plot correlations between variables in form of a graph. 
   Each node on it is associated with single variable. Variables correlated with each other 
   (positively and negatively alike) shall be close, and weakly correlated  - far from each other. ">
 <meta property="og:image" content="/logo.png">
@@ -52,11 +52,11 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a class="navbar-brand" href="index.html">CorrGrapheR</a>
+        <a class="navbar-brand" href="index.html">corrgrapher</a>
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">0.6</span>
+          <span class="version version-default">0.7</span>
         </div>
       </div>
     </div>
@@ -86,8 +86,11 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
         <li>
-  <a href="https://github.com/ModelOriented/CorrGrapheR/">
+  <a href="https://github.com/ModelOriented/corrgrapher/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -106,11 +109,11 @@
   <div class="contents col-md-9">
 <div id="corrgrapher-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#corrgrapher-" class="anchor"></a>CorrGrapheR <img src="reference/figures/logo.png" align="right" width="150">
+<a href="#corrgrapher-" class="anchor"></a>corrgrapher <img src="reference/figures/logo.png" align="right" width="150">
 </h1></div>
 <!-- badges: start -->
 
-<p><a href="https://travis-ci.org/ModelOriented/CorrGrapheR"><img src="https://travis-ci.org/ModelOriented/CorrGrapheR.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/gh/ModelOriented/CorrGrapheR?branch=master"><img src="https://codecov.io/gh/ModelOriented/CorrGrapheR/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
+<p><a href="https://travis-ci.org/ModelOriented/corrgrapher"><img src="https://travis-ci.org/ModelOriented/corrgrapher.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/gh/ModelOriented/corrgrapher?branch=master"><img src="https://codecov.io/gh/ModelOriented/corrgrapher/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
 <div id="the-problem-with-pairs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-problem-with-pairs" class="anchor"></a>The problem with pairs</h2>
@@ -125,13 +128,15 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Install the <code>CorrGrapheR</code> package from GitHub.</p>
-<pre><code>devtools::install_github("ModelOriented/CorrGrapheR")</code></pre>
+<p>The easiest way to get <code>corrgrapher</code> is to install it from CRAN:</p>
+<pre class="{r}"><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("corrgrapher")</a></code></pre>
+<p>Or the the development version from GitHub:</p>
+<pre class="{r}"><code>devtools::install_github("ModelOriented/corrgrapher")</code></pre>
 </div>
 <div id="example-of-use" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-of-use" class="anchor"></a>Example of use</h2>
-<pre><code><a href="https://rdrr.io/pkg/CorrGrapheR/man">library('CorrGrapheR')
+<pre><code><a href="https://rdrr.io/pkg/corrgrapher/man">library('corrgrapher')
 df &lt;- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
 cgr &lt;- corrgrapher(df)
 cgr</a></code></pre>
@@ -139,7 +144,7 @@ cgr</a></code></pre>
 <div id="see-also" class="section level2">
 <h2 class="hasAnchor">
 <a href="#see-also" class="anchor"></a>See also</h2>
-<p>Feel free to take a look at articles about <a href="https://modeloriented.github.io/CorrGrapheR/articles/Introduction.html">introduction</a> and <a href="https://modeloriented.github.io/CorrGrapheR/articles/Customization.html">customization</a> at <a href="https://modeloriented.github.io/CorrGrapheR/index.html">package site</a>.</p>
+<p>Feel free to take a look at articles about <a href="https://modeloriented.github.io/corrgrapher/articles/Introduction.html">introduction</a> and <a href="https://modeloriented.github.io/corrgrapher/articles/Customization.html">customization</a> at <a href="https://modeloriented.github.io/corrgrapher/index.html">package site</a>.</p>
 </div>
 </div>
   </div>
@@ -148,9 +153,9 @@ cgr</a></code></pre>
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/ModelOriented/CorrGrapheR/">https://​github.com/​ModelOriented/​CorrGrapheR/​</a>
+<li>Browse source code at <br><a href="https://github.com/ModelOriented/corrgrapher/">https://​github.com/​ModelOriented/​corrgrapher/​</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/ModelOriented/CorrGrapheR/issues">https://​github.com/​ModelOriented/​CorrGrapheR/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/ModelOriented/corrgrapher/issues">https://​github.com/​ModelOriented/​corrgrapher/​issues</a>
 </li>
 </ul>
 </div>
@@ -171,7 +176,7 @@ cgr</a></code></pre>
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ModelOriented/CorrGrapheR/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/ModelOriented/CorrGrapheR/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/ModelOriented/corrgrapher/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/ModelOriented/corrgrapher/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 </div>
