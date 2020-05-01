@@ -133,12 +133,22 @@
 <p>Or the the development version from GitHub:</p>
 <pre class="{r}"><code>devtools::install_github("ModelOriented/corrgrapher")</code></pre>
 </div>
-<div id="example-of-use" class="section level2">
+<div id="examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example-of-use" class="anchor"></a>Example of use</h2>
-<pre><code><a href="https://rdrr.io/pkg/corrgrapher/man">library('corrgrapher')
-df &lt;- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
+<a href="#examples" class="anchor"></a>Examples</h2>
+<p>First, load the data</p>
+<pre><code><a href="https://rdrr.io/pkg/corrgrapher/man">library('corrgrapher')</a></code></pre>
+<p>For data frames the <code>corrgrapher</code> shows correlation network and histograms/distributions for features.</p>
+<pre><code>df &lt;- as.data.frame(datasets::Seatbelts)
 cgr &lt;- corrgrapher(df)
+cgr</code></pre>
+<p>For models the <code>corrgrapher</code> shows partial dependencies.</p>
+<pre><code><a href="https://rdrr.io/pkg/DALEX/man">library(DALEX)
+library(ranger)
+
+titanic_rgr &lt;- ranger(survived ~ ., data = titanic_imputed, classification = TRUE)
+titanic_exp &lt;- explain(titanic_rgr, data = titanic_imputed, y = titanic_imputed$survived)
+cgr &lt;- corrgrapher(titanic_exp)
 cgr</a></code></pre>
 </div>
 <div id="see-also" class="section level2">
