@@ -142,14 +142,20 @@
 <pre><code>df &lt;- as.data.frame(datasets::Seatbelts)
 cgr &lt;- corrgrapher(df)
 cgr</code></pre>
+<center>
+<img src="inst/corrgrapher1.gif">
+</center>
 <p>For models the <code>corrgrapher</code> shows partial dependencies.</p>
 <pre><code><a href="https://rdrr.io/pkg/DALEX/man">library(DALEX)
 library(ranger)
 
 titanic_rgr &lt;- ranger(survived ~ ., data = titanic_imputed, classification = TRUE)
-titanic_exp &lt;- explain(titanic_rgr, data = titanic_imputed, y = titanic_imputed$survived)
+titanic_exp &lt;- explain(titanic_rgr, data = titanic_imputed, y = titanic_imputed$survived, verbose = FALSE)
 cgr &lt;- corrgrapher(titanic_exp)
 cgr</a></code></pre>
+<center>
+<img src="inst/corrgrapher2.gif">
+</center>
 </div>
 <div id="see-also" class="section level2">
 <h2 class="hasAnchor">
