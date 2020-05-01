@@ -2,20 +2,23 @@
 
 <!-- badges: start -->
 [![R build status](https://github.com/ModelOriented/corrgrapher/workflows/R-CMD-check/badge.svg)](https://github.com/ModelOriented/corrgrapher/actions?query=workflow%3AR-CMD-check)
-
 [![Travis build status](https://travis-ci.org/ModelOriented/corrgrapher.svg?branch=master)](https://travis-ci.org/ModelOriented/corrgrapher)
 [![Codecov test coverage](https://codecov.io/gh/ModelOriented/corrgrapher/branch/master/graph/badge.svg)](https://codecov.io/gh/ModelOriented/corrgrapher?branch=master)
 <!-- badges: end -->
 
-## The problem with pairs
+## Overview
 
-Data analysis (and creating ML models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding correlations between variables proves to be difficult (`n`variables means `n(n-1)/2` pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readable (and therefore meaningful) it becomes.  
+When exploring data or models we often examine variables one by one. This analysis is incomplete if the relationship between these variables is not taken into account. The corrgrapher package facilitates simultaneous exploration of the Partial Dependence Profiles and the correlation between variables in the model.
 
-## The solution - less numbers, more layout
+The package [corrgrapher](https://github.com/ModelOriented/corrgrapher) is a part of the [DrWhy.AI](http://drwhy.ai/) universe. 
+
+## The solution - less numbers, more insights
 
 This package aims to plot correlations between variables in form of a graph. Each node on it is associated with single variable. Variables correlated with each other (positively and negatively alike) shall be close, and weakly correlated  - far from each other. 
 
 It is achieved through a physical simulation, where the nodes are treated as points with mass (and are pushing each other away) and edges are treated as mass-less springs. The length of a spring depends on absolute value of correlation between connected nodes. The bigger the correlation, the shorter the spring.
+
+When you click on the node of the graph you can view the distribution or the Partial Dependence Plot for the selected variable.
 
 ## Installation
 
@@ -72,3 +75,8 @@ cgr
 Feel free to take a look at articles about
 [introduction](https://modeloriented.github.io/corrgrapher/articles/Introduction.html) and [customization](https://modeloriented.github.io/corrgrapher/articles/Customization.html) at
 [package site](https://modeloriented.github.io/corrgrapher/index.html).
+
+
+## Acknowledgments
+
+Work on this package was financially supported by the Polish National Science Centre under Opus Grant number 2017/27/B/ST6/0130.

@@ -2,6 +2,15 @@
 #' 
 #' This is the main function of \code{corrgrapher} package. It does necessary calculations and creates a \code{corrgrapher} object. 
 #' Feel free to pass it into \code{plot}, include it in knitr report or generate a simple HTML. 
+#' 
+#' Data analysis (and creating ML models) involves many stages. For early exploration, 
+#' it is useful to have a grip not only on individual series (AKA variables) available, 
+#' but also on relations between them. Unfortunately, 
+#' the task of understanding correlations between variables proves to be difficult. 
+#' corrgrapher package aims to plot correlations between variables in form of a graph. 
+#' Each node on it is associated with single variable. Variables correlated with each other 
+#' (positively and negatively alike) shall be close, and weakly correlated  - far from each other.
+#' 
 #' @importFrom stats cor
 #' @param x an object to be used to select the method, which must satisfy conditions:
 #' \itemize{
