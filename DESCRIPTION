@@ -3,7 +3,6 @@ Type: Package
 Title: Plot Correlations Between Variables
 Version: 0.7
 Encoding: UTF-8
-Date: 2020-04-29
 Authors@R: c(person("Pawel", 
                     "Morgen", 
                     email = "seriousmorgen@protonmail.com",
@@ -16,7 +15,7 @@ Description: Data analysis (and creating ML models) involves many stages. For ea
   it is useful to have a grip not only on individual series (AKA variables) available, 
   but also on relations between them. Unfortunately, 
   the task of understanding correlations between variables proves to be difficult. 
-  CorrGrapheR package aims to plot correlations between variables in form of a graph. 
+  corrgrapher package aims to plot correlations between variables in form of a graph. 
   Each node on it is associated with single variable. Variables correlated with each other 
   (positively and negatively alike) shall be close, and weakly correlated  - far from each other. 
 License: GPL (>= 2)

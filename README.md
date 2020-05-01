@@ -19,9 +19,15 @@ It is achieved through a physical simulation, where the nodes are treated as poi
 
 ## Installation
 
-Install the `CorrGrapheR` package from GitHub.
+The easiest way to get `corrgrapher` is to install it from CRAN:
 
+```{r}
+install.packages("corrgrapher")
 ```
+
+Or the the development version from GitHub:
+
+```{r}
 devtools::install_github("ModelOriented/corrgrapher")
 ```
 
@@ -37,5 +43,5 @@ cgr
 ## See also
 
 Feel free to take a look at articles about
-[introduction](https://modeloriented.github.io/CorrGrapheR/articles/Introduction.html) and [customization](https://modeloriented.github.io/CorrGrapheR/articles/Customization.html) at
-[package site](https://modeloriented.github.io/CorrGrapheR/index.html).
+[introduction](https://modeloriented.github.io/corrgrapher/articles/Introduction.html) and [customization](https://modeloriented.github.io/corrgrapher/articles/Customization.html) at
+[package site](https://modeloriented.github.io/corrgrapher/index.html).

@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
                       collapse = TRUE,
                       comment = "#>")
-load(system.file('extdata', 'fifa_cgr.rda', package = 'CorrGrapheR'))
+load(system.file('extdata', 'fifa_cgr.rda', package = 'corrgrapher'))
 ```
 
 ## The problem

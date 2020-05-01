@@ -8,3 +8,4 @@
 ^.github$
 ^report.html$
 ^_pkgdown.yml$
+vignettes/
