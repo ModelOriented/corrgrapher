@@ -31,12 +31,31 @@ Or the the development version from GitHub:
 devtools::install_github("ModelOriented/corrgrapher")
 ```
 
-## Example of use
+## Examples
+
+First, load the data
 
 ```
 library('corrgrapher')
-df <- as.data.frame(datasets::Seatbelts)[,-8] # Drop the binary variable
+```
+
+For data frames the `corrgrapher` shows correlation network and histograms/distributions for features.
+
+```
+df <- as.data.frame(datasets::Seatbelts)
 cgr <- corrgrapher(df)
+cgr
+```
+
+For models the `corrgrapher` shows partial dependencies.
+
+```
+library(DALEX)
+library(ranger)
+
+titanic_rgr <- ranger(survived ~ ., data = titanic_imputed, classification = TRUE)
+titanic_exp <- explain(titanic_rgr, data = titanic_imputed, y = titanic_imputed$survived)
+cgr <- corrgrapher(titanic_exp)
 cgr
 ```
 
