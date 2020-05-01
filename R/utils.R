@@ -15,7 +15,7 @@ wrap_with_html_tag <- function(cgr) {
   if (!'corrgrapher' %in% class(cgr))
     stop("cgr must be of corrgrapher class")
   x <- {
-    cgr_graph <- plot(cgr, width = '65%', height = '100%')
+    cgr_graph <- plot(cgr, width = '65%', height = '80%')
     cgr_graph <- visNetwork::visOptions(cgr_graph, nodesIdSelection = list(selected = 1))
     cgr_graph <- visNetwork::visEvents(cgr_graph, type = 'once', afterDrawing = 'addEventToSelect')
     cgr_graph <- visNetwork::visEvents(cgr_graph, 

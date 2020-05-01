@@ -47,6 +47,10 @@ cgr <- corrgrapher(df)
 cgr
 ```
 
+<center>
+<img src="inst/corrgrapher1.gif">
+</center>
+
 For models the `corrgrapher` shows partial dependencies.
 
 ```
@@ -54,10 +58,14 @@ library(DALEX)
 library(ranger)
 
 titanic_rgr <- ranger(survived ~ ., data = titanic_imputed, classification = TRUE)
-titanic_exp <- explain(titanic_rgr, data = titanic_imputed, y = titanic_imputed$survived)
+titanic_exp <- explain(titanic_rgr, data = titanic_imputed, y = titanic_imputed$survived, verbose = FALSE)
 cgr <- corrgrapher(titanic_exp)
 cgr
 ```
+
+<center>
+<img src="inst/corrgrapher2.gif">
+</center>
 
 ## See also
 
