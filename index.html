@@ -138,14 +138,21 @@
 <a href="#examples" class="anchor"></a>Examples</h2>
 <p>First, load the data</p>
 <pre><code><a href="https://rdrr.io/pkg/corrgrapher/man">library('corrgrapher')</a></code></pre>
+<div id="for-data-sets" class="section level3">
+<h3 class="hasAnchor">
+<a href="#for-data-sets" class="anchor"></a>For data sets</h3>
 <p>For data frames the <code>corrgrapher</code> shows correlation network and histograms/distributions for features.</p>
 <pre><code>df &lt;- as.data.frame(datasets::Seatbelts)
 cgr &lt;- corrgrapher(df)
 cgr</code></pre>
 <center>
-<img src="inst/corrgrapher1.gif">
+<img src="https://github.com/ModelOriented/corrgrapher/raw/master/inst/corrgrapher1.gif">
 </center>
-<p>For models the <code>corrgrapher</code> shows partial dependencies.</p>
+</div>
+<div id="for-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#for-models" class="anchor"></a>For models</h3>
+<p>For models the <code>corrgrapher</code> shows partial dependencies. Use the <code><a href="https://rdrr.io/pkg/DALEX/man/explain.html">DALEX::explain()</a></code> function to create an adapter for any predictive model.</p>
 <pre><code><a href="https://rdrr.io/pkg/DALEX/man">library(DALEX)
 library(ranger)
 
@@ -154,8 +161,9 @@ titanic_exp &lt;- explain(titanic_rgr, data = titanic_imputed, y = titanic_imput
 cgr &lt;- corrgrapher(titanic_exp)
 cgr</a></code></pre>
 <center>
-<img src="inst/corrgrapher2.gif">
+<img src="https://github.com/ModelOriented/corrgrapher/raw/master/inst/corrgrapher2.gif">
 </center>
+</div>
 </div>
 <div id="see-also" class="section level2">
 <h2 class="hasAnchor">
