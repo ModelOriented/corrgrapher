@@ -233,6 +233,15 @@ See also arguments <code>feature_importance</code> and <code>partial_dependence<
 <li><p><code>data</code> - data used to create the object.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Data analysis (and creating ML models) involves many stages. For early exploration, 
+it is useful to have a grip not only on individual series (AKA variables) available, 
+but also on relations between them. Unfortunately, 
+the task of understanding correlations between variables proves to be difficult. 
+corrgrapher package aims to plot correlations between variables in form of a graph. 
+Each node on it is associated with single variable. Variables correlated with each other 
+(positively and negatively alike) shall be close, and weakly correlated  - far from each other.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot.corrgrapher.html'>plot.corrgrapher</a></code>, <code><a href='knit_print.corrgrapher.html'>knit_print.corrgrapher</a></code>, <code><a href='save_to_html.html'>save_to_html</a></code></p></div>

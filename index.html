@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plot Correlations Between Variables • corrgrapher</title>
+<title>Explore Correlations Between Variables in a Machine Learning Model • corrgrapher</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -19,14 +19,13 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- dalexverse --><link href="dalexverse.css" rel="stylesheet">
 <link href="dalexverse-2.css" rel="stylesheet">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Plot Correlations Between Variables">
-<meta property="og:description" content="Data analysis (and creating ML models) involves many stages. For early exploration, 
-  it is useful to have a grip not only on individual series (AKA variables) available, 
-  but also on relations between them. Unfortunately, 
-  the task of understanding correlations between variables proves to be difficult. 
-  corrgrapher package aims to plot correlations between variables in form of a graph. 
-  Each node on it is associated with single variable. Variables correlated with each other 
-  (positively and negatively alike) shall be close, and weakly correlated  - far from each other. ">
+<script src="pkgdown.js"></script><meta property="og:title" content="Explore Correlations Between Variables in a Machine Learning Model">
+<meta property="og:description" content="When exploring data or models we often examine variables one by one. 
+  This analysis is incomplete if the relationship between these variables is 
+  not taken into account. The corrgrapher package facilitates simultaneous 
+  exploration of the Partial Dependence Profiles and the correlation between 
+  variables in the model.
+  The package corrgrapher is a part of the DrWhy.AI universe.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -113,17 +112,18 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><a href="https://travis-ci.org/ModelOriented/corrgrapher"><img src="https://travis-ci.org/ModelOriented/corrgrapher.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/gh/ModelOriented/corrgrapher?branch=master"><img src="https://codecov.io/gh/ModelOriented/corrgrapher/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
-<div id="the-problem-with-pairs" class="section level2">
+<div id="overview" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-problem-with-pairs" class="anchor"></a>The problem with pairs</h2>
-<p>Data analysis (and creating ML models) involves many stages. For early exploration, it is useful to have a grip not only on individual series (AKA variables) available, but also on relations between them. Unfortunately, the task of understanding correlations between variables proves to be difficult (<code>n</code>variables means <code>n(n-1)/2</code> pairs of variables). Furthermore, the mainstream method of visualizing them (i.e. correlation matrix) has its limits; the more variables, the less readable (and therefore meaningful) it becomes.</p>
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>When exploring data or models we often examine variables one by one. This analysis is incomplete if the relationship between these variables is not taken into account. The corrgrapher package facilitates simultaneous exploration of the Partial Dependence Profiles and the correlation between variables in the model.</p>
+<p>The package <a href="https://github.com/ModelOriented/corrgrapher">corrgrapher</a> is a part of the <a href="http://drwhy.ai/">DrWhy.AI</a> universe.</p>
 </div>
-<div id="the-solution---less-numbers-more-layout" class="section level2">
+<div id="the-solution---less-numbers-more-insights" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-solution---less-numbers-more-layout" class="anchor"></a>The solution - less numbers, more layout</h2>
+<a href="#the-solution---less-numbers-more-insights" class="anchor"></a>The solution - less numbers, more insights</h2>
 <p>This package aims to plot correlations between variables in form of a graph. Each node on it is associated with single variable. Variables correlated with each other (positively and negatively alike) shall be close, and weakly correlated - far from each other.</p>
 <p>It is achieved through a physical simulation, where the nodes are treated as points with mass (and are pushing each other away) and edges are treated as mass-less springs. The length of a spring depends on absolute value of correlation between connected nodes. The bigger the correlation, the shorter the spring.</p>
+<p>When you click on the node of the graph you can view the distribution or the Partial Dependence Plot for the selected variable.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -162,6 +162,11 @@ cgr</a></code></pre>
 <a href="#see-also" class="anchor"></a>See also</h2>
 <p>Feel free to take a look at articles about <a href="https://modeloriented.github.io/corrgrapher/articles/Introduction.html">introduction</a> and <a href="https://modeloriented.github.io/corrgrapher/articles/Customization.html">customization</a> at <a href="https://modeloriented.github.io/corrgrapher/index.html">package site</a>.</p>
 </div>
+<div id="acknowledgments" class="section level2">
+<h2 class="hasAnchor">
+<a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
+<p>Work on this package was financially supported by the Polish National Science Centre under Opus Grant number 2017/27/B/ST6/0130.</p>
+</div>
 </div>
   </div>
 
@@ -193,6 +198,8 @@ cgr</a></code></pre>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/ModelOriented/corrgrapher/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/ModelOriented/corrgrapher/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://travis-ci.org/ModelOriented/corrgrapher"><img src="https://travis-ci.org/ModelOriented/corrgrapher.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://codecov.io/gh/ModelOriented/corrgrapher?branch=master"><img src="https://codecov.io/gh/ModelOriented/corrgrapher/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 </div>
