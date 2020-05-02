@@ -36,7 +36,7 @@ devtools::install_github("ModelOriented/corrgrapher")
 
 ## Examples
 
-First, load the data
+First, load the package
 
 ```
 library('corrgrapher')
