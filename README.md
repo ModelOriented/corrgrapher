@@ -42,6 +42,8 @@ First, load the data
 library('corrgrapher')
 ```
 
+### For data sets
+
 For data frames the `corrgrapher` shows correlation network and histograms/distributions for features.
 
 ```
@@ -51,10 +53,12 @@ cgr
 ```
 
 <center>
-<img src="inst/corrgrapher1.gif">
+<img src="https://github.com/ModelOriented/corrgrapher/raw/master/inst/corrgrapher1.gif">
 </center>
 
-For models the `corrgrapher` shows partial dependencies.
+### For models
+
+For models the `corrgrapher` shows partial dependencies. Use the `DALEX::explain()` function to create an adapter for any predictive model.
 
 ```
 library(DALEX)
@@ -67,7 +71,7 @@ cgr
 ```
 
 <center>
-<img src="inst/corrgrapher2.gif">
+<img src="https://github.com/ModelOriented/corrgrapher/raw/master/inst/corrgrapher2.gif">
 </center>
 
 ## See also
