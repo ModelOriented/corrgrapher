@@ -132,7 +132,8 @@ insert_image <- function(plt, container_id, tf = NULL, dir = tempdir()){
                                    width = 125,
                                    height = 100,
                                    units = 'mm'))
-  txt <- RCurl::base64Encode(readBin(tf, "raw", file.info(tf)[1, "size"]), "txt")
+  txt <- jsonlite::base64_enc(readBin(tf, "raw", file.info(tf)[1,"size"]))
+  #txt <- RCurl::base64Encode(readBin(tf, "raw", file.info(tf)[1, "size"]), "txt")
   file.remove(tf)
   encoded_image_src <- sprintf('data:image/png;base64,%s', txt)
   tags$script(paste0("var img = document.createElement(\"img\");",

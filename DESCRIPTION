@@ -23,7 +23,7 @@ Imports: visNetwork,
     DALEX,
     ingredients,
     htmltools,
-    RCurl,
+    jsonlite,
     ggplot2,
     knitr
 Suggests: 
