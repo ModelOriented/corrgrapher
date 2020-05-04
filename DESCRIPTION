@@ -1,7 +1,7 @@
 Package: corrgrapher
 Type: Package
 Title: Explore Correlations Between Variables in a Machine Learning Model
-Version: 0.7
+Version: 1.0
 Encoding: UTF-8
 Authors@R: c(person("Pawel", 
                     "Morgen", 
@@ -18,7 +18,7 @@ Description: When exploring data or models we often examine variables one by one
   variables in the model.
   The package 'corrgrapher' is a part of the 'DrWhy.AI' universe.
 License: GPL (>= 2)
-Depends: R (>= 3.5.0)
+Depends: R (>= 4.0.0)
 Imports: visNetwork,
     DALEX,
     ingredients,
