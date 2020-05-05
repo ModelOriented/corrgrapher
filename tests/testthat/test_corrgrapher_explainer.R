@@ -4,7 +4,8 @@ options(check.attributes = FALSE)
 set.seed(2020)
 
 custom_values <- data.frame(label = colnames(dragons)[-5],
-                            value = rep(15, ncol(dragons) - 1))
+                            value = rep(15, ncol(dragons) - 1),
+                            stringsAsFactors = FALSE)
 custom_values <- custom_values[order(custom_values$label),]
 rownames(custom_values) <- NULL
 

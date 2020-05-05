@@ -128,7 +128,8 @@ corrgrapher.default <- function(x,
                       label = colnames(x),
                       title = colnames(x),
                       color = '#ae2c87',
-                      scaling = list(label = list(min = 10, max = 15)))
+                      scaling = list(label = list(min = 10, max = 15)),
+                      stringsAsFactors = FALSE)
   
   nodes <- merge(nodes, values, 
                  by.x = 'label',

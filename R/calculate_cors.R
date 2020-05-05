@@ -193,12 +193,12 @@ calculate_cors.default <- function(x,
   pairs <- combn(colnames(x), 2)
   
   determine_case <- function(v){
-    if(length(setdiff(v, c_nums)) == 0) return('num_num_f')
-    if(length(setdiff(v, c_cats)) == 0) return('cat_cat_f')
-    'num_cat_f'
+    if(length(setdiff(v, c_nums)) == 0) return(num_num_f)
+    if(length(setdiff(v, c_cats)) == 0) return(cat_cat_f)
+    num_cat_f
   }
   
-  values <- apply(pairs, 2, function(v) get(determine_case(v))(x[[v[1]]],x[[v[2]]]))
+  values <- apply(pairs, 2, function(v) determine_case(v)(x[[v[1]]],x[[v[2]]]))
   values <- pmin(values, max_cor) / max_cor
   values_to_matrix(values, pairs, colnames(x))
 }
