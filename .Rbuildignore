@@ -12,3 +12,5 @@ vignettes/
 corrgrapher1.gif
 corrgrapher2.gif
 LICENSE
+^CRAN-RELEASE$
+^cran-comments.md$

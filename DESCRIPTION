@@ -1,7 +1,7 @@
 Package: corrgrapher
 Type: Package
 Title: Explore Correlations Between Variables in a Machine Learning Model
-Version: 1.0.0
+Version: 1.0.1
 Encoding: UTF-8
 Authors@R: c(person("Pawel", 
                     "Morgen", 
