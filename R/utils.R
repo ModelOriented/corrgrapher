@@ -136,7 +136,7 @@ insert_image <- function(plt, container_id, tf = NULL, dir = tempdir()){
   #txt <- RCurl::base64Encode(readBin(tf, "raw", file.info(tf)[1, "size"]), "txt")
   file.remove(tf)
   encoded_image_src <- sprintf('data:image/png;base64,%s', txt)
-  tags$script(paste0("var img = document.createElement(\"img\");",
+  HTML(paste0("<script>var img = document.createElement(\"img\");",
                      "img.classList.add(\"cgr_image\");",
                      "img.src = \"",
                      encoded_image_src,
@@ -144,7 +144,7 @@ insert_image <- function(plt, container_id, tf = NULL, dir = tempdir()){
                      "var src = document.getElementById(\"",
                      container_id,
                      "\");",
-                     "src.appendChild(img);"))
+                     "src.appendChild(img);</script>"))
 }
 
 #' Extract info about column types
