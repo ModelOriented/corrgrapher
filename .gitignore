@@ -43,5 +43,8 @@ report.html
 
 lib/*
 
+docs/*
+pkgdown/*
+
 vignettes/test.Rmd
 inst/doc
