@@ -1,10 +1,10 @@
 ---
-title: "Introduction to CorrGrapheR"
+title: "Introduction to corrgrapher"
 author: "Paweł Morgen"
 output: 
   rmarkdown::html_vignette:
 vignette: >
-  %\VignetteIndexEntry{Vignette}
+  %\VignetteIndexEntry{Introduction to corrgrapher}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

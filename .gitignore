@@ -27,12 +27,6 @@ vignettes/*_cache/
 *.knit.md
 doc
 Meta
-# rsconnect files
-/inst/shiny-examples/*/rsconnect/*
-
-# widgets - for now
-R/first_widget.R
-inst/htmlwidgets/*
 
 # cache data
 data/cgr_exp.rda
