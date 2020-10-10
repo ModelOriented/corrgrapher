@@ -33,7 +33,7 @@ Suggests:
     ranger,
     spelling,
     covr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 URL: https://modeloriented.github.io/corrgrapher/, https://github.com/ModelOriented/corrgrapher
 BugReports: https://github.com/ModelOriented/corrgrapher/issues
 Language: en-US

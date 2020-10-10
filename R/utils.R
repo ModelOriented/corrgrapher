@@ -38,11 +38,12 @@ wrap_with_html_tag <- function(cgr) {
           tags$div(
             id = paste(base_id, name, sep = '_'),
             class = 'cgr_tabcontent',
-            insert_image(
-              plt,
-              container_id = paste(base_id, name, sep = '_'),
-              dir = dir
-            )
+            suppressMessages(htmltools::plotTag(plt,
+                               alt = name,
+                               width = 250,
+                               height = 200,
+                               attribs = list(class = 'cgr_image'),
+                               suppressSize = "xy"))
           )
       })
     )
@@ -104,47 +105,6 @@ plot_distribution <- function(x, label){
   else
     plt <- plt + ggplot2::geom_bar()
   plt
-}
-
-#' Insert base64 encoded images
-#' 
-#' Process images to be inserted into HTML document (or knitr)
-#' 
-#' @param plt a ggplot object
-#' @param container_id Id of div container
-#' @param tf name of temporary file to save img into
-#' @param dir name of temporary directory to save images into
-#' @return 
-#' A htmltools script tag, which contains code needed to load base64 encoded image into document.
-#' @noRd
-
-insert_image <- function(plt, container_id, tf = NULL, dir = tempdir()){
-  # plt - an object that can be save with the png() function
-  if(is.null(tf)){
-    tf <- tempfile(fileext = '.png')
-    file.create(tf)
-  }
-  else{
-    if(file.exists(tf)) stop(paste0(tf, ' exists'))
-    file.create(tf)
-  }
-  suppressMessages(ggplot2::ggsave(tf, plt,
-                                   width = 125,
-                                   height = 100,
-                                   units = 'mm'))
-  txt <- jsonlite::base64_enc(readBin(tf, "raw", file.info(tf)[1,"size"]))
-  #txt <- RCurl::base64Encode(readBin(tf, "raw", file.info(tf)[1, "size"]), "txt")
-  file.remove(tf)
-  encoded_image_src <- sprintf('data:image/png;base64,%s', txt)
-  HTML(paste0("<script>var img = document.createElement(\"img\");",
-                     "img.classList.add(\"cgr_image\");",
-                     "img.src = \"",
-                     encoded_image_src,
-                     "\";",
-                     "var src = document.getElementById(\"",
-                     container_id,
-                     "\");",
-                     "src.appendChild(img);</script>"))
 }
 
 #' Extract info about column types
