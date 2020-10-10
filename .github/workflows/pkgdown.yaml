@@ -11,8 +11,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-r@master
-        with:
-          r-version: ${{matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@master
 
@@ -26,7 +24,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: macOS-r-4.0-${{ hashFiles('.github/depends.Rds') }}
+          key: macOS-r-4.0-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: macOS-r-4.0-1-
 
       - name: Install dependencies
