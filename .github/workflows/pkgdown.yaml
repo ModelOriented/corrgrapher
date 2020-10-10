@@ -12,7 +12,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r@master
         with:
-          r-version: 4.0
+          r-version: ${{matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@master
 
@@ -27,13 +27,12 @@ jobs:
         with:
           path: ${{ env.R_LIBS_USER }}
           key: macOS-r-4.0-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: macOS-r-4.0-
+          restore-keys: macOS-r-4.0-1-
 
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "ranger", "gbm", "pkgdown"))
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_dev("pkgdown")
           remotes::install_github("ModelOriented/DrWhyTemplate")
           
         shell: Rscript {0}
