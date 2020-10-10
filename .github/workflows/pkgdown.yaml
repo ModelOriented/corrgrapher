@@ -29,8 +29,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "ranger", "gbm", "pkgdown"))
+          install.packages("remotes"")
           remotes::install_deps(dependencies = TRUE)
+          install.packages(c("ranger", "gbm", "pkgdown"))
           remotes::install_github("ModelOriented/DrWhyTemplate")
           
         shell: Rscript {0}
