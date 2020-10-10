@@ -10,7 +10,7 @@
 #' 
 #' @export
 print.corrgrapher <- function(x, ...){
-  tmpf <- paste0(tempfile(), ".html")
+  tmpf <- tempfile(fileext = ".html")
   save_to_html(x, file = tmpf, overwrite = TRUE)
   viewer <- getOption("viewer")
   viewer(tmpf)

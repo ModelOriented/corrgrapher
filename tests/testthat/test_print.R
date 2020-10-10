@@ -1,4 +1,4 @@
-context('knit_print working properly')
+context('knit_print method working properly')
 
 if(!exists('cgr_exp')) skip('Corrgrapher did not create the object')
 
