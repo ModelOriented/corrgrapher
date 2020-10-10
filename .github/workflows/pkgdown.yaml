@@ -29,7 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages("remotes"")
+          install.packages("remotes")
           remotes::install_deps(dependencies = TRUE)
           install.packages(c("ranger", "gbm", "pkgdown"))
           remotes::install_github("ModelOriented/DrWhyTemplate")
