@@ -98,7 +98,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0.0</span>
+          <span class="version version-default">1.0.2</span>
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@
       <a href="../articles/Customization.html">Customization</a>
     </li>
     <li>
-      <a href="../articles/Introduction.html">Introduction to CorrGrapheR</a>
+      <a href="../articles/Introduction.html">Introduction to corrgrapher</a>
     </li>
   </ul>
 </li>
@@ -160,7 +160,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for corrgrapher</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,9 +185,10 @@
     <div class='dont-index'><p><code><a href='corrgrapher.html'>corrgrapher</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw pkg'>datasets</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/r/datasets/UKDriverDeaths.html'>Seatbelts</a></span>)[,<span class='fl'>1</span>:<span class='fl'>7</span>] <span class='co'># drop the binary target variable</span>
-<span class='no'>cgr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='corrgrapher.html'>corrgrapher</a></span>(<span class='no'>df</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cgr</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'>datasets</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/datasets/UKDriverDeaths.html'>Seatbelts</a></span><span class='op'>)</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span> <span class='co'># drop the binary target variable</span>
+<span class='va'>cgr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='corrgrapher.html'>corrgrapher</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cgr</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

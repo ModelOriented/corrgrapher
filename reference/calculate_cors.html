@@ -104,7 +104,7 @@ categorical - categorical
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0.0</span>
+          <span class="version version-default">1.0.2</span>
         </div>
       </div>
     </div>
@@ -130,7 +130,7 @@ categorical - categorical
       <a href="../articles/Customization.html">Customization</a>
     </li>
     <li>
-      <a href="../articles/Introduction.html">Introduction to CorrGrapheR</a>
+      <a href="../articles/Introduction.html">Introduction to corrgrapher</a>
     </li>
   </ul>
 </li>
@@ -171,49 +171,49 @@ using 3 different functions for 3 different possible pairs of vairables:</p><ul>
 
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_cors</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>num_num_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>num_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cat_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_cor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)
+    <pre class="usage"><span class='fu'>calculate_cors</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  num_num_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  num_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cat_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  max_cor <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for explainer</span>
-<span class='fu'>calculate_cors</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>num_num_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>num_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cat_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_cor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)
+<span class='fu'>calculate_cors</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  num_num_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  num_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cat_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  max_cor <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>calculate_cors</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>num_num_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>num_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cat_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_cor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)
+<span class='fu'>calculate_cors</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  num_num_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  num_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cat_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  max_cor <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for table</span>
-<span class='fu'>calculate_cors</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>num_num_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>num_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cat_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_cor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)
+<span class='fu'>calculate_cors</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  num_num_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  num_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cat_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  max_cor <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>calculate_cors</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>num_num_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>num_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cat_cat_f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_cor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+<span class='fu'>calculate_cors</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  num_num_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  num_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cat_cat_f <span class='op'>=</span> <span class='cn'>NULL</span>,
+  max_cor <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -283,11 +283,12 @@ and return a single number from [0,max_num]. The <code>num_cat_f</code> must acc
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>mtcars</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
 <span class='co'># Make sure, that categorical variables are factors</span>
-<span class='no'>mtcars</span>$<span class='no'>vs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>mtcars</span>$<span class='no'>vs</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'V-shaped'</span>, <span class='st'>'straight'</span>))
-<span class='no'>mtcars</span>$<span class='no'>am</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>mtcars</span>$<span class='no'>am</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'automatic'</span>, <span class='st'>'manual'</span>))
-<span class='fu'>calculate_cors</span>(<span class='no'>mtcars</span>)</div><div class='output co'>#&gt;             mpg        cyl       disp          hp        drat          wt
+<span class='va'>mtcars</span><span class='op'>$</span><span class='va'>vs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>vs</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'V-shaped'</span>, <span class='st'>'straight'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>mtcars</span><span class='op'>$</span><span class='va'>am</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>am</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'automatic'</span>, <span class='st'>'manual'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>calculate_cors</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             mpg        cyl       disp          hp        drat          wt
 #&gt; mpg  1.00000000 0.09213768 0.09027782 0.067476725 0.047504984 0.098880796
 #&gt; cyl  0.09213768 1.00000000 0.11744043 0.084586878 0.050838285 0.069145071
 #&gt; disp 0.09027782 0.11744043 1.00000000 0.071461389 0.052771998 0.109128153
@@ -312,15 +313,17 @@ and return a single number from [0,max_num]. The <code>num_cat_f</code> must acc
 #&gt; gear 0.006152266 0.025715289 0.044059498 1.000000000 0.008893124
 #&gt; carb 0.043432361 0.019595498 0.005198029 0.008893124 1.000000000</div><div class='input'>
 <span class='co'># For a table:</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>HairEyeColor</span>)
-<span class='fu'>calculate_cors</span>(<span class='no'>HairEyeColor</span>)</div><div class='output co'>#&gt;            Hair         Eye         Sex
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>HairEyeColor</span><span class='op'>)</span>
+<span class='fu'>calculate_cors</span><span class='op'>(</span><span class='va'>HairEyeColor</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            Hair         Eye         Sex
 #&gt; Hair 1.00000000 0.246335235 0.013360089
 #&gt; Eye  0.24633523 1.000000000 0.001704363
 #&gt; Sex  0.01336009 0.001704363 1.000000000</div><div class='input'>
 <span class='co'># Custom functions:</span>
-<span class='no'>num_mtcars</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>[,-<span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>mtcars</span>) <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'vs'</span>, <span class='st'>'am'</span>))]
-<span class='no'>my_f</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>,<span class='no'>y</span>) <span class='fu'><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>'spearman'</span>, <span class='kw'>exact</span><span class='kw'>=</span><span class='fl'>FALSE</span>)$<span class='no'>estimate</span>
-<span class='fu'>calculate_cors</span>(<span class='no'>num_mtcars</span>, <span class='kw'>num_num_f</span> <span class='kw'>=</span> <span class='no'>my_f</span>, <span class='kw'>max_cor</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt;             mpg        cyl       disp         hp        drat         wt
+<span class='va'>num_mtcars</span> <span class='op'>&lt;-</span> <span class='va'>mtcars</span><span class='op'>[</span>,<span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'vs'</span>, <span class='st'>'am'</span><span class='op'>)</span><span class='op'>)</span><span class='op'>]</span>
+<span class='va'>my_f</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, method <span class='op'>=</span> <span class='st'>'spearman'</span>, exact<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>$</span><span class='va'>estimate</span>
+<span class='fu'>calculate_cors</span><span class='op'>(</span><span class='va'>num_mtcars</span>, num_num_f <span class='op'>=</span> <span class='va'>my_f</span>, max_cor <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;             mpg        cyl       disp         hp        drat         wt
 #&gt; mpg   1.0000000 -0.9108013 -0.9088824 -0.8946646  0.65145546 -0.8864220
 #&gt; cyl  -0.9108013  1.0000000  0.9276516  0.9017909 -0.67888119  0.8577282
 #&gt; disp -0.9088824  0.9276516  1.0000000  0.8510426 -0.68359210  0.8977064

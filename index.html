@@ -55,7 +55,7 @@
         <div class="info">
           <span class="partof">part of the <a href="https://github.com/ModelOriented/DrWhy">DrWhy.AI</a>
            developed by the <a href="https://mi2.mini.pw.edu.pl/">MI^2 DataLab</a> </span>
-          <span class="version version-default">1.0.0</span>
+          <span class="version version-default">1.0.2</span>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
       <a href="articles/Customization.html">Customization</a>
     </li>
     <li>
-      <a href="articles/Introduction.html">Introduction to CorrGrapheR</a>
+      <a href="articles/Introduction.html">Introduction to corrgrapher</a>
     </li>
   </ul>
 </li>
@@ -131,13 +131,13 @@
 <p>The easiest way to get <code>corrgrapher</code> is to install it from CRAN:</p>
 <pre class="{r}"><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("corrgrapher")</a></code></pre>
 <p>Or the the development version from GitHub:</p>
-<pre class="{r}"><code>devtools::install_github("ModelOriented/corrgrapher")</code></pre>
+<pre class="{r}"><code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">devtools::install_github("ModelOriented/corrgrapher")</a></code></pre>
 </div>
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
 <p>First, load the package</p>
-<pre><code><a href="https://rdrr.io/pkg/corrgrapher/man">library('corrgrapher')</a></code></pre>
+<pre><code><a href="https://modeloriented.github.io/corrgrapher/">library('corrgrapher')</a></code></pre>
 <div id="for-data-sets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#for-data-sets" class="anchor"></a>For data sets</h3>
@@ -152,8 +152,8 @@ cgr</code></pre>
 <div id="for-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#for-models" class="anchor"></a>For models</h3>
-<p>For models the <code>corrgrapher</code> shows partial dependencies. Use the <code><a href="https://rdrr.io/pkg/DALEX/man/explain.html">DALEX::explain()</a></code> function to create an adapter for any predictive model.</p>
-<pre><code><a href="https://rdrr.io/pkg/DALEX/man">library(DALEX)
+<p>For models the <code>corrgrapher</code> shows partial dependencies. Use the <code><a href="https://ModelOriented.github.io/DALEX/reference/explain.html">DALEX::explain()</a></code> function to create an adapter for any predictive model.</p>
+<pre><code><a href="https://ModelOriented.github.io/DALEX/">library(DALEX)
 library(ranger)
 
 titanic_rgr &lt;- ranger(survived ~ ., data = titanic_imputed, classification = TRUE)
@@ -182,6 +182,8 @@ cgr</a></code></pre>
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=corrgrapher">https://​cloud.r-project.org/​package=corrgrapher</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/ModelOriented/corrgrapher/">https://​github.com/​ModelOriented/​corrgrapher/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/ModelOriented/corrgrapher/issues">https://​github.com/​ModelOriented/​corrgrapher/​issues</a>
@@ -205,9 +207,9 @@ cgr</a></code></pre>
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ModelOriented/corrgrapher/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/ModelOriented/corrgrapher/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://travis-ci.org/ModelOriented/corrgrapher"><img src="https://travis-ci.org/ModelOriented/corrgrapher.svg?branch=master" alt="Travis build status"></a></li>
 <li><a href="https://codecov.io/gh/ModelOriented/corrgrapher?branch=master"><img src="https://codecov.io/gh/ModelOriented/corrgrapher/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/ModelOriented/corrgrapher/actions"><img src="https://github.com/ModelOriented/corrgrapher/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 </div>
