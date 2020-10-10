@@ -14,3 +14,4 @@ corrgrapher2.gif
 LICENSE
 ^CRAN-RELEASE$
 ^cran-comments.md$
+^\.github$
